@@ -3,24 +3,34 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="?attr/colorPrimary"
+    android:background="#C80101"
     android:elevation="4dp"
     android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Samobor N&amp;T"
+            android:text="@string/samobor_n_amp_t"
             android:textColor="@color/white"
-            android:textSize="22sp"/>
+            android:textSize="22sp" />
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_menu"
-            android:layout_alignParentRight = "true"
-            android:paddingRight="20dp"
-            />
+            android:layout_alignParentEnd="true"
+            android:paddingEnd="20dp"
+            android:src="@android:drawable/ic_dialog_map" />
+        <!-- U ImageView iznad treba dodati
+        android:onClick="ImeMetode"
+        gdje umjesto ImeMetode stavljamo ime metode
+        koja ce pozvati novi activity u kojemu je ona
+        lista kartica od svih mjesta/atrakcija
+        -->
+
+
     </RelativeLayout>
 </androidx.appcompat.widget.Toolbar>

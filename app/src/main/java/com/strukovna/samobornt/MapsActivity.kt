@@ -1,15 +1,12 @@
 package com.strukovna.samobornt
 
 import android.annotation.SuppressLint
-import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import android.widget.Toolbar
-import androidx.core.app.ActivityCompat
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -58,8 +55,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             if (!success) {
                 Log.e(logMsg, "Style parsing failed.")
             }
-        }
-        catch (e: Resources.NotFoundException) {
+        } catch (e: Resources.NotFoundException) {
             Log.e(logMsg, "Can't find style. Error: ", e)
         }
     }
@@ -79,7 +75,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 .snippet("Click for more info.")
         )
         map.setOnMapClickListener { latLng ->
-            Toast.makeText(this, "onMapClick:\n" + latLng.latitude + "\n" + latLng.longitude, Toast.LENGTH_SHORT).show();
+            Toast.makeText(
+                this,
+                "onMapClick:\n" + latLng.latitude + "\n" + latLng.longitude,
+                Toast.LENGTH_SHORT
+            ).show();
             true
         }
         map.setOnMarkerClickListener { marker ->
@@ -96,14 +96,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 .jointType(JointType.ROUND)
                 .startCap(RoundCap())
                 .startCap(RoundCap())
-                .pattern(listOf(
-                    Dot(), Gap(20F), Dash(30F), Gap(20F)))
+                .pattern(
+                    listOf(
+                        Dot(), Gap(20F), Dash(30F), Gap(20F)
+                    )
+                )
                 .geodesic(true)
                 .add(
                     LatLng(45.8011, 15.7110),
                     LatLng(45.8111, 15.7010),
                     LatLng(45.8211, 15.7310),
-                    LatLng(45.8311, 15.6910),)
+                    LatLng(45.8311, 15.6910),
+                )
         )
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(samobor, 18f))
         setupMap()
