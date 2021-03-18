@@ -10,10 +10,6 @@
         />
     <item
         android:id="@+id/menu_about"
-        android:title="About"
-        />
-    <item
-        android:id="@+id/menu_close_app"
-        android:title="Close App"
+        android:title="@string/about"
         />
 </menu>

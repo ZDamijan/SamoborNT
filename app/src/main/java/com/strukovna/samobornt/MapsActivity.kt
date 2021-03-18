@@ -52,11 +52,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         ).show()
                         true
                     }
-                    R.id.menu_close_app -> {
-                        //Toast.makeText(this, "Close App", Toast.LENGTH_SHORT).show()
-                        closeApp(this)
-                        true
-                    }
                     else -> false
                 }
             }
@@ -80,24 +75,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onPause() {
         super.onPause()
         stopLocationUpdates()
-    }
-
-    fun closeApp(activity: Activity) {
-        //finish in background many activities as possible
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            activity.finishAndRemoveTask()
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            activity.finishAffinity()
-        } else {
-            activity.finish()
-        }
-
-        //Kill all existing app process
-        activity.moveTaskToBack(true)
-        Process.killProcess(Process.myPid())
-
-        //close the app
-        exitProcess(0)
     }
 
     private val logMsg = MapsActivity::class.java.simpleName
