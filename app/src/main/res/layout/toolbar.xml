@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_baseline_menu"
             android:layout_alignParentRight = "true"
-            android:paddingRight="20dp"/>
+            android:paddingRight="20dp"
+            />
     </RelativeLayout>
 </androidx.appcompat.widget.Toolbar>
