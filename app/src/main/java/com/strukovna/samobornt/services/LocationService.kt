@@ -3,7 +3,6 @@ package com.strukovna.samobornt.services
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.ComponentCallbacks
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Looper
@@ -11,7 +10,6 @@ import androidx.core.app.ActivityCompat
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.strukovna.samobornt.fusedLocationProviderClient
-import java.lang.Exception
 
 private const val REQUEST_CODE = 12
 
@@ -91,8 +89,7 @@ fun Activity.getLocationUpdates(function: () -> Unit) {
     if (hasLocationPermission()) {
         createLocationCallback(function)
         createLocationRequest()
-    } else
-    {
+    } else {
         requestPermission()
     }
 }

@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.SamoborNT" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#C2081C</item>
-        <item name="colorPrimaryVariant">#A60819</item>
+        <item name="colorPrimary">@color/BrightRed</item>
+        <item name="colorPrimaryVariant">@color/DarkRed</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>

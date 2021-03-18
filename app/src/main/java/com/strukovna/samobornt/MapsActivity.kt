@@ -1,6 +1,5 @@
 package com.strukovna.samobornt
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.content.res.Resources
@@ -11,7 +10,6 @@ import android.util.Log
 import android.widget.Toast
 import android.widget.Toolbar
 import androidx.core.app.ActivityCompat
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -32,7 +30,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        createLocationCallback { this::showCurrentLocation }
+        createLocationCallback(::showCurrentLocation)
         createLocationRequest()
     }
 
@@ -120,7 +118,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         showCurrentLocation()
     }
 
-    private fun setupMap() = getLocationUpdates(this::showCurrentLocation)
+    private fun setupMap() = getLocationUpdates(::showCurrentLocation)
 
     @SuppressLint("MissingPermission")
     private fun showCurrentLocation() {

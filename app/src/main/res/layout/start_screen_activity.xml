@@ -1,8 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FrameLayout android:orientation="vertical" android:layout_height="fill_parent" android:layout_width="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
-    <ImageView android:layout_height="wrap_content" android:layout_width="wrap_content" android:src="@drawable/background" android:scaleType="centerCrop" android:layout_gravity="bottom"/>
-    <LinearLayout android:orientation="vertical" android:layout_height="match_parent" android:layout_width="match_parent" xmlns:android="http://schemas.android.com/apk/res/android" android:gravity="bottom">
-        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:shadowRadius="10" android:shadowDy="2" android:shadowDx="2" android:shadowColor="#000000" android:textSize="32sp" android:textColor="#FFF" android:text="@string/start_message" android:layout_marginRight="@dimen/margin_right" android:layout_marginLeft="@dimen/margin_left"/>
-        <Button android:layout_height="80dp" android:layout_width="match_parent" android:textSize="22sp" android:text="@string/explore" android:layout_marginRight="@dimen/margin_right" android:layout_marginLeft="@dimen/margin_left" android:id="@+id/btnExplore"/>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_left"
+            android:layout_marginRight="@dimen/margin_right"
+            android:shadowColor="@color/black"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="10"
+            android:text="@string/start_message"
+            android:textColor="#FFF"
+            android:textSize="34sp"
+            android:layout_marginBottom="5dp" />
+
+        <Button
+            android:id="@+id/btnExplore"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="@dimen/margin_left"
+            android:layout_marginRight="@dimen/margin_right"
+            android:text="@string/explore"
+            android:textSize="24sp" />
     </LinearLayout>
 </FrameLayout>
