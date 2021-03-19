@@ -18,8 +18,8 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.maps.android.data.kml.KmlLayer
 import com.strukovna.samobornt.services.*
-import kotlin.system.exitProcess
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -103,6 +103,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // https://snazzymaps.com/editor/customize/113400
         setMapStyle(map)
         // Add a marker in Samobor and move the camera
+        val layer = KmlLayer(map, R.raw.route4, this);
+        layer.addLayerToMap()
         val samobor = LatLng(45.8011, 15.7110)
         map.addMarker(
             MarkerOptions()
