@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.strukovna.samobornt.services.DBConnection
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.strukovna.samobornt.services.requestPermission
@@ -29,6 +30,7 @@ class StartScreenActivity : AppCompatActivity() {
 
         initListener()
 
+        val connection: DBConnection = DBConnection.getConnectionInstance(this)
     }
 
     private fun initListener() {
