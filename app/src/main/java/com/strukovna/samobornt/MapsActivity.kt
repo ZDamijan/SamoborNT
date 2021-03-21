@@ -1,24 +1,24 @@
 package com.strukovna.samobornt
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Intent
-import android.content.res.Resources
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
-import android.os.Process
-import android.util.Log
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.*
+import com.google.android.libraries.maps.CameraUpdateFactory
+import com.google.android.libraries.maps.GoogleMap
+import com.google.android.libraries.maps.OnMapReadyCallback
+import com.google.android.libraries.maps.SupportMapFragment
+import com.google.android.libraries.maps.model.*
+import com.google.maps.android.collections.GroundOverlayManager
+import com.google.maps.android.collections.MarkerManager
+import com.google.maps.android.collections.PolygonManager
+import com.google.maps.android.collections.PolylineManager
 import com.google.maps.android.data.kml.KmlLayer
+import com.google.maps.android.data.kml.KmlLineString
+import com.google.maps.android.data.kml.KmlPoint
 import com.strukovna.samobornt.services.*
 
 
@@ -78,60 +78,71 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private val logMsg = MapsActivity::class.java.simpleName
-    private fun setMapStyle(map: GoogleMap) {
-        try {
-            // Customize the styling of the base map using a JSON object defined
-            // in a raw resource file.
-            val success = map.setMapStyle(
-                MapStyleOptions.loadRawResourceStyle(
-                    this,
-                    R.raw.map_style
-                )
-            )
-            if (!success) {
-                Log.e(logMsg, "Style parsing failed.")
-            }
-        }
-        catch (e: Resources.NotFoundException) {
-            Log.e(logMsg, "Can't find style. Error: ", e)
-        }
-    }
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         map.uiSettings.isZoomControlsEnabled = true
-        // https://snazzymaps.com/editor/customize/113400
-        setMapStyle(map)
-        // Add a marker in Samobor and move the camera
-        val layer = KmlLayer(map, R.raw.route4, this);
-        layer.addLayerToMap()
-        val samobor = LatLng(45.8011, 15.7110)
-        map.addMarker(
-            MarkerOptions()
-                .position(samobor).title("Samobor")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-                .title("Samobor")
-                .snippet("Click for more info.")
+
+        val markerManager = MarkerManager(map)
+        val groundOverlayManager = GroundOverlayManager(map!!)
+        val polygonManager = PolygonManager(map)
+        val polylineManager = PolylineManager(map)
+        val kmlLayer = KmlLayer(
+            map,
+            R.raw.route1,
+            this,
+            markerManager,
+            polygonManager,
+            polylineManager,
+            groundOverlayManager,
+            null
         )
-        map.setOnMapClickListener { latLng ->
-            Toast.makeText(
-                this,
-                "onMapClick:\n" + latLng.latitude + "\n" + latLng.longitude,
-                Toast.LENGTH_SHORT
-            ).show();
-            true
+        kmlLayer.addLayerToMap()
+
+        val centerPosition = LatLng(45.8019356, 15.7098924)
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(centerPosition, 15f))
+
+        val markerCollection = markerManager.newCollection()
+        val polylineCollection = polylineManager.newCollection()
+        val pathPoints: ArrayList<LatLng> = ArrayList()
+        if (kmlLayer?.getContainers() != null) {
+            for (container in kmlLayer.containers) {
+                if (container.hasPlacemarks()) {
+                    for (placemark in container.placemarks) {
+                        val geometry = placemark.geometry
+                        if (geometry.geometryType.equals("Point")) {
+                            val point: KmlPoint = placemark.geometry as KmlPoint
+                            markerCollection.addMarker(
+                                MarkerOptions()
+                                    .position(
+                                        LatLng(
+                                            point.geometryObject.latitude,
+                                            point.geometryObject.longitude
+                                        )
+                                    )
+                                    .icon(
+                                        BitmapDescriptorFactory.defaultMarker(
+                                            BitmapDescriptorFactory.HUE_AZURE
+                                        )
+                                    )
+                                    .title(placemark.getProperty("name"))
+                                    .snippet(placemark.getProperty("description"))
+                            )
+                        }
+                        else if (geometry.getGeometryType().equals("LineString")) {
+                            val kmlLineString: KmlLineString = geometry as KmlLineString
+                            val coords: ArrayList<LatLng> = kmlLineString.geometryObject
+                            for (latLng in coords) {
+                                pathPoints.add(latLng);
+                            }
+                        }
+                    }
+                }
+            }
         }
-        map.setOnMarkerClickListener { marker ->
-            Toast.makeText(this, "OnMarkerClick: " + marker.title, Toast.LENGTH_SHORT).show()
-            marker.showInfoWindow()
-            true
-        }
-        map.setOnInfoWindowClickListener { marker ->
-            Toast.makeText(this, "OnInfoWindowClick: " + marker.title, Toast.LENGTH_SHORT).show()
-        }
-        val polyline1 = googleMap.addPolyline(
+        polylineCollection.addPolyline(
             PolylineOptions()
-                .color(Color.GREEN)
+                .color(Color.RED)
                 .jointType(JointType.ROUND)
                 .startCap(RoundCap())
                 .startCap(RoundCap())
@@ -141,14 +152,36 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     )
                 )
                 .geodesic(true)
-                .add(
-                    LatLng(45.8011, 15.7110),
-                    LatLng(45.8111, 15.7010),
-                    LatLng(45.8211, 15.7310),
-                    LatLng(45.8311, 15.6910),
-                )
+                .addAll(pathPoints)
         )
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(samobor, 18f))
+
+        kmlLayer.removeLayerFromMap()
+
+        map.setOnMapClickListener { latLng ->
+            Toast.makeText(
+                this,
+                "onMapClick:\n" + latLng.latitude + "\n" + latLng.longitude,
+                Toast.LENGTH_SHORT
+            ).show();
+            true
+        }
+        markerCollection.setOnMarkerClickListener { marker: Marker ->
+            Toast.makeText(
+                this,
+                "OnMarkerClick: ${marker.title}",
+                Toast.LENGTH_SHORT
+            ).show()
+            marker.showInfoWindow()
+            true
+        }
+        markerCollection.setOnInfoWindowClickListener { marker: Marker ->
+            Toast.makeText(
+                this,
+                "OnInfoWindowClick: ${marker.title}",
+                Toast.LENGTH_SHORT
+            ).show()
+            false
+        }
         setupMap()
     }
 
