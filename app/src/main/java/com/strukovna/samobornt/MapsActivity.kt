@@ -99,8 +99,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         )
         kmlLayer.addLayerToMap()
 
-        val centerPosition = LatLng(45.8019356, 15.7098924)
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(centerPosition, 15f))
+        val targetPosition = LatLng(45.8019356, 15.7098924)
+        val cameraPosition = CameraPosition.Builder()
+            .target(targetPosition) // Sets the center of the map to Mountain View
+            .zoom(18f)            // Sets the zoom
+            .bearing(0f)          // Sets the orientation of the camera to east
+            .tilt(45f)            // Sets the tilt of the camera to 30 degrees
+            .build()              // Creates a CameraPosition from the builder
+        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
 
         val markerCollection = markerManager.newCollection()
         val polylineCollection = polylineManager.newCollection()
