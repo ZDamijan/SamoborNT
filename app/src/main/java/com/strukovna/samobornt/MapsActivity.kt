@@ -1,8 +1,10 @@
 package com.strukovna.samobornt
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
+import android.view.Window
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Toast
@@ -38,6 +40,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 when (item.itemId) {
                     R.id.menu_changeLanguage_app -> {
                         Toast.makeText(this, "Change Language", Toast.LENGTH_SHORT).show()
+                        val dialog = Dialog(this)
+                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                        dialog.setCancelable(false)
+                        dialog.setContentView(R.layout.language_dialog)
+                        dialog.show()
                         true
                     }
                     R.id.menu_seeAllMarkers_app -> {
@@ -104,7 +111,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             .target(targetPosition) // Sets the center of the map to Mountain View
             .zoom(18f)            // Sets the zoom
             .bearing(0f)          // Sets the orientation of the camera to east
-            .tilt(45f)            // Sets the tilt of the camera to 30 degrees
+            .tilt(30f)            // Sets the tilt of the camera to 30 degrees
             .build()              // Creates a CameraPosition from the builder
         map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
 
