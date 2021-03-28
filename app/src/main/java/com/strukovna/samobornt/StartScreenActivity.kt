@@ -1,16 +1,16 @@
 package com.strukovna.samobornt
 
-import android.content.res.Configuration
+import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.strukovna.samobornt.services.DBConnection
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.strukovna.samobornt.services.DBConnection
 import com.strukovna.samobornt.services.requestPermission
 import com.strukovnasamobor.samobornt.api.startActivity
-import java.util.*
+
 
 private lateinit var btnExplore: Button
 lateinit var fusedLocationProviderClient: FusedLocationProviderClient

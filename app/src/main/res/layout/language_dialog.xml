@@ -21,21 +21,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:orientation="vertical" >
+        android:orientation="vertical">
         <RadioButton
             android:id="@+id/rdb_hr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/croatian"
             android:tag="hr"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:buttonTint="@color/BrightRed" />
         <RadioButton
             android:id="@+id/rdb_en"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/english"
             android:tag="en"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:buttonTint="@color/BrightRed" />
     </RadioGroup>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"

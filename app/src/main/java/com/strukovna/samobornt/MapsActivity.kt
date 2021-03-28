@@ -153,7 +153,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                     )
                                     .icon(
                                         BitmapDescriptorFactory.defaultMarker(
-                                            BitmapDescriptorFactory.HUE_AZURE
+                                            BitmapDescriptorFactory.HUE_RED
                                         )
                                     )
                                     .title(placemark.getProperty("name"))
