@@ -2,12 +2,11 @@ package com.strukovna.samobornt
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Window
-import android.widget.ImageView
-import android.widget.PopupMenu
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.libraries.maps.CameraUpdateFactory
 import com.google.android.libraries.maps.GoogleMap
@@ -22,6 +21,8 @@ import com.google.maps.android.data.kml.KmlLayer
 import com.google.maps.android.data.kml.KmlLineString
 import com.google.maps.android.data.kml.KmlPoint
 import com.strukovna.samobornt.services.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -39,11 +40,28 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.menu_changeLanguage_app -> {
-                        Toast.makeText(this, "Change Language", Toast.LENGTH_SHORT).show()
                         val dialog = Dialog(this)
+                        val currentLang = resources.configuration.locale.language
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                        dialog.setCancelable(false)
+                        dialog.setCancelable(true)
+                        dialog.setCanceledOnTouchOutside(true)
                         dialog.setContentView(R.layout.language_dialog)
+                        val languageRadioGroup: RadioGroup = dialog.findViewById(R.id.rdg_languages) as RadioGroup
+                        languageRadioGroup.check(R.id.rdb_en)
+                        for (i in 0..languageRadioGroup.childCount) {
+                            if(languageRadioGroup.getChildAt(i).tag == currentLang) {
+                                languageRadioGroup.check(languageRadioGroup.getChildAt(i).id)
+                                break;
+                            }
+                        }
+                        dialog.findViewById<Button>(R.id.btn_close).setOnClickListener {
+                            dialog.cancel()
+                        }
+                        dialog.findViewById<Button>(R.id.btn_save).setOnClickListener {
+                            val checkedRadioButton: RadioButton = dialog.findViewById(languageRadioGroup.checkedRadioButtonId) as RadioButton
+                            changeLanguage(checkedRadioButton.tag.toString())
+                            dialog.cancel()
+                        }
                         dialog.show()
                         true
                     }
@@ -118,7 +136,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val markerCollection = markerManager.newCollection()
         val polylineCollection = polylineManager.newCollection()
         val pathPoints: ArrayList<LatLng> = ArrayList()
-        if (kmlLayer?.getContainers() != null) {
+        if (kmlLayer?.containers != null) {
             for (container in kmlLayer.containers) {
                 if (container.hasPlacemarks()) {
                     for (placemark in container.placemarks) {
@@ -142,10 +160,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                     .snippet(placemark.getProperty("description"))
                             )
                         }
-                        else if (geometry.getGeometryType().equals("LineString")) {
+                        else if (geometry.geometryType.equals("LineString")) {
                             val kmlLineString: KmlLineString = geometry as KmlLineString
-                            val coords: ArrayList<LatLng> = kmlLineString.geometryObject
-                            for (latLng in coords) {
+                            val coordinates: ArrayList<LatLng> = kmlLineString.geometryObject
+                            for (latLng in coordinates) {
                                 pathPoints.add(latLng);
                             }
                         }
@@ -220,5 +238,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
         }
+    }
+
+    private fun changeLanguage(languageToLoad: String) {
+        val locale = Locale(languageToLoad)
+        Locale.setDefault(locale)
+        val config = Configuration()
+        config.setLocale(locale)
+        baseContext.resources.updateConfiguration(
+            config,
+            baseContext.resources.displayMetrics
+        )
     }
 }

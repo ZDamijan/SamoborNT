@@ -8,27 +8,49 @@
     android:layout_marginTop="@dimen/margin_top"
     android:layout_marginBottom="@dimen/margin_bottom">
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_bottom"
         android:textAlignment="center"
-        android:text="Change language" />
+        android:text="@string/change_language"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
     <RadioGroup
-        android:id="@+id/radio_group"
+        android:id="@+id/rdg_languages"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:orientation="vertical" >
-
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/rdb_hr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Croatian" />
-
+            android:text="@string/croatian"
+            android:tag="hr"
+            android:textSize="18sp" />
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/rdb_en"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="English" />
+            android:text="@string/english"
+            android:tag="en"
+            android:textSize="18sp" />
     </RadioGroup>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            android:layout_marginRight="@dimen/margin_right"/>
+        <Button
+            android:id="@+id/btn_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/close" />
+    </LinearLayout>
 </LinearLayout>

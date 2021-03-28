@@ -35,21 +35,8 @@ class StartScreenActivity : AppCompatActivity() {
 
     private fun initListener() {
         btnExplore.setOnClickListener {
-            changeLanguage("en")
             startActivity<MapsActivity>()
         }
     }
-
-    private fun changeLanguage(languageToLoad : String) {
-        val locale = Locale(languageToLoad)
-        Locale.setDefault(locale)
-        val config = Configuration()
-        config.setLocale(locale)
-        baseContext.resources.updateConfiguration(
-            config,
-            baseContext.resources.displayMetrics
-        )
-    }
-
 }
 

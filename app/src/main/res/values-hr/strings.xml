@@ -5,4 +5,11 @@
     <string name="explore">Istraži Samobor</string>
     <string name="title_actionbar"><![CDATA[Samobor N&T]]></string>
     <string name="about">O aplikaciji</string>
+    <string name="sights">Znamenitosti</string>
+    <string name="virtual_tour">Virtualna šetlja</string>
+    <string name="change_language">Promjena jezika</string>
+    <string name="croatian">Hrvatski</string>
+    <string name="english">Engleski</string>
+    <string name="save">Spremi</string>
+    <string name="close">Poništi</string>
 </resources>

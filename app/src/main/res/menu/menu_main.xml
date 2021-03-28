@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menu_changeLanguage_app"
-        android:title="Change Language"
+        android:id="@+id/menu_seeAllMarkers_app"
+        android:title="@string/sights"
         />
     <item
-        android:id="@+id/menu_seeAllMarkers_app"
-        android:title="See All Markers"
+        android:id="@+id/virtual_tour"
+        android:title="@string/virtual_tour"
+        />
+    <item
+        android:id="@+id/menu_changeLanguage_app"
+        android:title="@string/change_language"
         />
     <item
         android:id="@+id/menu_about"
