@@ -1,7 +1,10 @@
 package com.strukovna.samobornt
 
-import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.view.WindowManager
 import android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
@@ -17,11 +20,13 @@ lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
 class StartScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        @Suppress("DEPRECATION")
-        window.setFlags(FLAG_FULLSCREEN, FLAG_FULLSCREEN)
-
         super.onCreate(savedInstanceState)
+        this.window.apply {
+            clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            statusBarColor = Color.TRANSPARENT
+        }
         setContentView(R.layout.start_screen_activity)
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)

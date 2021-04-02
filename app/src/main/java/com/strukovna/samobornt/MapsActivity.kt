@@ -26,11 +26,11 @@ import kotlin.collections.ArrayList
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
-
     private lateinit var map: GoogleMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show()
         setContentView(R.layout.activity_maps)
         setSupportActionBar(findViewById(R.id.toolbar))
 
@@ -46,10 +46,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         dialog.setCancelable(true)
                         dialog.setCanceledOnTouchOutside(true)
                         dialog.setContentView(R.layout.language_dialog)
-                        val languageRadioGroup: RadioGroup = dialog.findViewById(R.id.rdg_languages) as RadioGroup
+                        val languageRadioGroup: RadioGroup =
+                            dialog.findViewById(R.id.rdg_languages) as RadioGroup
                         languageRadioGroup.check(R.id.rdb_en)
                         for (i in 0..languageRadioGroup.childCount) {
-                            if(languageRadioGroup.getChildAt(i).tag == currentLang) {
+                            if (languageRadioGroup.getChildAt(i).tag == currentLang) {
                                 languageRadioGroup.check(languageRadioGroup.getChildAt(i).id)
                                 break;
                             }
@@ -58,7 +59,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             dialog.cancel()
                         }
                         dialog.findViewById<Button>(R.id.btn_save).setOnClickListener {
-                            val checkedRadioButton: RadioButton = dialog.findViewById(languageRadioGroup.checkedRadioButtonId) as RadioButton
+                            val checkedRadioButton: RadioButton = dialog.findViewById(
+                                languageRadioGroup.checkedRadioButtonId
+                            ) as RadioButton
                             changeLanguage(checkedRadioButton.tag.toString())
                             dialog.cancel()
                         }
@@ -92,17 +95,37 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         createLocationRequest()
     }
 
+    override fun onStart() {
+        super.onStart()
+        Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show()
+    }
+
     override fun onResume() {
         super.onResume()
+        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show()
         if (!locationUpdateState) startLocationUpdates()
     }
 
     override fun onPause() {
         super.onPause()
+        Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show()
         stopLocationUpdates()
     }
 
-    private val logMsg = MapsActivity::class.java.simpleName
+    override fun onStop() {
+        super.onStop()
+        Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show()
+        stopLocationUpdates()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onBackPressed() {
+        moveTaskToBack(true)
+    }
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
