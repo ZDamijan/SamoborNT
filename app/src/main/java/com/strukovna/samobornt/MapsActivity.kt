@@ -151,11 +151,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                             point.geometryObject.longitude
                                         )
                                     )
-                                    .icon(
-                                        BitmapDescriptorFactory.defaultMarker(
-                                            BitmapDescriptorFactory.HUE_RED
-                                        )
-                                    )
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_custom))
                                     .title(placemark.getProperty("name"))
                                     .snippet(placemark.getProperty("description"))
                             )
