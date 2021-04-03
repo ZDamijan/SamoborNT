@@ -2,8 +2,11 @@ package com.strukovna.samobornt
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.view.Window
 import android.widget.*
@@ -78,6 +81,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             "Created by: Ekonomska, turistička i ugostiteljska škola, Samobor\nPartner: Srednja strukovna škola, Samobor\nSupported by: Ministry of Tourism and Sports\nVersion: 2021 1.0",
                             Toast.LENGTH_LONG
                         ).show()
+                        true
+                    }
+                    R.id.virtual_tour -> {
+                        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.samobor.hr/virtualna-tura/"))
+                        try {
+                            startActivity(browserIntent)
+                        } catch (ex: ActivityNotFoundException) {}
                         true
                     }
                     else -> false
