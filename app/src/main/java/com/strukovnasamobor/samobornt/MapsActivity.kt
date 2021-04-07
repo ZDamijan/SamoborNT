@@ -44,7 +44,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 when (item.itemId) {
                     R.id.menu_changeLanguage -> {
                         val dialog = Dialog(this)
-                        val currentLang = resources.configuration.locale.language
+                        @Suppress("DEPRECATION") val currentLang = resources.configuration.locale.language
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
                         dialog.setCancelable(true)
                         dialog.setCanceledOnTouchOutside(true)
@@ -148,7 +148,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         map.uiSettings.isZoomControlsEnabled = true
 
         val markerManager = MarkerManager(map)
-        val groundOverlayManager = GroundOverlayManager(map!!)
+        val groundOverlayManager = GroundOverlayManager(map)
         val polygonManager = PolygonManager(map)
         val polylineManager = PolylineManager(map)
         val kmlLayer = KmlLayer(
@@ -175,7 +175,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val markerCollection = markerManager.newCollection()
         val polylineCollection = polylineManager.newCollection()
         val pathPoints: ArrayList<LatLng> = ArrayList()
-        if (kmlLayer?.containers != null) {
+        if (kmlLayer.containers != null) {
             for (container in kmlLayer.containers) {
                 if (container.hasPlacemarks()) {
                     for (placemark in container.placemarks) {
@@ -228,8 +228,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 this,
                 "onMapClick:\n" + latLng.latitude + "\n" + latLng.longitude,
                 Toast.LENGTH_SHORT
-            ).show();
-            true
+            ).show()
         }
         markerCollection.setOnMarkerClickListener { marker: Marker ->
             Toast.makeText(
@@ -246,7 +245,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 "OnInfoWindowClick: ${marker.title}",
                 Toast.LENGTH_SHORT
             ).show()
-            false
         }
         setupMap()
     }
@@ -268,7 +266,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             map.isMyLocationEnabled = true
             fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
                 if (location != null) {
-                    val currentLatLng = LatLng(location.latitude, location.longitude)
+                    //val currentLatLng = LatLng(location.latitude, location.longitude)
                     //map.animateCamera(CameraUpdateFactory.newLatLng(currentLatLng))
                 }
             }
@@ -280,6 +278,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         Locale.setDefault(locale)
         val config = Configuration()
         config.setLocale(locale)
+        @Suppress("DEPRECATION")
         baseContext.resources.updateConfiguration(
             config,
             baseContext.resources.displayMetrics
