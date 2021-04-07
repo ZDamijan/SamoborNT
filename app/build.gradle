@@ -8,7 +8,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.strukovna.samobornt"
+        applicationId "com.strukovnasamobor.samobornt"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1

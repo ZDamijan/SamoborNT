@@ -1,4 +1,4 @@
-package com.strukovna.samobornt.services
+package com.strukovnasamobor.samobornt.services
 
 import android.annotation.SuppressLint
 import android.content.Context

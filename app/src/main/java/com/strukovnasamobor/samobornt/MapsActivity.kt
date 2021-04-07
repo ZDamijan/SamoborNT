@@ -1,4 +1,4 @@
-package com.strukovna.samobornt
+package com.strukovnasamobor.samobornt
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -23,7 +23,7 @@ import com.google.maps.android.collections.PolylineManager
 import com.google.maps.android.data.kml.KmlLayer
 import com.google.maps.android.data.kml.KmlLineString
 import com.google.maps.android.data.kml.KmlPoint
-import com.strukovna.samobornt.services.*
+import com.strukovnasamobor.samobornt.services.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -78,7 +78,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     R.id.menu_about -> {
                         Toast.makeText(
                             this,
-                            "Created by: Ekonomska, turistička i ugostiteljska škola, Samobor\nPartner: Srednja strukovna škola, Samobor\nSupported by: Ministry of Tourism and Sports\nVersion: 2021 1.0",
+                            "Created by: Ekonomska, turistička i ugostiteljska škola, Samobor\nPartner: Srednja strukovnasamobor škola, Samobor\nSupported by: Ministry of Tourism and Sports\nVersion: 2021 1.0",
                             Toast.LENGTH_LONG
                         ).show()
                         true

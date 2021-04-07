@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.strukovna.samobornt">
+    package="com.strukovnasamobor.samobornt">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
@@ -18,11 +18,11 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name="com.strukovnasamobor.samobornt.MapsActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".StartScreenActivity"
+            android:name="com.strukovnasamobor.samobornt.StartScreenActivity"
             android:label="@string/title_activity_maps">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

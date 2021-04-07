@@ -1,4 +1,4 @@
-package com.strukovna.samobornt.services
+package com.strukovnasamobor.samobornt.services
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -9,7 +9,7 @@ import android.os.Looper
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
-import com.strukovna.samobornt.fusedLocationProviderClient
+import com.strukovnasamobor.samobornt.fusedLocationProviderClient
 
 private const val REQUEST_CODE = 12
 

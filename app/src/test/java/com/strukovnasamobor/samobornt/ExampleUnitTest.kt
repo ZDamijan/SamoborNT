@@ -1,4 +1,4 @@
-package com.strukovna.samobornt
+package com.strukovnasamobor.samobornt
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
