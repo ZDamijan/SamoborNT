@@ -42,7 +42,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             val popupMenu = PopupMenu(this, it)
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
-                    R.id.menu_changeLanguage_app -> {
+                    R.id.menu_changeLanguage -> {
                         val dialog = Dialog(this)
                         val currentLang = resources.configuration.locale.language
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -71,7 +71,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         dialog.show()
                         true
                     }
-                    R.id.menu_seeAllMarkers_app -> {
+                    R.id.menu_seeAllMarkers -> {
                         Toast.makeText(this, "See All Markers", Toast.LENGTH_SHORT).show()
                         true
                     }
