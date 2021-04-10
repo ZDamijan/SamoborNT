@@ -1,4 +1,4 @@
 include ':app'
 rootProject.name = "Samobor N&T"
 include ':unityLibrary'
-project(':unityLibrary').projectDir=new File('..\\ARImageTracer\\androidBuild\\unityLibrary')
+project(':unityLibrary').projectDir=new File('\\ARImageTracer\\androidBuild\\unityLibrary')
