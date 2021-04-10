@@ -6,6 +6,7 @@ plugins {
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
+    ndkVersion "22.1.7171670"
 
     defaultConfig {
         applicationId "com.strukovnasamobor.samobornt"
@@ -44,4 +45,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    implementation project(':unityLibrary')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 }

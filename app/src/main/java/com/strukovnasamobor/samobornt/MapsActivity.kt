@@ -23,6 +23,7 @@ import com.google.maps.android.collections.PolylineManager
 import com.google.maps.android.data.kml.KmlLayer
 import com.google.maps.android.data.kml.KmlLineString
 import com.google.maps.android.data.kml.KmlPoint
+import com.strukovnasamobor.samobornt.api.startActivity
 import com.strukovnasamobor.samobornt.services.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -77,8 +78,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
                     R.id.menu_augmentedReality-> {
                         Toast.makeText(this, "Augmented Reality", Toast.LENGTH_SHORT).show()
-                        //val intent = Intent(this, UnityHolderActivity::class.java)
-                        //startActivity(intent)
+                        startActivity<UnityHolderActivity>()
                         true
                     }
                     R.id.menu_about -> {

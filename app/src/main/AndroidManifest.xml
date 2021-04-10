@@ -11,21 +11,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SamoborNT"
-        >
+        android:extractNativeLibs="true">
+        <activity android:name=".UnityHolderActivity"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="com.strukovnasamobor.samobornt.MapsActivity"
+            android:name=".MapsActivity"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.strukovnasamobor.samobornt.StartScreenActivity"
+            android:name=".StartScreenActivity"
             android:label="@string/title_activity_maps">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

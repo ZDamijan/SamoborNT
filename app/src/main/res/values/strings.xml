@@ -13,4 +13,5 @@
     <string name="save">Save</string>
     <string name="close">Close</string>
     <string name="augmented_reality">Augmented Reality</string>
+    <string name="game_view_content_description" translatable="false">Game view</string>
 </resources>
