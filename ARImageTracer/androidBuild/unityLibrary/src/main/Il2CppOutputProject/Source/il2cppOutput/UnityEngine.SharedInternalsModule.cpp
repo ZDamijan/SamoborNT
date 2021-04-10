@@ -2292,6 +2292,18 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void NativeClassAttribute__ctor_m09D17E5BEBF8
 		return;
 	}
 }
+// System.Void UnityEngine.NativeClassAttribute::.ctor(System.String,System.String)
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void NativeClassAttribute__ctor_mE1C1EED35F711F3880A51B29C1A019CC46991CD4 (NativeClassAttribute_tBE8213A7A54307A9A771B70B38CB946BED926B0D * __this, String_t* ___qualifiedCppName0, String_t* ___declaration1, const RuntimeMethod* method)
+{
+	{
+		Attribute__ctor_m5C1862A7DFC2C25A4797A8C5F681FBB5CB53ECE1(__this, /*hidden argument*/NULL);
+		String_t* L_0 = ___qualifiedCppName0;
+		NativeClassAttribute_set_QualifiedNativeName_mFC347A2EBD44977DFEA72A9B37C0ADECF1150262_inline(__this, L_0, /*hidden argument*/NULL);
+		String_t* L_1 = ___declaration1;
+		NativeClassAttribute_set_Declaration_mF6FF1EB7079637160DA617FC4318EAD490409A3A_inline(__this, L_1, /*hidden argument*/NULL);
+		return;
+	}
+}
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif

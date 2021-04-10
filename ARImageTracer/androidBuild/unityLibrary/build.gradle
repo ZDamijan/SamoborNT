@@ -14,7 +14,6 @@ dependencies {
 android {
     compileSdkVersion 29
     buildToolsVersion '28.0.3'
-    ndkVersion "22.1.7171670"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
