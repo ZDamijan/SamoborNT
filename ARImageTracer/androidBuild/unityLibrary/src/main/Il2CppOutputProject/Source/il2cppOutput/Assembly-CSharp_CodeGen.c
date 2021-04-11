@@ -12,26 +12,30 @@
 
 
 
-// 0x00000001 System.Void SupportBackScript::FixedUpdate()
-extern void SupportBackScript_FixedUpdate_mFB74D3297E0A4D6773FA010DF9E108033D20DBE7 (void);
-// 0x00000002 System.Void SupportBackScript::.ctor()
-extern void SupportBackScript__ctor_m2F421F865BD4AD2F7DF75CEF84FFA9DBB211BD10 (void);
-static Il2CppMethodPointer s_methodPointers[2] = 
+// 0x00000001 System.Void InteractionScript::Start()
+extern void InteractionScript_Start_m3882D651FA6F79FBFA583FBF66D45DED229D1ABB (void);
+// 0x00000002 System.Void InteractionScript::Update()
+extern void InteractionScript_Update_mDF788FC20E7EBE39BCA7D4F32D436E1BA57138CE (void);
+// 0x00000003 System.Void InteractionScript::.ctor()
+extern void InteractionScript__ctor_mE445863647D96652820C6C105EEADF0DB7B5A071 (void);
+static Il2CppMethodPointer s_methodPointers[3] = 
 {
-	SupportBackScript_FixedUpdate_mFB74D3297E0A4D6773FA010DF9E108033D20DBE7,
-	SupportBackScript__ctor_m2F421F865BD4AD2F7DF75CEF84FFA9DBB211BD10,
+	InteractionScript_Start_m3882D651FA6F79FBFA583FBF66D45DED229D1ABB,
+	InteractionScript_Update_mDF788FC20E7EBE39BCA7D4F32D436E1BA57138CE,
+	InteractionScript__ctor_mE445863647D96652820C6C105EEADF0DB7B5A071,
 };
-static const int32_t s_InvokerIndices[2] = 
+static const int32_t s_InvokerIndices[3] = 
 {
-	1897,
-	1897,
+	2140,
+	2140,
+	2140,
 };
 extern const CustomAttributesCacheGenerator g_AssemblyU2DCSharp_AttributeGenerators[];
 IL2CPP_EXTERN_C const Il2CppCodeGenModule g_AssemblyU2DCSharp_CodeGenModule;
 const Il2CppCodeGenModule g_AssemblyU2DCSharp_CodeGenModule = 
 {
 	"Assembly-CSharp.dll",
-	2,
+	3,
 	s_methodPointers,
 	0,
 	NULL,

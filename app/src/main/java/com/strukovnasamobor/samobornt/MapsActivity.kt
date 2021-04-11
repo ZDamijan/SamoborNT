@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.res.Configuration
 import android.graphics.Color
 import android.net.Uri
@@ -25,6 +27,7 @@ import com.google.maps.android.data.kml.KmlLineString
 import com.google.maps.android.data.kml.KmlPoint
 import com.strukovnasamobor.samobornt.api.startActivity
 import com.strukovnasamobor.samobornt.services.*
+import com.unity3d.player.UnityPlayerActivity
 import java.util.*
 import kotlin.collections.ArrayList
 

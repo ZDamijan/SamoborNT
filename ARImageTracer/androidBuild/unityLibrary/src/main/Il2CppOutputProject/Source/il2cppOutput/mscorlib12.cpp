@@ -8910,6 +8910,8 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void StringBuilder_ExpandByABlock_m30CEE07683
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR StringBuilder_t * StringBuilder_Append_m7D5B3033AE7D343BFCB2F762A82A62F512ECC16F (StringBuilder_t * __this, Il2CppChar* ___value0, int32_t ___valueCount1, const RuntimeMethod* method);
 // System.Void System.Text.StringBuilder::AppendHelper(System.String)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void StringBuilder_AppendHelper_mAAD57FC10AA9BBF17BA2ACF03B7742F2B978A8C5 (StringBuilder_t * __this, String_t* ___value0, const RuntimeMethod* method);
+// System.String System.Environment::get_NewLine()
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR String_t* Environment_get_NewLine_mD145C8EE917C986BAA7C5243DEFAF4D333C521B4 (const RuntimeMethod* method);
 // System.Void System.Text.StringBuilder::MakeRoom(System.Int32,System.Int32,System.Text.StringBuilder&,System.Int32&,System.Boolean)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void StringBuilder_MakeRoom_m7038AA71C53BFD09E8B12DBA1F5163060E3E6157 (StringBuilder_t * __this, int32_t ___index0, int32_t ___count1, StringBuilder_t ** ___chunk2, int32_t* ___indexInChunk3, bool ___doneMoveFollowingChars4, const RuntimeMethod* method);
 // System.Void System.Text.StringBuilder::ReplaceInPlaceAtChunk(System.Text.StringBuilder&,System.Int32&,System.Char*,System.Int32)
@@ -17079,6 +17081,18 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t String_LastIndexOfAny_m84EB34C7448EB6
 		return L_3;
 	}
 }
+// System.Int32 System.String::LastIndexOfAny(System.Char[],System.Int32)
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t String_LastIndexOfAny_mD26613D8310B76952AE97E4F4AE5B3A118AD0219 (String_t* __this, CharU5BU5D_t7B7FC5BC8091AA3B9CB0B29CDD80B5EE9254AA34* ___anyOf0, int32_t ___startIndex1, const RuntimeMethod* method)
+{
+	{
+		CharU5BU5D_t7B7FC5BC8091AA3B9CB0B29CDD80B5EE9254AA34* L_0 = ___anyOf0;
+		int32_t L_1 = ___startIndex1;
+		int32_t L_2 = ___startIndex1;
+		int32_t L_3;
+		L_3 = String_LastIndexOfAny_m8D3CE5D38D85B77019CDEB4E6BFAC45A6EE200EF(__this, L_0, L_1, ((int32_t)il2cpp_codegen_add((int32_t)L_2, (int32_t)1)), /*hidden argument*/NULL);
+		return L_3;
+	}
+}
 // System.Int32 System.String::LastIndexOf(System.String,System.StringComparison)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t String_LastIndexOf_m010D788B0081D6BB2EF5E0D2D60486A0668872C5 (String_t* __this, String_t* ___value0, int32_t ___comparisonType1, const RuntimeMethod* method)
 {
@@ -25047,6 +25061,31 @@ IL_0089:
 		L_27 = StringBuilder_Append_m7D5B3033AE7D343BFCB2F762A82A62F512ECC16F(__this, (Il2CppChar*)(Il2CppChar*)((Il2CppChar*)il2cpp_codegen_add((intptr_t)L_24, (intptr_t)((intptr_t)il2cpp_codegen_multiply((intptr_t)((intptr_t)L_25), (int32_t)2)))), L_26, /*hidden argument*/NULL);
 		V_1 = (String_t*)NULL;
 		return __this;
+	}
+}
+// System.Text.StringBuilder System.Text.StringBuilder::AppendLine()
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR StringBuilder_t * StringBuilder_AppendLine_mB5790BC98389118626505708AE683AE9257B91B2 (StringBuilder_t * __this, const RuntimeMethod* method)
+{
+	{
+		String_t* L_0;
+		L_0 = Environment_get_NewLine_mD145C8EE917C986BAA7C5243DEFAF4D333C521B4(/*hidden argument*/NULL);
+		StringBuilder_t * L_1;
+		L_1 = StringBuilder_Append_mD02AB0C74C6F55E3E330818C77EC147E22096FB1(__this, L_0, /*hidden argument*/NULL);
+		return L_1;
+	}
+}
+// System.Text.StringBuilder System.Text.StringBuilder::AppendLine(System.String)
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR StringBuilder_t * StringBuilder_AppendLine_m4FBF9761747825683B04B18842DF906473EEF7C8 (StringBuilder_t * __this, String_t* ___value0, const RuntimeMethod* method)
+{
+	{
+		String_t* L_0 = ___value0;
+		StringBuilder_t * L_1;
+		L_1 = StringBuilder_Append_mD02AB0C74C6F55E3E330818C77EC147E22096FB1(__this, L_0, /*hidden argument*/NULL);
+		String_t* L_2;
+		L_2 = Environment_get_NewLine_mD145C8EE917C986BAA7C5243DEFAF4D333C521B4(/*hidden argument*/NULL);
+		StringBuilder_t * L_3;
+		L_3 = StringBuilder_Append_mD02AB0C74C6F55E3E330818C77EC147E22096FB1(__this, L_2, /*hidden argument*/NULL);
+		return L_3;
 	}
 }
 // System.Text.StringBuilder System.Text.StringBuilder::Insert(System.Int32,System.String,System.Int32)
