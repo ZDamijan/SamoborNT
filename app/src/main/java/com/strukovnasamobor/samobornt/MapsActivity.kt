@@ -2,17 +2,23 @@ package com.strukovnasamobor.samobornt
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.app.PendingIntent
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.google.android.gms.location.Geofence
+import com.google.android.gms.location.GeofencingClient
+import com.google.android.gms.location.GeofencingRequest
 import com.google.android.libraries.maps.CameraUpdateFactory
 import com.google.android.libraries.maps.GoogleMap
 import com.google.android.libraries.maps.OnMapReadyCallback
@@ -27,10 +33,11 @@ import com.google.maps.android.data.kml.KmlLineString
 import com.google.maps.android.data.kml.KmlPoint
 import com.strukovnasamobor.samobornt.api.startActivity
 import com.strukovnasamobor.samobornt.services.*
-import com.unity3d.player.UnityPlayerActivity
 import java.util.*
 import kotlin.collections.ArrayList
 
+const val GEOFENCE_RADIUS = 200
+const val GEOFENCE_LOCATION_REQUEST_CODE = 12345
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var map: GoogleMap
@@ -48,7 +55,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 when (item.itemId) {
                     R.id.menu_changeLanguage -> {
                         val dialog = Dialog(this)
-                        @Suppress("DEPRECATION") val currentLang = resources.configuration.locale.language
+                        @Suppress("DEPRECATION") val currentLang =
+                            resources.configuration.locale.language
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
                         dialog.setCancelable(true)
                         dialog.setCanceledOnTouchOutside(true)
@@ -79,7 +87,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         Toast.makeText(this, "See All Markers", Toast.LENGTH_SHORT).show()
                         true
                     }
-                    R.id.menu_augmentedReality-> {
+                    R.id.menu_augmentedReality -> {
                         Toast.makeText(this, "Augmented Reality", Toast.LENGTH_SHORT).show()
                         startActivity<UnityHolderActivity>()
                         true
@@ -93,10 +101,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         true
                     }
                     R.id.virtual_tour -> {
-                        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.samobor.hr/virtualna-tura/"))
+                        val browserIntent = Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("https://www.samobor.hr/virtualna-tura/")
+                        )
                         try {
                             startActivity(browserIntent)
-                        } catch (ex: ActivityNotFoundException) {}
+                        } catch (ex: ActivityNotFoundException) {
+                        }
                         true
                     }
                     else -> false
@@ -197,8 +209,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                     .title(placemark.getProperty("name"))
                                     .snippet(placemark.getProperty("description"))
                             )
-                        }
-                        else if (geometry.geometryType.equals("LineString")) {
+                        } else if (geometry.geometryType.equals("LineString")) {
                             val kmlLineString: KmlLineString = geometry as KmlLineString
                             val coordinates: ArrayList<LatLng> = kmlLineString.geometryObject
                             for (latLng in coordinates) {
@@ -287,4 +298,48 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             baseContext.resources.displayMetrics
         )
     }
+
+    private fun createGeofence(location: LatLng, key: String, geofencingClient: GeofencingClient) {
+        val geofence = Geofence.Builder()
+            .setRequestId(key)
+            .setCircularRegion(location.latitude, location.longitude, GEOFENCE_RADIUS.toFloat())
+            .setExpirationDuration(Geofence.NEVER_EXPIRE)
+            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
+            .build()
+
+        val geofenceRequest = GeofencingRequest.Builder()
+            .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
+            .addGeofence(geofence)
+            .build()
+
+        val intent = Intent(this, GeofenceReceiver::class.java)
+            .putExtra("key", key)
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            applicationContext,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            if (ContextCompat.checkSelfPermission(
+                    applicationContext,
+                    android.Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(android.Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+                    GEOFENCE_LOCATION_REQUEST_CODE
+                )
+            } else {
+                geofencingClient.addGeofences(geofenceRequest, pendingIntent)
+            }
+        } else {
+            geofencingClient.addGeofences(geofenceRequest, pendingIntent)
+        }
+    }
+
+
 }

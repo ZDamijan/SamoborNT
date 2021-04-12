@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.unity3d.player.UnityPlayerActivity
 
@@ -16,6 +15,7 @@ class UnityHolderActivity : AppCompatActivity() {
             //Log.e("unityPlayer", "Unity called Android function 'Call'.")
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_unity_holder)

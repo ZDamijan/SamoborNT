@@ -14,12 +14,14 @@
         android:flipInterval="4000"
         android:inAnimation="@android:anim/fade_in">
         android:outAnimation="@android:anim/fade_out">
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
             android:scaleType="centerCrop"
             android:src="@drawable/town_main_square" />
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

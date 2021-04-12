@@ -8,9 +8,9 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.strukovnasamobor.samobornt.api.startActivity
 import com.strukovnasamobor.samobornt.services.DBConnection
 import com.strukovnasamobor.samobornt.services.requestPermission
-import com.strukovnasamobor.samobornt.api.startActivity
 
 
 private lateinit var btnExplore: Button
