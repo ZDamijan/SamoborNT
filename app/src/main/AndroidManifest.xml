@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SamoborNT"
+        android:taskAffinity="com.strukovnasamobor.samobornt"
         android:extractNativeLibs="true">
 
         <meta-data
@@ -32,7 +33,6 @@
         </activity>
         <activity
             android:name=".UnityHolderActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait">
         </activity>
     </application>

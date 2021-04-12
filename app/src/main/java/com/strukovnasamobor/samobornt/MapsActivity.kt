@@ -1,11 +1,10 @@
 package com.strukovnasamobor.samobornt
 
+import android.R.id.message
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.res.Configuration
 import android.graphics.Color
 import android.net.Uri
@@ -27,7 +26,6 @@ import com.google.maps.android.data.kml.KmlLineString
 import com.google.maps.android.data.kml.KmlPoint
 import com.strukovnasamobor.samobornt.api.startActivity
 import com.strukovnasamobor.samobornt.services.*
-import com.unity3d.player.UnityPlayerActivity
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -54,7 +52,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         dialog.setCanceledOnTouchOutside(true)
                         dialog.setContentView(R.layout.language_dialog)
                         val languageRadioGroup: RadioGroup =
-                            dialog.findViewById(R.id.rdg_languages) as RadioGroup
+                                dialog.findViewById(R.id.rdg_languages) as RadioGroup
                         languageRadioGroup.check(R.id.rdb_en)
                         for (i in 0..languageRadioGroup.childCount) {
                             if (languageRadioGroup.getChildAt(i).tag == currentLang) {
@@ -67,7 +65,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         }
                         dialog.findViewById<Button>(R.id.btn_save).setOnClickListener {
                             val checkedRadioButton: RadioButton = dialog.findViewById(
-                                languageRadioGroup.checkedRadioButtonId
+                                    languageRadioGroup.checkedRadioButtonId
                             ) as RadioButton
                             changeLanguage(checkedRadioButton.tag.toString())
                             dialog.cancel()
@@ -79,16 +77,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         Toast.makeText(this, "See All Markers", Toast.LENGTH_SHORT).show()
                         true
                     }
-                    R.id.menu_augmentedReality-> {
+                    R.id.menu_augmentedReality1 -> {
                         Toast.makeText(this, "Augmented Reality", Toast.LENGTH_SHORT).show()
-                        startActivity<UnityHolderActivity>()
+                        val intent = Intent(this, UnityHolderActivity::class.java)
+                        intent.putExtra("sceneName", "BasicLightEstimation")
+                        startActivity(intent)
+                        true
+                    }
+                    R.id.menu_augmentedReality2 -> {
+                        Toast.makeText(this, "Augmented Reality", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, UnityHolderActivity::class.java)
+                        intent.putExtra("sceneName", "ImageTracer")
+                        startActivity(intent)
                         true
                     }
                     R.id.menu_about -> {
                         Toast.makeText(
-                            this,
-                            "Created by: Ekonomska, turistička i ugostiteljska škola, Samobor\nPartner: Srednja strukovnasamobor škola, Samobor\nSupported by: Ministry of Tourism and Sports\nVersion: 2021 1.0",
-                            Toast.LENGTH_LONG
+                                this,
+                                "Created by: Ekonomska, turistička i ugostiteljska škola, Samobor\nPartner: Srednja strukovnasamobor škola, Samobor\nSupported by: Ministry of Tourism and Sports\nVersion: 2021 1.0",
+                                Toast.LENGTH_LONG
                         ).show()
                         true
                     }
@@ -96,7 +103,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.samobor.hr/virtualna-tura/"))
                         try {
                             startActivity(browserIntent)
-                        } catch (ex: ActivityNotFoundException) {}
+                        } catch (ex: ActivityNotFoundException) {
+                        }
                         true
                     }
                     else -> false
@@ -155,14 +163,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val polygonManager = PolygonManager(map)
         val polylineManager = PolylineManager(map)
         val kmlLayer = KmlLayer(
-            map,
-            R.raw.route1,
-            this,
-            markerManager,
-            polygonManager,
-            polylineManager,
-            groundOverlayManager,
-            null
+                map,
+                R.raw.route1,
+                this,
+                markerManager,
+                polygonManager,
+                polylineManager,
+                groundOverlayManager,
+                null
         )
         kmlLayer.addLayerToMap()
 
@@ -186,16 +194,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         if (geometry.geometryType.equals("Point")) {
                             val point: KmlPoint = placemark.geometry as KmlPoint
                             markerCollection.addMarker(
-                                MarkerOptions()
-                                    .position(
-                                        LatLng(
-                                            point.geometryObject.latitude,
-                                            point.geometryObject.longitude
-                                        )
-                                    )
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_custom))
-                                    .title(placemark.getProperty("name"))
-                                    .snippet(placemark.getProperty("description"))
+                                    MarkerOptions()
+                                            .position(
+                                                    LatLng(
+                                                            point.geometryObject.latitude,
+                                                            point.geometryObject.longitude
+                                                    )
+                                            )
+                                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_custom))
+                                            .title(placemark.getProperty("name"))
+                                            .snippet(placemark.getProperty("description"))
                             )
                         }
                         else if (geometry.geometryType.equals("LineString")) {
@@ -210,52 +218,52 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
         polylineCollection.addPolyline(
-            PolylineOptions()
-                .color(Color.RED)
-                .jointType(JointType.ROUND)
-                .startCap(RoundCap())
-                .startCap(RoundCap())
-                .pattern(
-                    listOf(
-                        Dot(), Gap(20F), Dash(30F), Gap(20F)
-                    )
-                )
-                .geodesic(true)
-                .addAll(pathPoints)
+                PolylineOptions()
+                        .color(Color.RED)
+                        .jointType(JointType.ROUND)
+                        .startCap(RoundCap())
+                        .startCap(RoundCap())
+                        .pattern(
+                                listOf(
+                                        Dot(), Gap(20F), Dash(30F), Gap(20F)
+                                )
+                        )
+                        .geodesic(true)
+                        .addAll(pathPoints)
         )
 
         kmlLayer.removeLayerFromMap()
 
         map.setOnMapClickListener { latLng ->
             Toast.makeText(
-                this,
-                "onMapClick:\n" + latLng.latitude + "\n" + latLng.longitude,
-                Toast.LENGTH_SHORT
+                    this,
+                    "onMapClick:\n" + latLng.latitude + "\n" + latLng.longitude,
+                    Toast.LENGTH_SHORT
             ).show()
         }
         markerCollection.setOnMarkerClickListener { marker: Marker ->
             Toast.makeText(
-                this,
-                "OnMarkerClick: ${marker.title}",
-                Toast.LENGTH_SHORT
+                    this,
+                    "OnMarkerClick: ${marker.title}",
+                    Toast.LENGTH_SHORT
             ).show()
             marker.showInfoWindow()
             true
         }
         markerCollection.setOnInfoWindowClickListener { marker: Marker ->
             Toast.makeText(
-                this,
-                "OnInfoWindowClick: ${marker.title}",
-                Toast.LENGTH_SHORT
+                    this,
+                    "OnInfoWindowClick: ${marker.title}",
+                    Toast.LENGTH_SHORT
             ).show()
         }
         setupMap()
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         showCurrentLocation()
@@ -283,8 +291,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         config.setLocale(locale)
         @Suppress("DEPRECATION")
         baseContext.resources.updateConfiguration(
-            config,
-            baseContext.resources.displayMetrics
+                config,
+                baseContext.resources.displayMetrics
         )
     }
 }

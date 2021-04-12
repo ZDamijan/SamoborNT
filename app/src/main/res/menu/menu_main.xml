@@ -5,7 +5,11 @@
         android:title="@string/sights"
         />
     <item
-        android:id="@+id/menu_augmentedReality"
+        android:id="@+id/menu_augmentedReality1"
+        android:title="@string/augmented_reality"
+        />
+    <item
+        android:id="@+id/menu_augmentedReality2"
         android:title="@string/augmented_reality"
         />
     <item
