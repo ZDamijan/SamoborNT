@@ -1,0 +1,131 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:1:1-21:12
+INJECTED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:1:1-21:12
+INJECTED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:1:1-21:12
+	package
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:1:70-98
+		INJECTED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml
+	xmlns:tools
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:1:99-145
+	xmlns:android
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:1:11-69
+application
+ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:2:3-13:17
+activity#com.unity3d.player.UnityPlayerActivity
+ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:3:5-6:16
+	android:screenOrientation
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:3:354-390
+	android:process
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:3:322-353
+	android:launchMode
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:3:286-321
+	android:hardwareAccelerated
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:3:251-285
+	android:configChanges
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:3:69-250
+	android:theme
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:3:433-474
+	android:taskAffinity
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:3:391-432
+	android:name
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:3:15-68
+meta-data#unityplayer.UnityActivity
+ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:4:7-82
+	android:value
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:4:59-79
+	android:name
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:4:18-58
+meta-data#android.notch_support
+ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:5:7-78
+	android:value
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:5:55-75
+	android:name
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:5:18-54
+meta-data#unity.splash-mode
+ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:7:5-69
+	android:value
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:7:49-66
+	android:name
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:7:16-48
+meta-data#unity.splash-enable
+ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:8:5-74
+	android:value
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:8:51-71
+	android:name
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:8:16-50
+meta-data#notch.config
+ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:9:5-81
+	android:value
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:9:44-78
+	android:name
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:9:16-43
+meta-data#unity.build-id
+ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:10:5-101
+	android:value
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:10:46-98
+	android:name
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:10:16-45
+meta-data#unityplayer.SkipPermissionsDialog
+ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:11:5-88
+	android:value
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:11:65-85
+	android:name
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:11:16-64
+meta-data#com.google.ar.core
+ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:12:5-77
+	android:value
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:12:50-74
+	android:name
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:12:16-49
+uses-feature#0x00030000
+ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:14:3-52
+	android:glEsVersion
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:14:17-49
+uses-permission#android.permission.INTERNET
+ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:15:3-65
+	android:name
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:15:20-62
+uses-feature#android.hardware.touchscreen
+ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:16:3-88
+	android:required
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:16:61-85
+	android:name
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:16:17-60
+uses-feature#android.hardware.touchscreen.multitouch
+ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:17:3-99
+	android:required
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:17:72-96
+	android:name
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:17:17-71
+uses-feature#android.hardware.touchscreen.multitouch.distinct
+ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:18:3-108
+	android:required
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:18:81-105
+	android:name
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:18:17-80
+uses-permission#android.permission.CAMERA
+ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:19:3-63
+	android:name
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:19:20-60
+uses-feature#android.hardware.camera.ar
+ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:20:3-85
+	android:required
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:20:59-82
+	android:name
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml:20:17-58
+uses-sdk
+INJECTED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml
+INJECTED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml
+INJECTED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml
+INJECTED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml
+		ADDED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Korisnik\Documents\AndroidProjects\SamoborNT\ARImageTracer\androidBuild\unityLibrary\src\main\AndroidManifest.xml

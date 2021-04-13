@@ -18,7 +18,7 @@ out/
 
 # Gradle files
 .gradle/
-build/
+/build/
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -85,4 +85,6 @@ lint/tmp/
 .idea/codeStyles/codeStyleConfig.xml
 ARImageTracer/androidBuild/unityLibrary/symbols/arm64-v8a/libil2cpp.so
 ARImageTracer/androidBuild/unityLibrary/symbols/armeabi-v7a/libil2cpp.so
-ARImageTracer/androidBuild/unityLibrary/symbols/armeabi-v7a/libil2cpp.so
+ARImageTracer/androidBuild/unityLibrary/build/il2cpp_arm64-v8a_Release/il2cpp_cache/linkresult_B5036625E3B7215B03F315DFE37D8705/libil2cpp.sym.so
+ARImageTracer/androidBuild/unityLibrary/build/il2cpp_arm64-v8a_Release/il2cpp_cache/linkresult_B5036625E3B7215B03F315DFE37D8705/libil2cpp.so
+ARImageTracer/androidBuild/unityLibrary/build/il2cpp_arm64-v8a_Release/il2cpp_cache/linkresult_B5036625E3B7215B03F315DFE37D8705/libil2cpp.dbg.so

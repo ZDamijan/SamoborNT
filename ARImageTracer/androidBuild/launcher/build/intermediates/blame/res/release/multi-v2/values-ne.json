@@ -1,0 +1,26 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\Korisnik\\Documents\\AndroidProjects\\SamoborNT\\ARImageTracer\\androidBuild\\launcher\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-ne\\values-ne.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Korisnik\\.gradle\\caches\\transforms-2\\files-2.1\\3d013d9db422af7f44d5b698a270da6a\\arcore_client\\res\\values-ne\\values.xml",
+                    "from": {
+                        "startLines": "4,5,6,7,8",
+                        "startColumns": "0,0,0,0,0",
+                        "startOffsets": "190,245,303,414,533",
+                        "endColumns": "54,57,110,118,78",
+                        "endOffsets": "244,302,413,532,611"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6",
+                        "startColumns": "4,4,4,4,4",
+                        "startOffsets": "55,114,176,291,414",
+                        "endColumns": "58,61,114,122,82",
+                        "endOffsets": "109,171,286,409,492"
+                    }
+                }
+            ]
+        }
+    ]
+}
