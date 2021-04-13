@@ -4,8 +4,13 @@
         android:id="@+id/menu_seeAllMarkers"
         android:title="@string/sights" />
     <item
-        android:id="@+id/menu_augmentedReality"
-        android:title="@string/augmented_reality" />
+        android:id="@+id/menu_augmentedReality1"
+        android:title="@string/augmented_reality"
+        />
+    <item
+        android:id="@+id/menu_augmentedReality2"
+        android:title="@string/augmented_reality"
+        />
     <item
         android:id="@+id/virtual_tour"
         android:title="@string/virtual_tour" />

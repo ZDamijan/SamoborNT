@@ -85,3 +85,4 @@ lint/tmp/
 .idea/codeStyles/codeStyleConfig.xml
 ARImageTracer/androidBuild/unityLibrary/symbols/arm64-v8a/libil2cpp.so
 ARImageTracer/androidBuild/unityLibrary/symbols/armeabi-v7a/libil2cpp.so
+ARImageTracer/androidBuild/unityLibrary/symbols/armeabi-v7a/libil2cpp.so

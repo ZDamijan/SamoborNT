@@ -28,6 +28,7 @@ IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_System_Xml_CodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_UnityEngine_ARModule_CodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_UnityEngine_AndroidJNIModule_CodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_UnityEngine_AnimationModule_CodeGenModule;
+IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_UnityEngine_AudioModule_CodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_UnityEngine_CodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_UnityEngine_CoreModule_CodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_UnityEngine_GridModule_CodeGenModule;
@@ -53,7 +54,7 @@ IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_Unity_XR_ARSubsystems_CodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_Unity_XR_Management_CodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_mscorlib_CodeGenModule;
 IL2CPP_EXTERN_C const Il2CppCodeGenModule* g_CodeGenModules[];
-const Il2CppCodeGenModule* g_CodeGenModules[34] = 
+const Il2CppCodeGenModule* g_CodeGenModules[35] = 
 {
 	(&g_AssemblyU2DCSharp_CodeGenModule),
 	(&g_Google_XR_ARCoreExtensions_CodeGenModule),
@@ -65,6 +66,7 @@ const Il2CppCodeGenModule* g_CodeGenModules[34] =
 	(&g_UnityEngine_ARModule_CodeGenModule),
 	(&g_UnityEngine_AndroidJNIModule_CodeGenModule),
 	(&g_UnityEngine_AnimationModule_CodeGenModule),
+	(&g_UnityEngine_AudioModule_CodeGenModule),
 	(&g_UnityEngine_CodeGenModule),
 	(&g_UnityEngine_CoreModule_CodeGenModule),
 	(&g_UnityEngine_GridModule_CodeGenModule),
@@ -95,18 +97,18 @@ const Il2CppCodeRegistration g_CodeRegistration =
 {
 	9,
 	g_ReversePInvokeWrapperPointers,
-	10054,
+	10056,
 	g_Il2CppGenericMethodPointers,
 	g_Il2CppGenericAdjustorThunks,
-	3591,
+	3603,
 	g_Il2CppInvokerPointers,
-	445,
+	447,
 	g_UnresolvedVirtualMethodPointers,
-	217,
+	221,
 	g_Il2CppInteropData,
 	0,
 	NULL,
-	34,
+	35,
 	g_CodeGenModules,
 };
 IL2CPP_EXTERN_C_CONST Il2CppMetadataRegistration g_MetadataRegistration;

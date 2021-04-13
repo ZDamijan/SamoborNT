@@ -284,6 +284,8 @@ struct AsyncCallback_tA7921BEF974919C46FF8F9D9867C567B200BB0EA;
 struct BaseEventData_t722C48843CF21B50E06CC0E2E679415E38A7444E;
 // UnityEngine.EventSystems.BaseRaycaster
 struct BaseRaycaster_tBC0FB2CBE6D3D40991EC20F689C43F76AD82A876;
+// UnityEngine.Behaviour
+struct Behaviour_t1A3DDDCF73B4627928FBFE02ED52B7251777DBD9;
 // System.Reflection.Binder
 struct Binder_t2BEE27FD84737D1E79BC47FD67F6D3DD2F2DDA30;
 // System.Byte
@@ -409,6 +411,7 @@ IL2CPP_EXTERN_C RuntimeClass* AndroidReflection_tEB6633FD5B7D2816E1AC6C711E11B2D
 IL2CPP_EXTERN_C RuntimeClass* ArgumentException_t505FA8C11E883F2D96C797AD9D396490794DEE00_il2cpp_TypeInfo_var;
 IL2CPP_EXTERN_C RuntimeClass* ArgumentNullException_tFB5C4621957BC53A7D1B4FDD5C38B4D6E15DB8FB_il2cpp_TypeInfo_var;
 IL2CPP_EXTERN_C RuntimeClass* ArgumentOutOfRangeException_tFAF23713820951D4A09ABBFE5CC091E445A6F3D8_il2cpp_TypeInfo_var;
+IL2CPP_EXTERN_C RuntimeClass* Behaviour_t1A3DDDCF73B4627928FBFE02ED52B7251777DBD9_il2cpp_TypeInfo_var;
 IL2CPP_EXTERN_C RuntimeClass* Debug_tEB68BCBEB8EFD60F8043C67146DC05E7F50F374B_il2cpp_TypeInfo_var;
 IL2CPP_EXTERN_C RuntimeClass* Delegate_t_il2cpp_TypeInfo_var;
 IL2CPP_EXTERN_C RuntimeClass* Exception_t_il2cpp_TypeInfo_var;
@@ -13466,6 +13469,10 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR RuntimeObject * XRReferenceObject_FindEntry_T
 // System.Void System.Action`1<System.IntPtr>::Invoke(!0)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Action_1_Invoke_mEAB37079EB59D19D569529B0C5353085E6B5BFA5_gshared (Action_1_t35A46FAEE6B0A26D311444DF75B6EAFC59EBD914 * __this, intptr_t ___obj0, const RuntimeMethod* method);
 
+// System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool Object_op_Inequality_mE1F187520BD83FB7D86A6D850710C4D42B864E90 (Object_tF2F3778131EFF286AF62B7B013A170F95A91571A * ___x0, Object_tF2F3778131EFF286AF62B7B013A170F95A91571A * ___y1, const RuntimeMethod* method);
+// System.Boolean UnityEngine.Behaviour::get_isActiveAndEnabled()
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool Behaviour_get_isActiveAndEnabled_mDD843C0271D492C1E08E0F8DEE8B6F1CFA951BFA (Behaviour_t1A3DDDCF73B4627928FBFE02ED52B7251777DBD9 * __this, const RuntimeMethod* method);
 // System.Type System.Object::GetType()
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Type_t * Object_GetType_m571FE8360C10B98C23AAF1F066D92C08CC94F45B (RuntimeObject * __this, const RuntimeMethod* method);
 // System.Type System.Type::GetTypeFromHandle(System.RuntimeTypeHandle)
@@ -13879,6 +13886,61 @@ inline void Action_1_Invoke_mEAB37079EB59D19D569529B0C5353085E6B5BFA5 (Action_1_
 }
 // System.Void System.Runtime.InteropServices.GCHandle::Free()
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void GCHandle_Free_mB4E9415544FC9F0075C02AB17E270E49AF006025 (GCHandle_t757890BC4BBBEDE5A623A3C110013EDD24613603 * __this, const RuntimeMethod* method);
+// System.Boolean UnityEngine.EventSystems.ExecuteEvents::ShouldSendToComponent<System.Object>(UnityEngine.Component)
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool ExecuteEvents_ShouldSendToComponent_TisRuntimeObject_mC2174179E148BA911F59C992606CE53443EA7128_gshared (Component_t62FBC8D2420DA4BE9037AFE430740F6B3EECA684 * ___component0, const RuntimeMethod* method)
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Behaviour_t1A3DDDCF73B4627928FBFE02ED52B7251777DBD9_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Object_tF2F3778131EFF286AF62B7B013A170F95A91571A_il2cpp_TypeInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	Behaviour_t1A3DDDCF73B4627928FBFE02ED52B7251777DBD9 * V_0 = NULL;
+	{
+		// var valid = component is T;
+		Component_t62FBC8D2420DA4BE9037AFE430740F6B3EECA684 * L_0 = ___component0;
+		// if (!valid)
+		if (((!(((RuntimeObject*)(RuntimeObject *)((RuntimeObject *)IsInst((RuntimeObject*)L_0, IL2CPP_RGCTX_DATA(method->rgctx_data, 0)))) <= ((RuntimeObject*)(RuntimeObject *)NULL)))? 1 : 0))
+		{
+			goto IL_000d;
+		}
+	}
+	{
+		// return false;
+		return (bool)0;
+	}
+
+IL_000d:
+	{
+		// var behaviour = component as Behaviour;
+		Component_t62FBC8D2420DA4BE9037AFE430740F6B3EECA684 * L_1 = ___component0;
+		V_0 = (Behaviour_t1A3DDDCF73B4627928FBFE02ED52B7251777DBD9 *)((Behaviour_t1A3DDDCF73B4627928FBFE02ED52B7251777DBD9 *)IsInst((RuntimeObject*)L_1, Behaviour_t1A3DDDCF73B4627928FBFE02ED52B7251777DBD9_il2cpp_TypeInfo_var));
+		// if (behaviour != null)
+		Behaviour_t1A3DDDCF73B4627928FBFE02ED52B7251777DBD9 * L_2 = V_0;
+		IL2CPP_RUNTIME_CLASS_INIT(Object_tF2F3778131EFF286AF62B7B013A170F95A91571A_il2cpp_TypeInfo_var);
+		bool L_3;
+		L_3 = Object_op_Inequality_mE1F187520BD83FB7D86A6D850710C4D42B864E90((Object_tF2F3778131EFF286AF62B7B013A170F95A91571A *)L_2, (Object_tF2F3778131EFF286AF62B7B013A170F95A91571A *)NULL, /*hidden argument*/NULL);
+		if (!L_3)
+		{
+			goto IL_0024;
+		}
+	}
+	{
+		// return behaviour.isActiveAndEnabled;
+		Behaviour_t1A3DDDCF73B4627928FBFE02ED52B7251777DBD9 * L_4 = V_0;
+		NullCheck((Behaviour_t1A3DDDCF73B4627928FBFE02ED52B7251777DBD9 *)L_4);
+		bool L_5;
+		L_5 = Behaviour_get_isActiveAndEnabled_mDD843C0271D492C1E08E0F8DEE8B6F1CFA951BFA((Behaviour_t1A3DDDCF73B4627928FBFE02ED52B7251777DBD9 *)L_4, /*hidden argument*/NULL);
+		return (bool)L_5;
+	}
+
+IL_0024:
+	{
+		// return true;
+		return (bool)1;
+	}
+}
 // T UnityEngine.EventSystems.ExecuteEvents::ValidateEventData<System.Object>(UnityEngine.EventSystems.BaseEventData)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR RuntimeObject * ExecuteEvents_ValidateEventData_TisRuntimeObject_m5B0E68F2BA8094CE8F20407CBC51DFE2CB4A429F_gshared (BaseEventData_t722C48843CF21B50E06CC0E2E679415E38A7444E * ___data0, const RuntimeMethod* method)
 {
