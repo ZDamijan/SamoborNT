@@ -11,6 +11,7 @@
 
 # Generated files
 bin/
+!ARImageTracer/androidBuild/unityLibrary/src/main/assets/bin/
 gen/
 out/
 #  Uncomment the following line in case you need and you don't have the release build type files in your app
@@ -80,9 +81,11 @@ lint/intermediates/
 lint/generated/
 lint/outputs/
 lint/tmp/
+
 # lint/reports/
 .idea/codeStyles/Project.xml
 .idea/codeStyles/codeStyleConfig.xml
-ARImageTracer/androidBuild/unityLibrary/symbols/arm64-v8a/libil2cpp.so
-ARImageTracer/androidBuild/unityLibrary/symbols/armeabi-v7a/libil2cpp.so
-ARImageTracer/androidBuild/unityLibrary/symbols/armeabi-v7a/libil2cpp.so
+
+# symbols
+symbols/
+
