@@ -88,7 +88,6 @@ lint/tmp/
 
 # symbols
 symbols/
-
 ARImageTracer/androidBuild/unityLibrary/src/main/Il2CppOutputProject/Source/il2cppOutput/
 ARImageTracer/androidBuild/unityLibrary/src/main/jniLibs/arm64-v8a/libil2cpp.so
 ARImageTracer/androidBuild/unityLibrary/src/main/jniLibs/armeabi-v7a/libil2cpp.so
