@@ -1,0 +1,7 @@
+#include "il2cpp-config.h"
+#include "C:\Projects\AndroidProjects\SamoborNT\samobornt-ar\androidBuild\unityLibrary\src\main\Il2CppOutputProject\IL2CPP\libil2cpp\mono\MonoPosixHelper.cpp"
+#include "C:\Projects\AndroidProjects\SamoborNT\samobornt-ar\androidBuild\unityLibrary\src\main\Il2CppOutputProject\IL2CPP\libil2cpp\mono\ThreadPool\ThreadPoolMonitorThread.cpp"
+#include "C:\Projects\AndroidProjects\SamoborNT\samobornt-ar\androidBuild\unityLibrary\src\main\Il2CppOutputProject\IL2CPP\libil2cpp\mono\ThreadPool\ThreadPoolWorkerThread.cpp"
+#include "C:\Projects\AndroidProjects\SamoborNT\samobornt-ar\androidBuild\unityLibrary\src\main\Il2CppOutputProject\IL2CPP\libil2cpp\mono\ThreadPool\threadpool-ms-io-poll.cpp"
+#include "C:\Projects\AndroidProjects\SamoborNT\samobornt-ar\androidBuild\unityLibrary\src\main\Il2CppOutputProject\IL2CPP\libil2cpp\mono\ThreadPool\threadpool-ms-io.cpp"
+#include "C:\Projects\AndroidProjects\SamoborNT\samobornt-ar\androidBuild\unityLibrary\src\main\Il2CppOutputProject\IL2CPP\libil2cpp\mono\ThreadPool\threadpool-ms.cpp"
