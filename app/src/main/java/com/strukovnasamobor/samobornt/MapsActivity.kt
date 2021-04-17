@@ -77,17 +77,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         Toast.makeText(this, "See All Markers", Toast.LENGTH_SHORT).show()
                         true
                     }
-                    R.id.menu_augmentedReality1 -> {
+                    R.id.menu_augmentedReality -> {
                         Toast.makeText(this, "Augmented Reality", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this, UnityHolderActivity::class.java)
-                        intent.putExtra("sceneName", "BasicLightEstimation")
-                        startActivity(intent)
-                        true
-                    }
-                    R.id.menu_augmentedReality2 -> {
-                        Toast.makeText(this, "Augmented Reality", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this, UnityHolderActivity::class.java)
-                        intent.putExtra("sceneName", "ImageTracer")
+                        intent.putExtra("sceneName", "LauncherScreen")
                         startActivity(intent)
                         true
                     }

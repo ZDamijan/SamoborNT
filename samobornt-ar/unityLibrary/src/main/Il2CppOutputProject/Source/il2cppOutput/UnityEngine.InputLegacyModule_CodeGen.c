@@ -30,8 +30,8 @@ extern void CameraRaycastHelper_RaycastTry_Injected_mFAED8F3DC204691A92849F36D8B
 extern void CameraRaycastHelper_RaycastTry2D_Injected_m1AB3B5B899C17D5D6FC41D8F8CF2BE549F7D9F21 (void);
 // 0x00000009 System.Boolean UnityEngine.Input::GetKeyInt(UnityEngine.KeyCode)
 extern void Input_GetKeyInt_mCBF4A2379EF913E589DFF4AE9C9407D0AC6B4E4D (void);
-// 0x0000000A System.Boolean UnityEngine.Input::GetKeyDownInt(UnityEngine.KeyCode)
-extern void Input_GetKeyDownInt_mEAC027107792507CA7F0B1DFBEA4E6289CDCCCBA (void);
+// 0x0000000A System.Boolean UnityEngine.Input::GetKeyUpInt(UnityEngine.KeyCode)
+extern void Input_GetKeyUpInt_mBF5453011D089E0D585F38D8BC72AB743CE243BE (void);
 // 0x0000000B System.Single UnityEngine.Input::GetAxisRaw(System.String)
 extern void Input_GetAxisRaw_mC07AC23FD8D04A69CDB07C6399C93FFFAEB0FC5B (void);
 // 0x0000000C System.Boolean UnityEngine.Input::GetButtonDown(System.String)
@@ -46,8 +46,8 @@ extern void Input_GetMouseButtonUp_m2BA562F8C4FE8364EEC93970093E776371DF4022 (vo
 extern void Input_GetTouch_m6A2A31482B1A7D018C3AAC188C02F5D14500C81F (void);
 // 0x00000011 System.Boolean UnityEngine.Input::GetKey(UnityEngine.KeyCode)
 extern void Input_GetKey_mFDD450A4C61F2930928B12287FFBD1ACCB71E429 (void);
-// 0x00000012 System.Boolean UnityEngine.Input::GetKeyDown(UnityEngine.KeyCode)
-extern void Input_GetKeyDown_m476116696E71771641BBECBAB1A4C55E69018220 (void);
+// 0x00000012 System.Boolean UnityEngine.Input::GetKeyUp(UnityEngine.KeyCode)
+extern void Input_GetKeyUp_mDE9D56FE11715566D4D54FD96F8E1EF9734D225F (void);
 // 0x00000013 UnityEngine.Vector3 UnityEngine.Input::get_mousePosition()
 extern void Input_get_mousePosition_m79528BC2F30C57054641F709C855130AE586AC0E (void);
 // 0x00000014 UnityEngine.Vector2 UnityEngine.Input::get_mouseScrollDelta()
@@ -103,7 +103,7 @@ static Il2CppMethodPointer s_methodPointers[40] =
 	CameraRaycastHelper_RaycastTry_Injected_mFAED8F3DC204691A92849F36D8BC69CFE68F43E8,
 	CameraRaycastHelper_RaycastTry2D_Injected_m1AB3B5B899C17D5D6FC41D8F8CF2BE549F7D9F21,
 	Input_GetKeyInt_mCBF4A2379EF913E589DFF4AE9C9407D0AC6B4E4D,
-	Input_GetKeyDownInt_mEAC027107792507CA7F0B1DFBEA4E6289CDCCCBA,
+	Input_GetKeyUpInt_mBF5453011D089E0D585F38D8BC72AB743CE243BE,
 	Input_GetAxisRaw_mC07AC23FD8D04A69CDB07C6399C93FFFAEB0FC5B,
 	Input_GetButtonDown_m2001112EBCA3D5C7B0344EF62C896667F7E67DDF,
 	Input_GetMouseButton_m27BF2DDBF38A38787B83A13D3E6F0F88F7C834C1,
@@ -111,7 +111,7 @@ static Il2CppMethodPointer s_methodPointers[40] =
 	Input_GetMouseButtonUp_m2BA562F8C4FE8364EEC93970093E776371DF4022,
 	Input_GetTouch_m6A2A31482B1A7D018C3AAC188C02F5D14500C81F,
 	Input_GetKey_mFDD450A4C61F2930928B12287FFBD1ACCB71E429,
-	Input_GetKeyDown_m476116696E71771641BBECBAB1A4C55E69018220,
+	Input_GetKeyUp_mDE9D56FE11715566D4D54FD96F8E1EF9734D225F,
 	Input_get_mousePosition_m79528BC2F30C57054641F709C855130AE586AC0E,
 	Input_get_mouseScrollDelta_m018B3C74FC710A166684FC8391CAC93D8EC0ADB7,
 	Input_get_imeCompositionMode_m04AD6A8C7FEE55E7C4F70885DB5AF222E9F904E5,
@@ -150,46 +150,46 @@ static Il2CppTokenAdjustorThunkPair s_adjustorThunks[5] =
 };
 static const int32_t s_InvokerIndices[40] = 
 {
-	2535,
-	2586,
-	2535,
-	2535,
-	3042,
-	3042,
-	3029,
-	3029,
-	4069,
-	4069,
-	4092,
-	4072,
-	4069,
-	4069,
-	4069,
-	4099,
-	4069,
-	4069,
-	4180,
-	4179,
-	4158,
-	4125,
-	4164,
-	4179,
-	4135,
-	4173,
-	4158,
-	4173,
-	3812,
-	4116,
-	4116,
-	4116,
-	4116,
-	4182,
-	4125,
-	3818,
-	4182,
-	2134,
-	4083,
-	3704,
+	2118,
+	2164,
+	2118,
+	2118,
+	2550,
+	2550,
+	2536,
+	2536,
+	3514,
+	3514,
+	3537,
+	3517,
+	3514,
+	3514,
+	3514,
+	3544,
+	3514,
+	3514,
+	3622,
+	3621,
+	3602,
+	3569,
+	3607,
+	3621,
+	3579,
+	3615,
+	3602,
+	3615,
+	3267,
+	3561,
+	3561,
+	3561,
+	3561,
+	3624,
+	3569,
+	3273,
+	3624,
+	1803,
+	3528,
+	3160,
 };
 extern const CustomAttributesCacheGenerator g_UnityEngine_InputLegacyModule_AttributeGenerators[];
 IL2CPP_EXTERN_C const Il2CppCodeGenModule g_UnityEngine_InputLegacyModule_CodeGenModule;

@@ -15,7 +15,8 @@ class UnityHolderActivity : AppCompatActivity() {
         val bundle = intent.extras
         val sceneName = bundle!!.getString("sceneName")
         val intent = Intent(this, UnityPlayerActivity::class.java)
-        intent.putExtra("arguments", sceneName)
+        intent.putExtra("sceneName", sceneName)
+        Log.e("UnityPlayerHolder", "Android load Unity scene '" + sceneName + "'.")
         startActivity(intent)
         finish()
     }
@@ -24,7 +25,7 @@ class UnityHolderActivity : AppCompatActivity() {
     companion object {
         @JvmStatic
         fun Call(activity: Activity) {
-            Log.e("unityPlayer", "Unity called Android function 'Call' in Activity '" + activity.toString() + "'.")
+            Log.e("UnityPlayerHolder", "Unity called Android function 'Call' in Activity '" + activity.toString() + "'.")
             val intent = Intent(activity, MapsActivity::class.java)
             intent.flags = FLAG_ACTIVITY_REORDER_TO_FRONT
             activity.startActivity(intent)
