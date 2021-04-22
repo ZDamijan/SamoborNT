@@ -1,6 +1,5 @@
 package com.strukovnasamobor.samobornt
 
-import android.R.id.message
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.app.PendingIntent
@@ -32,7 +31,6 @@ import com.google.maps.android.collections.PolylineManager
 import com.google.maps.android.data.kml.KmlLayer
 import com.google.maps.android.data.kml.KmlLineString
 import com.google.maps.android.data.kml.KmlPoint
-import com.strukovnasamobor.samobornt.api.startActivity
 import com.strukovnasamobor.samobornt.services.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -41,7 +39,9 @@ const val GEOFENCE_RADIUS = 200
 const val GEOFENCE_LOCATION_REQUEST_CODE = 12345
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+
     private lateinit var map: GoogleMap
+    private lateinit var geofencingClient: GeofencingClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,8 +56,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 when (item.itemId) {
                     R.id.menu_changeLanguage -> {
                         val dialog = Dialog(this)
-                        @Suppress("DEPRECATION") val currentLang =
-                            resources.configuration.locale.language
+                        @Suppress("DEPRECATION") val currentLang = resources.configuration.locale.language
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
                         dialog.setCancelable(true)
                         dialog.setCanceledOnTouchOutside(true)
@@ -88,17 +87,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         Toast.makeText(this, "See All Markers", Toast.LENGTH_SHORT).show()
                         true
                     }
-                    R.id.menu_augmentedReality1 -> {
+                    R.id.menu_augmentedReality -> {
                         Toast.makeText(this, "Augmented Reality", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this, UnityHolderActivity::class.java)
-                        intent.putExtra("sceneName", "BasicLightEstimation")
-                        startActivity(intent)
-                        true
-                    }
-                    R.id.menu_augmentedReality2 -> {
-                        Toast.makeText(this, "Augmented Reality", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this, UnityHolderActivity::class.java)
-                        intent.putExtra("sceneName", "ImageTracer")
+                        intent.putExtra("sceneName", "LauncherScreen")
                         startActivity(intent)
                         true
                     }
@@ -111,10 +103,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         true
                     }
                     R.id.virtual_tour -> {
-                        val browserIntent = Intent(
-                            Intent.ACTION_VIEW,
-                            Uri.parse("https://www.samobor.hr/virtualna-tura/")
-                        )
+                        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.samobor.hr/virtualna-tura/"))
                         try {
                             startActivity(browserIntent)
                         } catch (ex: ActivityNotFoundException) {
@@ -219,7 +208,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                             .title(placemark.getProperty("name"))
                                             .snippet(placemark.getProperty("description"))
                             )
-                        } else if (geometry.geometryType.equals("LineString")) {
+                            createGeofence(
+                                LatLng(
+                                    point.geometryObject.latitude,
+                                    point.geometryObject.longitude
+                                ), placemark.getProperty("name"), geofencingClient)
+                        }
+                        else if (geometry.geometryType.equals("LineString")) {
                             val kmlLineString: KmlLineString = geometry as KmlLineString
                             val coordinates: ArrayList<LatLng> = kmlLineString.geometryObject
                             for (latLng in coordinates) {
@@ -350,6 +345,4 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             geofencingClient.addGeofences(geofenceRequest, pendingIntent)
         }
     }
-
-
 }

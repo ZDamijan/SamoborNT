@@ -2,22 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_seeAllMarkers"
-        android:title="@string/sights" />
-    <item
-        android:id="@+id/menu_augmentedReality1"
-        android:title="@string/augmented_reality"
+        android:title="@string/sights"
         />
     <item
-        android:id="@+id/menu_augmentedReality2"
+        android:id="@+id/menu_augmentedReality"
         android:title="@string/augmented_reality"
         />
     <item
         android:id="@+id/virtual_tour"
-        android:title="@string/virtual_tour" />
+        android:title="@string/virtual_tour"
+        />
     <item
         android:id="@+id/menu_changeLanguage"
-        android:title="@string/change_language" />
+        android:title="@string/change_language"
+        />
     <item
         android:id="@+id/menu_about"
-        android:title="@string/about" />
+        android:title="@string/about"
+        />
 </menu>
