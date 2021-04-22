@@ -88,7 +88,6 @@ lint/tmp/
 
 # symbols
 symbols/
-!samobornt-ar/unityLibrary/src/main/Il2CppOutputProject/Source/il2cppOutput/
-!samobornt-ar/unityLibrary/src/main/Il2CppOutputProject/Source/il2cppOutput/IL2CPP/build/*
+samobornt-ar/unityLibrary/src/main/Il2CppOutputProject/Source/il2cppOutput/
 samobornt-ar/unityLibrary/src/main/jniLibs/arm64-v8a/libil2cpp.so
 samobornt-ar/unityLibrary/src/main/jniLibs/armeabi-v7a/libil2cpp.so
