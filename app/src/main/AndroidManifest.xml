@@ -22,6 +22,11 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".cardview"
+            android:noHistory="true"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".StartScreenActivity"
             android:label="@string/title_activity_maps"
             android:launchMode="singleInstance">
