@@ -1,9 +1,11 @@
 package com.strukovnasamobor.samobornt
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.app.PendingIntent
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
@@ -19,6 +21,7 @@ import androidx.core.content.ContextCompat
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingClient
 import com.google.android.gms.location.GeofencingRequest
+import com.google.android.gms.location.LocationServices
 import com.google.android.libraries.maps.CameraUpdateFactory
 import com.google.android.libraries.maps.GoogleMap
 import com.google.android.libraries.maps.OnMapReadyCallback
@@ -35,8 +38,8 @@ import com.strukovnasamobor.samobornt.services.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-const val GEOFENCE_RADIUS = 200
-const val GEOFENCE_LOCATION_REQUEST_CODE = 12345
+const val GEOFENCE_RADIUS = 50
+const val GEOFENCE_LOCATION_REQUEST_CODE = 5
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -48,6 +51,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show()
         setContentView(R.layout.activity_maps)
         setSupportActionBar(findViewById(R.id.toolbar))
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+            if (ContextCompat.checkSelfPermission(
+                            applicationContext,
+                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+                        GEOFENCE_LOCATION_REQUEST_CODE
+                )
+            }
 
         val imageViewMenu = findViewById<ImageView>(R.id.imageViewMenu)
         imageViewMenu.setOnClickListener {
@@ -123,6 +139,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         createLocationCallback(::showCurrentLocation)
         createLocationRequest()
+        geofencingClient = LocationServices.getGeofencingClient(this)
+        Toast.makeText(this, "Intialising geofencingClient", Toast.LENGTH_SHORT).show()
+
     }
 
     override fun onStart() {
@@ -212,7 +231,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                 LatLng(
                                     point.geometryObject.latitude,
                                     point.geometryObject.longitude
-                                ), placemark.getProperty("name"), geofencingClient)
+                                ), placemark.getProperty("name")!!, geofencingClient)
+                            //Toast.makeText(this, "Geofencing: " + placemark.getProperty("name")!!, Toast.LENGTH_SHORT).show()
                         }
                         else if (geometry.geometryType.equals("LineString")) {
                             val kmlLineString: KmlLineString = geometry as KmlLineString
@@ -308,7 +328,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val geofence = Geofence.Builder()
             .setRequestId(key)
             .setCircularRegion(location.latitude, location.longitude, GEOFENCE_RADIUS.toFloat())
-            .setExpirationDuration(Geofence.NEVER_EXPIRE)
+            .setExpirationDuration(Geofence.NEVER_EXPIRE.toLong())
             .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
             .build()
 
@@ -330,12 +350,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             if (ContextCompat.checkSelfPermission(
                     applicationContext,
-                    android.Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
                 ActivityCompat.requestPermissions(
                     this,
-                    arrayOf(android.Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+                    arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
                     GEOFENCE_LOCATION_REQUEST_CODE
                 )
             } else {

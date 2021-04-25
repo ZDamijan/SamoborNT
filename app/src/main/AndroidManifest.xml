@@ -3,6 +3,7 @@
     package="com.strukovnasamobor.samobornt">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -13,6 +14,10 @@
         android:theme="@style/Theme.SamoborNT"
         android:taskAffinity="com.strukovnasamobor.samobornt"
         android:extractNativeLibs="true">
+
+        <receiver android:name=".GeofenceReceiver"
+        android:enabled="true"
+        android:exported="true"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

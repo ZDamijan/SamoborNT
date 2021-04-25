@@ -1,11 +1,14 @@
 package com.strukovnasamobor.samobornt
 
+import android.Manifest
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.strukovnasamobor.samobornt.services.DBConnection
@@ -30,7 +33,6 @@ class StartScreenActivity : AppCompatActivity() {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         btnExplore = findViewById(R.id.btnExplore)
         requestPermission()
-
         initListener()
 
         val connection: DBConnection = DBConnection.getConnectionInstance(this)

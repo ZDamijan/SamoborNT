@@ -6,9 +6,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Looper
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
+import com.strukovnasamobor.samobornt.GEOFENCE_LOCATION_REQUEST_CODE
 import com.strukovnasamobor.samobornt.fusedLocationProviderClient
 
 private const val REQUEST_CODE = 12
