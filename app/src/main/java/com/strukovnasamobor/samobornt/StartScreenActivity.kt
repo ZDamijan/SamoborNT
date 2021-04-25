@@ -1,19 +1,16 @@
 package com.strukovnasamobor.samobornt
 
-import android.Manifest
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.strukovnasamobor.samobornt.api.startActivity
 import com.strukovnasamobor.samobornt.services.DBConnection
 import com.strukovnasamobor.samobornt.services.requestPermission
-import com.strukovnasamobor.samobornt.api.startActivity
 
 
 private lateinit var btnExplore: Button

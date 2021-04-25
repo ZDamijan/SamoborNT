@@ -25,7 +25,10 @@ class UnityHolderActivity : AppCompatActivity() {
     companion object {
         @JvmStatic
         fun Call(activity: Activity) {
-            Log.e("UnityPlayerHolder", "Unity called Android function 'Call' in Activity '" + activity.toString() + "'.")
+            Log.e(
+                "UnityPlayerHolder",
+                "Unity called Android function 'Call' in Activity '" + activity.toString() + "'."
+            )
             val intent = Intent(activity, MapsActivity::class.java)
             intent.flags = FLAG_ACTIVITY_REORDER_TO_FRONT
             activity.startActivity(intent)

@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.app.PendingIntent
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
@@ -34,12 +33,13 @@ import com.google.maps.android.collections.PolylineManager
 import com.google.maps.android.data.kml.KmlLayer
 import com.google.maps.android.data.kml.KmlLineString
 import com.google.maps.android.data.kml.KmlPoint
-import com.strukovnasamobor.samobornt.services.*
 import com.strukovnasamobor.samobornt.api.startActivity
+import com.strukovnasamobor.samobornt.services.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-const val GEOFENCE_RADIUS = 50
+const val GEOFENCE_RADIUS =
+    50 //ovo je radius geofence-a, tj. koliko daleko korisnik mora biti da dobije notifikaciju..
 const val GEOFENCE_LOCATION_REQUEST_CODE = 5
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -55,14 +55,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
             if (ContextCompat.checkSelfPermission(
-                            applicationContext,
-                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                    ) != PackageManager.PERMISSION_GRANTED
+                    applicationContext,
+                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
             ) {
                 ActivityCompat.requestPermissions(
-                        this,
-                        arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
-                        GEOFENCE_LOCATION_REQUEST_CODE
+                    this,
+                    arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+                    GEOFENCE_LOCATION_REQUEST_CODE
                 )
             }
 
@@ -73,13 +73,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 when (item.itemId) {
                     R.id.menu_changeLanguage -> {
                         val dialog = Dialog(this)
-                        @Suppress("DEPRECATION") val currentLang = resources.configuration.locale.language
+                        @Suppress("DEPRECATION") val currentLang =
+                            resources.configuration.locale.language
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
                         dialog.setCancelable(true)
                         dialog.setCanceledOnTouchOutside(true)
                         dialog.setContentView(R.layout.language_dialog)
                         val languageRadioGroup: RadioGroup =
-                                dialog.findViewById(R.id.rdg_languages) as RadioGroup
+                            dialog.findViewById(R.id.rdg_languages) as RadioGroup
                         languageRadioGroup.check(R.id.rdb_en)
                         for (i in 0..languageRadioGroup.childCount) {
                             if (languageRadioGroup.getChildAt(i).tag == currentLang) {
@@ -92,7 +93,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         }
                         dialog.findViewById<Button>(R.id.btn_save).setOnClickListener {
                             val checkedRadioButton: RadioButton = dialog.findViewById(
-                                    languageRadioGroup.checkedRadioButtonId
+                                languageRadioGroup.checkedRadioButtonId
                             ) as RadioButton
                             changeLanguage(checkedRadioButton.tag.toString())
                             dialog.cancel()
@@ -114,14 +115,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
                     R.id.menu_about -> {
                         Toast.makeText(
-                                this,
-                                "Created by: Ekonomska, turistička i ugostiteljska škola, Samobor\nPartner: Srednja strukovnasamobor škola, Samobor\nSupported by: Ministry of Tourism and Sports\nVersion: 2021 1.0",
-                                Toast.LENGTH_LONG
+                            this,
+                            "Created by: Ekonomska, turistička i ugostiteljska škola, Samobor\nPartner: Srednja strukovnasamobor škola, Samobor\nSupported by: Ministry of Tourism and Sports\nVersion: 2021 1.0",
+                            Toast.LENGTH_LONG
                         ).show()
                         true
                     }
                     R.id.virtual_tour -> {
-                        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.samobor.hr/virtualna-tura/"))
+                        val browserIntent = Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("https://www.samobor.hr/virtualna-tura/")
+                        )
                         try {
                             startActivity(browserIntent)
                         } catch (ex: ActivityNotFoundException) {
@@ -142,8 +146,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         createLocationCallback(::showCurrentLocation)
         createLocationRequest()
         geofencingClient = LocationServices.getGeofencingClient(this)
-        Toast.makeText(this, "Intialising geofencingClient", Toast.LENGTH_SHORT).show()
-
     }
 
     override fun onStart() {
@@ -187,14 +189,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val polygonManager = PolygonManager(map)
         val polylineManager = PolylineManager(map)
         val kmlLayer = KmlLayer(
-                map,
-                R.raw.route1,
-                this,
-                markerManager,
-                polygonManager,
-                polylineManager,
-                groundOverlayManager,
-                null
+            map,
+            R.raw.route1,
+            this,
+            markerManager,
+            polygonManager,
+            polylineManager,
+            groundOverlayManager,
+            null
         )
         kmlLayer.addLayerToMap()
 
@@ -218,25 +220,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         if (geometry.geometryType.equals("Point")) {
                             val point: KmlPoint = placemark.geometry as KmlPoint
                             markerCollection.addMarker(
-                                    MarkerOptions()
-                                            .position(
-                                                    LatLng(
-                                                            point.geometryObject.latitude,
-                                                            point.geometryObject.longitude
-                                                    )
-                                            )
-                                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_custom))
-                                            .title(placemark.getProperty("name"))
-                                            .snippet(placemark.getProperty("description"))
+                                MarkerOptions()
+                                    .position(
+                                        LatLng(
+                                            point.geometryObject.latitude,
+                                            point.geometryObject.longitude
+                                        )
+                                    )
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_custom))
+                                    .title(placemark.getProperty("name"))
+                                    .snippet(placemark.getProperty("description"))
                             )
                             createGeofence(
                                 LatLng(
                                     point.geometryObject.latitude,
                                     point.geometryObject.longitude
-                                ), placemark.getProperty("name")!!, geofencingClient)
-                            //Toast.makeText(this, "Geofencing: " + placemark.getProperty("name")!!, Toast.LENGTH_SHORT).show()
-                        }
-                        else if (geometry.geometryType.equals("LineString")) {
+                                ), placemark.getProperty("name")!!, geofencingClient
+                            )
+                        } else if (geometry.geometryType.equals("LineString")) {
                             val kmlLineString: KmlLineString = geometry as KmlLineString
                             val coordinates: ArrayList<LatLng> = kmlLineString.geometryObject
                             for (latLng in coordinates) {
@@ -248,52 +249,52 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
         polylineCollection.addPolyline(
-                PolylineOptions()
-                        .color(Color.RED)
-                        .jointType(JointType.ROUND)
-                        .startCap(RoundCap())
-                        .startCap(RoundCap())
-                        .pattern(
-                                listOf(
-                                        Dot(), Gap(20F), Dash(30F), Gap(20F)
-                                )
-                        )
-                        .geodesic(true)
-                        .addAll(pathPoints)
+            PolylineOptions()
+                .color(Color.RED)
+                .jointType(JointType.ROUND)
+                .startCap(RoundCap())
+                .startCap(RoundCap())
+                .pattern(
+                    listOf(
+                        Dot(), Gap(20F), Dash(30F), Gap(20F)
+                    )
+                )
+                .geodesic(true)
+                .addAll(pathPoints)
         )
 
         kmlLayer.removeLayerFromMap()
 
         map.setOnMapClickListener { latLng ->
             Toast.makeText(
-                    this,
-                    "onMapClick:\n" + latLng.latitude + "\n" + latLng.longitude,
-                    Toast.LENGTH_SHORT
+                this,
+                "onMapClick:\n" + latLng.latitude + "\n" + latLng.longitude,
+                Toast.LENGTH_SHORT
             ).show()
         }
         markerCollection.setOnMarkerClickListener { marker: Marker ->
             Toast.makeText(
-                    this,
-                    "OnMarkerClick: ${marker.title}",
-                    Toast.LENGTH_SHORT
+                this,
+                "OnMarkerClick: ${marker.title}",
+                Toast.LENGTH_SHORT
             ).show()
             marker.showInfoWindow()
             true
         }
         markerCollection.setOnInfoWindowClickListener { marker: Marker ->
             Toast.makeText(
-                    this,
-                    "OnInfoWindowClick: ${marker.title}",
-                    Toast.LENGTH_SHORT
+                this,
+                "OnInfoWindowClick: ${marker.title}",
+                Toast.LENGTH_SHORT
             ).show()
         }
         setupMap()
     }
 
     override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<out String>,
-            grantResults: IntArray
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         showCurrentLocation()
@@ -321,8 +322,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         config.setLocale(locale)
         @Suppress("DEPRECATION")
         baseContext.resources.updateConfiguration(
-                config,
-                baseContext.resources.displayMetrics
+            config,
+            baseContext.resources.displayMetrics
         )
     }
 

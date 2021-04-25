@@ -16,9 +16,10 @@
         android:taskAffinity="com.strukovnasamobor.samobornt"
         android:extractNativeLibs="true">
 
-        <receiver android:name=".GeofenceReceiver"
-        android:enabled="true"
-        android:exported="true"/>
+        <receiver
+            android:name=".GeofenceReceiver"
+            android:enabled="true"
+            android:exported="true" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -44,7 +45,6 @@
 
         <activity
             android:name=".UnityHolderActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
     </application>
 </manifest>
