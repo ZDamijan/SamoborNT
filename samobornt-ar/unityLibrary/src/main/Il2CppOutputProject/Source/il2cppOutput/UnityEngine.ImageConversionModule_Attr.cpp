@@ -1031,7 +1031,7 @@ static void ImageConversion_t0022285A961C3EB42717486DD576532747C54126_CustomAttr
 		NativeHeaderAttribute__ctor_m0E83F29C5939F185D6E90541591802EB2845FD76(tmp, il2cpp_codegen_string_new_wrapper("\x4D\x6F\x64\x75\x6C\x65\x73\x2F\x49\x6D\x61\x67\x65\x43\x6F\x6E\x76\x65\x72\x73\x69\x6F\x6E\x2F\x53\x63\x72\x69\x70\x74\x42\x69\x6E\x64\x69\x6E\x67\x73\x2F\x49\x6D\x61\x67\x65\x43\x6F\x6E\x76\x65\x72\x73\x69\x6F\x6E\x2E\x62\x69\x6E\x64\x69\x6E\x67\x73\x2E\x68"), NULL);
 	}
 }
-static void ImageConversion_t0022285A961C3EB42717486DD576532747C54126_CustomAttributesCacheGenerator_ImageConversion_EncodeToPNG_mA598C2969C878ACC5AEA5FDC92C6199EB30D51ED(CustomAttributesCache* cache)
+static void ImageConversion_t0022285A961C3EB42717486DD576532747C54126_CustomAttributesCacheGenerator_ImageConversion_EncodeToJPG_mE32249F45E643405652057EA8A35112AB4721641(CustomAttributesCache* cache)
 {
 	{
 		ExtensionAttribute_t917F3F92E717DC8B2D7BC03967A9790B1B8EF7CC * tmp = (ExtensionAttribute_t917F3F92E717DC8B2D7BC03967A9790B1B8EF7CC *)cache->attributes[0];
@@ -1040,16 +1040,24 @@ static void ImageConversion_t0022285A961C3EB42717486DD576532747C54126_CustomAttr
 	{
 		NativeMethodAttribute_t57F61ACA17BEC1260A06658ACD971B0009CC1866 * tmp = (NativeMethodAttribute_t57F61ACA17BEC1260A06658ACD971B0009CC1866 *)cache->attributes[1];
 		NativeMethodAttribute__ctor_mB0D8BA2FFA19561CCB4257F8D6D03726514A9E5F(tmp, NULL);
-		NativeMethodAttribute_set_Name_mC85A9B1CE4650D43D0E73B503753864CA4952A9C_inline(tmp, il2cpp_codegen_string_new_wrapper("\x49\x6D\x61\x67\x65\x43\x6F\x6E\x76\x65\x72\x73\x69\x6F\x6E\x42\x69\x6E\x64\x69\x6E\x67\x73\x3A\x3A\x45\x6E\x63\x6F\x64\x65\x54\x6F\x50\x4E\x47"), NULL);
+		NativeMethodAttribute_set_Name_mC85A9B1CE4650D43D0E73B503753864CA4952A9C_inline(tmp, il2cpp_codegen_string_new_wrapper("\x49\x6D\x61\x67\x65\x43\x6F\x6E\x76\x65\x72\x73\x69\x6F\x6E\x42\x69\x6E\x64\x69\x6E\x67\x73\x3A\x3A\x45\x6E\x63\x6F\x64\x65\x54\x6F\x4A\x50\x47"), NULL);
 		NativeMethodAttribute_set_IsFreeFunction_m25C53EDE8A4BD0CEA8E4BA9E6199F9773368ACD1_inline(tmp, true, NULL);
 		NativeMethodAttribute_set_ThrowsException_m9F73529E4F4A3E151DBE4C7E07790B02292D8DBC_inline(tmp, true, NULL);
 	}
 }
+static void ImageConversion_t0022285A961C3EB42717486DD576532747C54126_CustomAttributesCacheGenerator_ImageConversion_EncodeToJPG_m75581ECC85FF41720A0CCB7602EF6E1D037C909F(CustomAttributesCache* cache)
+{
+	{
+		ExtensionAttribute_t917F3F92E717DC8B2D7BC03967A9790B1B8EF7CC * tmp = (ExtensionAttribute_t917F3F92E717DC8B2D7BC03967A9790B1B8EF7CC *)cache->attributes[0];
+		ExtensionAttribute__ctor_mB331519C39C4210259A248A4C629DF934937C1FA(tmp, NULL);
+	}
+}
 IL2CPP_EXTERN_C const CustomAttributesCacheGenerator g_UnityEngine_ImageConversionModule_AttributeGenerators[];
-const CustomAttributesCacheGenerator g_UnityEngine_ImageConversionModule_AttributeGenerators[3] = 
+const CustomAttributesCacheGenerator g_UnityEngine_ImageConversionModule_AttributeGenerators[4] = 
 {
 	ImageConversion_t0022285A961C3EB42717486DD576532747C54126_CustomAttributesCacheGenerator,
-	ImageConversion_t0022285A961C3EB42717486DD576532747C54126_CustomAttributesCacheGenerator_ImageConversion_EncodeToPNG_mA598C2969C878ACC5AEA5FDC92C6199EB30D51ED,
+	ImageConversion_t0022285A961C3EB42717486DD576532747C54126_CustomAttributesCacheGenerator_ImageConversion_EncodeToJPG_mE32249F45E643405652057EA8A35112AB4721641,
+	ImageConversion_t0022285A961C3EB42717486DD576532747C54126_CustomAttributesCacheGenerator_ImageConversion_EncodeToJPG_m75581ECC85FF41720A0CCB7602EF6E1D037C909F,
 	UnityEngine_ImageConversionModule_CustomAttributesCacheGenerator,
 };
 IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void RuntimeCompatibilityAttribute_set_WrapNonExceptionThrows_m8562196F90F3EBCEC23B5708EE0332842883C490_inline (RuntimeCompatibilityAttribute_tFF99AB2963098F9CBCD47A20D9FD3D51C17C1C80 * __this, bool ___value0, const RuntimeMethod* method)
