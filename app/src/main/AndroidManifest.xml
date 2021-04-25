@@ -19,6 +19,16 @@
             android:value="@string/google_maps_key" />
 
         <activity
+            android:name=".MapsActivity"
+            android:noHistory="true"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".cardview"
+            android:noHistory="true"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".StartScreenActivity"
             android:screenOrientation="portrait"
             android:label="@string/title_activity_maps">
