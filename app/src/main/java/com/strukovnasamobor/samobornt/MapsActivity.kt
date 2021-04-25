@@ -35,6 +35,7 @@ import com.google.maps.android.data.kml.KmlLayer
 import com.google.maps.android.data.kml.KmlLineString
 import com.google.maps.android.data.kml.KmlPoint
 import com.strukovnasamobor.samobornt.services.*
+import com.strukovnasamobor.samobornt.api.startActivity
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -100,7 +101,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         true
                     }
                     R.id.menu_seeAllMarkers -> {
-                        Toast.makeText(this, "See All Markers", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Start Card View", Toast.LENGTH_SHORT).show()
+                        startActivity<Cardview>()
                         true
                     }
                     R.id.menu_augmentedReality -> {

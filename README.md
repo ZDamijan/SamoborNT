@@ -1,2 +1,2 @@
-# SamoborNT
- 
+# Samobor N&T
+Android App
