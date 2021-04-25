@@ -20,16 +20,6 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
-            android:noHistory="true"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".cardview"
-            android:noHistory="true"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name=".StartScreenActivity"
             android:screenOrientation="portrait"
             android:label="@string/title_activity_maps">
@@ -38,14 +28,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".MapsActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".Cardview"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".UnityHolderActivity"
             android:screenOrientation="portrait">
         </activity>
     </application>
-
 </manifest>

@@ -1,6 +1,5 @@
 package com.strukovnasamobor.samobornt
 
-import android.R.id.message
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.ActivityNotFoundException
@@ -24,7 +23,7 @@ import com.google.maps.android.collections.PolylineManager
 import com.google.maps.android.data.kml.KmlLayer
 import com.google.maps.android.data.kml.KmlLineString
 import com.google.maps.android.data.kml.KmlPoint
-import com.strukovna.samobornt.services.*
+import com.strukovnasamobor.samobornt.services.*
 import com.strukovnasamobor.samobornt.api.startActivity
 import java.util.*
 import kotlin.collections.ArrayList
@@ -73,9 +72,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         dialog.show()
                         true
                     }
-                    R.id.menu_seeAllMarkers_app -> {
+                    R.id.menu_seeAllMarkers -> {
                         Toast.makeText(this, "Start Card View", Toast.LENGTH_SHORT).show()
-                        startActivity<cardview>()
+                        startActivity<Cardview>()
                         true
                     }
                     R.id.menu_augmentedReality -> {
