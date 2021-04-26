@@ -40,7 +40,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".Cardview"
+            android:name=".CardView"
             android:screenOrientation="portrait" />
 
         <activity

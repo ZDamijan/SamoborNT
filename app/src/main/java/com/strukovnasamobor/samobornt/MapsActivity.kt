@@ -102,7 +102,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
                     R.id.menu_sights -> {
                         Toast.makeText(this, "Sights", Toast.LENGTH_SHORT).show()
-                        startActivity<Cardview>()
+                        startActivity<CardView>()
                         true
                     }
                     R.id.menu_augmentedReality -> {

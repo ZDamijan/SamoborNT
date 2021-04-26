@@ -31,8 +31,6 @@ class StartScreenActivity : AppCompatActivity() {
         btnExplore = findViewById(R.id.btnExplore)
         requestPermission()
         initListener()
-
-        val connection: DBConnection = DBConnection.getConnectionInstance(this)
     }
 
     private fun initListener() {
