@@ -88,5 +88,13 @@ lint/tmp/
 
 # symbols
 symbols/
-samobornt-ar/
-!samobornt-ar/unityLibrary/src/main/AndroidManifest.xml
+
+samobornt-ar/*
+!/samobornt-ar/launcher/
+samobornt-ar/launcher/*
+!samobornt-ar/launcher/src
+samobornt-ar/launcher/src/*
+!samobornt-ar/launcher/src/main/
+samobornt-ar/launcher/src/main/*
+!samobornt-ar/launcher/src/main/AndroidManifest.xml
+
