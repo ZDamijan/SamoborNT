@@ -38,8 +38,7 @@ import com.strukovnasamobor.samobornt.services.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-const val GEOFENCE_RADIUS =
-    50 //ovo je radius geofence-a, tj. koliko daleko korisnik mora biti da dobije notifikaciju..
+const val GEOFENCE_RADIUS = 50 //ovo je radius geofence-a, tj. koliko daleko korisnik mora biti da dobije notifikaciju
 const val GEOFENCE_LOCATION_REQUEST_CODE = 5
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -101,8 +100,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         dialog.show()
                         true
                     }
-                    R.id.menu_seeAllMarkers -> {
-                        Toast.makeText(this, "Start Card View", Toast.LENGTH_SHORT).show()
+                    R.id.menu_sights -> {
+                        Toast.makeText(this, "Sights", Toast.LENGTH_SHORT).show()
                         startActivity<Cardview>()
                         true
                     }

@@ -45,6 +45,6 @@
 
         <activity
             android:name=".UnityHolderActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
     </application>
 </manifest>
