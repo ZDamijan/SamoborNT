@@ -1,12 +1,12 @@
 package com.strukovnasamobor.samobornt
-/*
+
 import android.app.Activity
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.unity3d.player.UnityPlayerActivity
+//import com.unity3d.player.UnityPlayerActivity
 
 class UnityHolderActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,7 +14,7 @@ class UnityHolderActivity : AppCompatActivity() {
         setContentView(R.layout.activity_unity_holder)
         val bundle = intent.extras
         val sceneName = bundle!!.getString("sceneName")
-        val intent = Intent(this, UnityPlayerActivity::class.java)
+        //val intent = Intent(this, UnityPlayerActivity::class.java)
         intent.putExtra("sceneName", sceneName)
         Log.e("UnityPlayerHolder", "Android load Unity scene '" + sceneName + "'.")
         startActivity(intent)
@@ -35,4 +35,3 @@ class UnityHolderActivity : AppCompatActivity() {
         }
     }
 }
-*/
