@@ -89,3 +89,4 @@ lint/tmp/
 # symbols
 symbols/
 samobornt-ar/
+!samobornt-ar/unityLibrary/src/main/AndroidManifest.xml
