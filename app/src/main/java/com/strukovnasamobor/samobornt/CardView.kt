@@ -7,13 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import com.strukovnasamobor.samobornt.api.startActivity
 import com.strukovnasamobor.samobornt.services.DBConnection
 
-class CardView : AppCompatActivity() {
+class CardView : BaseActivity() {
     private lateinit var cardview_image1: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.cardview)
-        setSupportActionBar(findViewById(R.id.toolbar))
+        super.initlizeMenu()
 
         cardview_image1 = findViewById(R.id.cardview_image1)
         initListener()
