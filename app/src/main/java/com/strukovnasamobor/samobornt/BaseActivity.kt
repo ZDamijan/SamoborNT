@@ -65,7 +65,7 @@ abstract class BaseActivity : AppCompatActivity() {
                     }
                     R.id.menu_augmentedReality -> {
                         Toast.makeText(this, "Augmented Reality", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this, UnityHolderActivity::class.java)
+                        //val intent = Intent(this, UnityHolderActivity::class.java)
                         intent.putExtra("sceneName", "LauncherScreen")
                         startActivity(intent)
                         true
