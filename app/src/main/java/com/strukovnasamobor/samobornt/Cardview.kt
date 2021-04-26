@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
-import com.strukovnasamobor.samobornt.services.DBConnection
 import com.strukovnasamobor.samobornt.api.startActivity
+import com.strukovnasamobor.samobornt.services.DBConnection
 
 
 private lateinit var slika1: ImageButton
