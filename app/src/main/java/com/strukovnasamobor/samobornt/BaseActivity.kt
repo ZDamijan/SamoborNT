@@ -18,7 +18,7 @@ abstract class BaseActivity : AppCompatActivity() {
         setContentView(R.layout.toolbar)
         setSupportActionBar(findViewById(R.id.toolbar))
     }
-    public fun initlizeMenu() {
+    public fun initializeMenu() {
         val imageViewMenu = findViewById<ImageView>(R.id.imageViewMenu)
         imageViewMenu.setOnClickListener {
             val popupMenu = PopupMenu(this, it)

@@ -1,9 +1,7 @@
 package com.strukovnasamobor.samobornt
 
 import android.os.Bundle
-import android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN
 import android.widget.ImageButton
-import androidx.appcompat.app.AppCompatActivity
 import com.strukovnasamobor.samobornt.api.startActivity
 import com.strukovnasamobor.samobornt.services.DBConnection
 
@@ -13,7 +11,7 @@ class CardView : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.cardview)
-        super.initlizeMenu()
+        super.initializeMenu()
 
         cardview_image1 = findViewById(R.id.cardview_image1)
         initListener()
