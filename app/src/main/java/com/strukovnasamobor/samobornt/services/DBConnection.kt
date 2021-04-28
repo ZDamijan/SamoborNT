@@ -28,20 +28,24 @@ class DBConnection private constructor(context: Context) :
 
     companion object {
         @SuppressLint("StaticFieldLeak")
-        private var singletonDBInstance: DBConnection? = null
+        @Volatile private var singletonDBInstance: DBConnection? = null
 
-        // NOT thread safe!
-        // for thread safety: https://en.wikipedia.org/wiki/Double-checked_locking
         fun getConnectionInstance(context: Context): DBConnection {
             if (singletonDBInstance == null) {
                 DB_FILE = context.getDatabasePath(DB_NAME).absoluteFile
-                singletonDBInstance = DBConnection(context.applicationContext)
                 // copy database from assets to device if it doesn't exist or version changed
                 if (!DB_FILE.isFile || UPGRADE_DATABASE) {
                     context.assets.open(DB_NAME)
-                        .copyTo(FileOutputStream(DB_FILE.toString(), false), 1024)
+                            .copyTo(FileOutputStream(DB_FILE.toString(), false), 1024)
+                }
+                return synchronized(DBConnection::class) {
+                    val newInstance = singletonDBInstance ?: DBConnection(context.applicationContext)
+                    singletonDBInstance = newInstance
+                    singletonDBInstance!!.connectToDatabase()
+                    newInstance
                 }
             }
+
             singletonDBInstance!!.connectToDatabase()
             return singletonDBInstance!!
         }
