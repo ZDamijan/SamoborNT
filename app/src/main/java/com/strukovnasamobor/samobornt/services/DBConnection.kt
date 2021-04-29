@@ -16,6 +16,14 @@ private lateinit var DB_FILE: File
 private var DATABASE: SQLiteDatabase? = null
 private var UPGRADE_DATABASE: Boolean = false
 
+const val TABLE_NAME: String = "locations"
+
+// column names
+const val C_NAME: String = "Name"
+const val C_SHORT_DESCRIPTION: String = "Short_description"
+const val C_LONG_DESCRIPTION: String = "Long_description"
+
+
 class DBConnection private constructor(context: Context) :
     SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
     override fun onCreate(db: SQLiteDatabase) {}
@@ -58,27 +66,7 @@ class DBConnection private constructor(context: Context) :
         }
     }
 
-    fun fetchDescription(name: String): String {
-        var description: String? = null
-        val dbCursor: Cursor =
-            DATABASE!!.rawQuery("SELECT Description FROM locations WHERE Name=?", arrayOf(name))
-        if (dbCursor.moveToFirst()) {
-            dbCursor.use { cursor ->
-                description = cursor.getString(cursor.getColumnIndex("Description"))
-            }
-        }
-        return description!!
-    }
-
-    fun fetchImageURL(name: String): String {
-        var imageURL: String? = null
-        val dbCursor: Cursor =
-            DATABASE!!.rawQuery("SELECT Image FROM locations WHERE Name=?", arrayOf(name))
-        if (dbCursor.moveToFirst()) {
-            dbCursor.use { cursor ->
-                imageURL = cursor.getString(cursor.getColumnIndex("Image"))
-            }
-        }
-        return imageURL!!
+    fun getFetchAllCursor(): Cursor {
+        return DATABASE!!.rawQuery("SELECT * FROM $TABLE_NAME", null)
     }
 }
