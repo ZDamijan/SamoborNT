@@ -22,6 +22,7 @@ const val TABLE_NAME: String = "locations"
 const val C_NAME: String = "Name"
 const val C_SHORT_DESCRIPTION: String = "Short_description"
 const val C_LONG_DESCRIPTION: String = "Long_description"
+const val C_MAIN_IMAGE: String = "Main_image"
 
 
 class DBConnection private constructor(context: Context) :

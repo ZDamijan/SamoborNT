@@ -7,10 +7,7 @@ import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.RecyclerView
 import com.strukovnasamobor.samobornt.BaseActivity
 import com.strukovnasamobor.samobornt.R
-import com.strukovnasamobor.samobornt.services.C_LONG_DESCRIPTION
-import com.strukovnasamobor.samobornt.services.C_NAME
-import com.strukovnasamobor.samobornt.services.C_SHORT_DESCRIPTION
-import com.strukovnasamobor.samobornt.services.DBConnection
+import com.strukovnasamobor.samobornt.services.*
 
 class CardViewActivity : BaseActivity() {
     private var connection: DBConnection? = null
@@ -28,24 +25,6 @@ class CardViewActivity : BaseActivity() {
 
     private fun createCards(): MutableList<Card> {
         val cardsList: MutableList<Card> = mutableListOf()
-        val imageMappings: HashMap<String, Int> = hashMapOf(
-                "Turistička zajednica grada Samobora" to R.drawable.tzgs_t_1,
-                "Bermet i muštarda Filipec" to R.drawable.bermet_t_1,
-                "Kuća Vrazove Ljubice" to R.drawable.ljubica_t_1,
-                "Samoborski muzej" to R.drawable.muzej_t_1,
-                "Crkva sv. Anastazije" to R.drawable.anastazija_t_1,
-                "Glazbena škola Ferdo Livadić" to R.drawable.livadic_t_1,
-                "Parking kod kina" to R.drawable.parking_t_1,
-                "Drveni most Mala Venecija" to R.drawable.mvenecija_t_1,
-                "Franjevačka crkva i Tabor" to R.drawable.franjevci_t_1,
-                "Vungriščak" to R.drawable.vungri_t_1,
-                "Galerija Prica" to R.drawable.prica_t_1,
-                "Park domovinske zahvalnosti" to R.drawable.pdz_t_1,
-                "Trg kralja Tomislava" to R.drawable.trg_t_1,
-                "Stari grad" to R.drawable.starigrad_t_1,
-                "Kapela sv. Ane" to R.drawable.svana_t_1,
-                "Vidikovac" to R.drawable.vidikovac_t_1,
-        )
         val cursor: Cursor = connection!!.getFetchAllCursor()
         var id: Int = 1
         if (cursor.moveToFirst()) {
@@ -53,11 +32,13 @@ class CardViewActivity : BaseActivity() {
                 val locationName: String = cursor.getString(cursor.getColumnIndex(C_NAME))
                 val locationSD: String = cursor.getString(cursor.getColumnIndex(C_SHORT_DESCRIPTION))
                 val locationLD: String = cursor.getString(cursor.getColumnIndex(C_LONG_DESCRIPTION))
+                val imageName: String = cursor.getString(cursor.getColumnIndex(C_MAIN_IMAGE))
                 @DrawableRes
-                val locationImage: Int? = imageMappings[locationName]
-                val newCard: Card = Card(cardID=id, locationName=locationName,
+                val locationImageID: Int? = this.resources
+                    .getIdentifier(imageName, "drawable", this.packageName)
+                val newCard = Card(cardID=id, locationName=locationName,
                         longDescription=locationLD, shortDescription=locationSD,
-                        mainImage=locationImage)
+                        mainImage=locationImageID)
                 cardsList.add(newCard)
                 cursor.moveToNext()
                 id += 1
