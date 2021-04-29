@@ -1,15 +1,12 @@
 package com.strukovnasamobor.samobornt.cardview
 
+import androidx.annotation.DrawableRes
+
 data class Card (
-
-    var Card_id: Int,
-
-    var Main_image: Int,
-
-    var Location_name: String,
-
-    var Short_description: String,
-
-    var Long_description: String,
-
-    )
+    val cardID: Int,
+    @DrawableRes
+    val mainImage: Int?,
+    val locationName: String,
+    val shortDescription: String,
+    val longDescription: String,
+)
