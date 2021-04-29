@@ -39,7 +39,7 @@
             android:screenOrientation="portrait"
             android:launchMode="singleTask" />
         <activity
-            android:name=".CardView"
+            android:name=".cardview.CardViewActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask" />
         <activity
