@@ -13,10 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:paddingTop="70dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:paddingBottom="15dp"
+        android:paddingTop="50dp"
+        android:paddingLeft="@dimen/margin_left"
+        android:paddingRight="@dimen/margin_right"
+        android:paddingBottom="@dimen/margin_bottom"
         app:layoutManager="LinearLayoutManager"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
