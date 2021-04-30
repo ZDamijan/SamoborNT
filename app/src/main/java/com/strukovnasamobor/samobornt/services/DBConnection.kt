@@ -16,6 +16,15 @@ private lateinit var DB_FILE: File
 private var DATABASE: SQLiteDatabase? = null
 private var UPGRADE_DATABASE: Boolean = false
 
+const val TABLE_NAME: String = "locations"
+
+// column names
+const val C_NAME: String = "Name"
+const val C_SHORT_DESCRIPTION: String = "Short_description"
+const val C_LONG_DESCRIPTION: String = "Long_description"
+const val C_MAIN_IMAGE: String = "Main_image"
+
+
 class DBConnection private constructor(context: Context) :
     SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
     override fun onCreate(db: SQLiteDatabase) {}
@@ -28,20 +37,24 @@ class DBConnection private constructor(context: Context) :
 
     companion object {
         @SuppressLint("StaticFieldLeak")
-        private var singletonDBInstance: DBConnection? = null
+        @Volatile private var singletonDBInstance: DBConnection? = null
 
-        // NOT thread safe!
-        // for thread safety: https://en.wikipedia.org/wiki/Double-checked_locking
         fun getConnectionInstance(context: Context): DBConnection {
             if (singletonDBInstance == null) {
                 DB_FILE = context.getDatabasePath(DB_NAME).absoluteFile
-                singletonDBInstance = DBConnection(context.applicationContext)
                 // copy database from assets to device if it doesn't exist or version changed
                 if (!DB_FILE.isFile || UPGRADE_DATABASE) {
                     context.assets.open(DB_NAME)
-                        .copyTo(FileOutputStream(DB_FILE.toString(), false), 1024)
+                            .copyTo(FileOutputStream(DB_FILE.toString(), false), 1024)
+                }
+                return synchronized(DBConnection::class) {
+                    val newInstance = singletonDBInstance ?: DBConnection(context.applicationContext)
+                    singletonDBInstance = newInstance
+                    singletonDBInstance!!.connectToDatabase()
+                    newInstance
                 }
             }
+
             singletonDBInstance!!.connectToDatabase()
             return singletonDBInstance!!
         }
@@ -54,27 +67,7 @@ class DBConnection private constructor(context: Context) :
         }
     }
 
-    fun fetchDescription(name: String): String {
-        var description: String? = null
-        val dbCursor: Cursor =
-            DATABASE!!.rawQuery("SELECT Description FROM locations WHERE Name=?", arrayOf(name))
-        if (dbCursor.moveToFirst()) {
-            dbCursor.use { cursor ->
-                description = cursor.getString(cursor.getColumnIndex("Description"))
-            }
-        }
-        return description!!
-    }
-
-    fun fetchImageURL(name: String): String {
-        var imageURL: String? = null
-        val dbCursor: Cursor =
-            DATABASE!!.rawQuery("SELECT Image FROM locations WHERE Name=?", arrayOf(name))
-        if (dbCursor.moveToFirst()) {
-            dbCursor.use { cursor ->
-                imageURL = cursor.getString(cursor.getColumnIndex("Image"))
-            }
-        }
-        return imageURL!!
+    fun getFetchAllCursor(): Cursor {
+        return DATABASE!!.rawQuery("SELECT * FROM $TABLE_NAME", null)
     }
 }

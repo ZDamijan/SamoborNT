@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.Window
 import android.widget.*
 import com.strukovnasamobor.samobornt.api.startActivity
+import com.strukovnasamobor.samobornt.cardview.CardViewActivity
 import java.util.*
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -60,7 +61,7 @@ abstract class BaseActivity : AppCompatActivity() {
                     }
                     R.id.menu_sights -> {
                         Toast.makeText(this, "Sights", Toast.LENGTH_SHORT).show()
-                        startActivity<CardView>()
+                        startActivity<CardViewActivity>()
                         true
                     }
                     R.id.menu_augmentedReality -> {
