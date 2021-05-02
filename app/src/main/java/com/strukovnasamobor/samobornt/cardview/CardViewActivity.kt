@@ -18,8 +18,8 @@ class CardViewActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        super.initializeMenu()
         setContentView(R.layout.card_view)
+        super.initializeMenu()
         recyclerView = findViewById(R.id.recycler_view)
         connection = DBConnection.getConnectionInstance(this)
         val cardsList: MutableList<Card> = createCards()
