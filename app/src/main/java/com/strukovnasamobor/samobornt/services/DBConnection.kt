@@ -16,7 +16,7 @@ private lateinit var DB_FILE: File
 private var DATABASE: SQLiteDatabase? = null
 private var UPGRADE_DATABASE: Boolean = false
 
-const val TABLE_NAME: String = "locations"
+const val TABLE_NAME: String = "locations_hrv"
 
 // column names
 const val C_NAME: String = "Name"
