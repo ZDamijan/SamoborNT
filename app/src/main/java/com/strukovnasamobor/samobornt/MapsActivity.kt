@@ -236,18 +236,6 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun changeLanguage(languageToLoad: String) {
-        val locale = Locale(languageToLoad)
-        Locale.setDefault(locale)
-        val config = Configuration()
-        config.setLocale(locale)
-        @Suppress("DEPRECATION")
-        baseContext.resources.updateConfiguration(
-            config,
-            baseContext.resources.displayMetrics
-        )
-    }
-
     private fun createGeofence(location: LatLng, key: String, geofencingClient: GeofencingClient) {
         val geofence = Geofence.Builder()
             .setRequestId(key)
