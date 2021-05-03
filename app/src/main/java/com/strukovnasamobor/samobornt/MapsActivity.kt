@@ -2,7 +2,10 @@ package com.strukovnasamobor.samobornt
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
@@ -11,6 +14,7 @@ import android.os.Build
 import android.os.Bundle
 import android.widget.*
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingClient
@@ -31,6 +35,7 @@ import com.google.maps.android.data.kml.KmlPoint
 import com.strukovnasamobor.samobornt.services.*
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.random.Random
 
 const val GEOFENCE_RADIUS = 50 //ovo je radius geofence-a, tj. koliko daleko korisnik mora biti da dobije notifikaciju
 const val GEOFENCE_LOCATION_REQUEST_CODE = 5
@@ -289,4 +294,37 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
             geofencingClient.addGeofences(geofenceRequest, pendingIntent)
         }
     }
+
+    companion object {
+        fun showNotification(context: Context?, message: String) {
+            val CHANNEL_ID = "REMINDER_NOTIFICATION_CHANNEL"
+            var notificationId = 12345
+            notificationId += Random(notificationId).nextInt(1, 30)
+
+            val notificationBuilder = NotificationCompat.Builder(context!!.applicationContext, CHANNEL_ID)
+                    .setSmallIcon(R.drawable.marker_custom)
+                    .setContentTitle(context.getString(R.string.app_name))
+                    .setContentText(message)
+                    .setStyle(
+                            NotificationCompat.BigTextStyle()
+                                    .bigText(message)
+                    )
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val channel = NotificationChannel(
+                        CHANNEL_ID,
+                        context.getString(R.string.app_name),
+                        NotificationManager.IMPORTANCE_DEFAULT
+                ).apply {
+                    description = context.getString(R.string.app_name)
+                }
+                notificationManager.createNotificationChannel(channel)
+            }
+            notificationManager.notify(notificationId, notificationBuilder.build())
+        }
+    }
+
 }

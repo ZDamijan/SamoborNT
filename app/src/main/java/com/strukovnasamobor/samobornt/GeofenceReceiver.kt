@@ -18,6 +18,11 @@ class GeofenceReceiver : BroadcastReceiver() {
 
                 triggeringGeofences.forEach {
                     Toast.makeText(context, "Ulaz u geofence: " + it.requestId, Toast.LENGTH_SHORT).show()
+
+                    MapsActivity.showNotification(
+                        context.applicationContext,
+                        "Ulaz u geofence: " + it.requestId
+                    )
                     //ovdje umjesto ovog Toast-a, treba poslati notifikaciju da je korisnik usao u geofence, ime geofence-a dobijemo preko: it.requestId
                 }
 
