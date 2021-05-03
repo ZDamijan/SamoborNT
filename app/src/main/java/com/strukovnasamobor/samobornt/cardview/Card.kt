@@ -6,7 +6,7 @@ data class Card (
     val cardID: Int,
     @DrawableRes
     val mainImage: Int?,
-    val locationName: String,
-    val shortDescription: String,
-    val longDescription: String,
+    var locationName: String,
+    var shortDescription: String,
+    var longDescription: String,
 )

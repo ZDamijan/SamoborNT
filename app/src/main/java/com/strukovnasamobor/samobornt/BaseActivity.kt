@@ -19,7 +19,7 @@ abstract class BaseActivity : AppCompatActivity() {
         setContentView(R.layout.toolbar)
         setSupportActionBar(findViewById(R.id.toolbar))
     }
-    public fun initializeMenu() {
+    fun initializeMenu() {
         val imageViewMenu = findViewById<ImageView>(R.id.imageViewMenu)
         imageViewMenu.setOnClickListener {
             val popupMenu = PopupMenu(this, it)
@@ -108,5 +108,12 @@ abstract class BaseActivity : AppCompatActivity() {
             config,
             baseContext.resources.displayMetrics
         )
+        if (this::class.java.simpleName == "CardViewActivity") {
+            this.finish()
+            val intent = Intent(this, CardViewActivity::class.java)
+            intent.putExtra("languageChanged", true)
+            intent.putExtra("changeToLanguage", resources.configuration.locales[0].toString())
+            startActivity<CardViewActivity>()
+        }
     }
 }

@@ -16,7 +16,8 @@ private lateinit var DB_FILE: File
 private var DATABASE: SQLiteDatabase? = null
 private var UPGRADE_DATABASE: Boolean = false
 
-const val TABLE_NAME: String = "locations_hrv"
+const val TABLE_NAME_HRV: String = "locations_hrv"
+const val TABLE_NAME_ENG: String = "locations_eng"
 
 // column names
 const val C_NAME: String = "Name"
@@ -67,7 +68,7 @@ class DBConnection private constructor(context: Context) :
         }
     }
 
-    fun getFetchAllCursor(): Cursor {
-        return DATABASE!!.rawQuery("SELECT * FROM $TABLE_NAME", null)
+    fun getFetchAllCursor(tableName: String): Cursor {
+        return DATABASE!!.rawQuery("SELECT * FROM $tableName", null)
     }
 }
