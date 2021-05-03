@@ -1,9 +1,7 @@
 package com.strukovnasamobor.samobornt.cardview
 
-import android.database.Cursor
 import android.os.Bundle
 import android.os.Parcelable
-import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.RecyclerView
 import com.strukovnasamobor.samobornt.BaseActivity
 import com.strukovnasamobor.samobornt.R
@@ -11,9 +9,12 @@ import com.strukovnasamobor.samobornt.detail.DetailActivity
 import com.strukovnasamobor.samobornt.services.*
 
 private var recyclerViewState: Parcelable? = null
+private var cardListLocale: String? = null
 
 class CardViewActivity : BaseActivity() {
-    private var connection: DBConnection? = null
+    private lateinit var connection: DBConnection
+    private lateinit var cardListHolder: CardListHolder
+    private lateinit var cardsList: MutableList<Card>
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +23,24 @@ class CardViewActivity : BaseActivity() {
         super.initializeMenu()
         recyclerView = findViewById(R.id.recycler_view)
         connection = DBConnection.getConnectionInstance(this)
-        val cardsList: MutableList<Card> = createCards()
+        cardListHolder = CardListHolder.getCardListHolderInstance(this)
+        cardsList = cardListHolder.getCardList()
+
+        if (cardListLocale == null) {
+            cardListLocale = resources.configuration.locales[0].toString()
+        }
+
+        if (resources.configuration.locales[0].toString() != cardListLocale) {
+            cardListLocale = resources.configuration.locales[0].toString()
+            cardListHolder.changeCardsLanguage(cardListLocale!!)
+            cardsList = cardListHolder.getCardList()
+        }
+        else if (intent.extras != null && intent.extras!!.getBoolean("languageChanged")) {
+            cardListLocale = intent.extras!!.getString("changeToLanguage")
+            cardListHolder.changeCardsLanguage(cardListLocale!!)
+            cardsList = cardListHolder.getCardList()
+        }
+
         val cardsViewAdapter = CardViewAdapter({ card -> adapterOnClick(card) }, cardsList)
         recyclerView.adapter = cardsViewAdapter
     }
@@ -37,28 +55,9 @@ class CardViewActivity : BaseActivity() {
         recyclerViewState = recyclerView.layoutManager!!.onSaveInstanceState()
     }
 
-    private fun createCards(): MutableList<Card> {
-        val cardsList: MutableList<Card> = mutableListOf()
-        val cursor: Cursor = connection!!.getFetchAllCursor()
-        var id = 1
-        if (cursor.moveToFirst()) {
-            while (!cursor.isAfterLast) {
-                val locationName: String = cursor.getString(cursor.getColumnIndex(C_NAME))
-                val locationSD: String = cursor.getString(cursor.getColumnIndex(C_SHORT_DESCRIPTION))
-                val locationLD: String = cursor.getString(cursor.getColumnIndex(C_LONG_DESCRIPTION))
-                val imageName: String = cursor.getString(cursor.getColumnIndex(C_MAIN_IMAGE))
-                @DrawableRes
-                val locationImageID: Int? = this.resources
-                    .getIdentifier(imageName, "drawable", this.packageName)
-                val newCard = Card(cardID = id, locationName = locationName,
-                        longDescription = locationLD, shortDescription = locationSD,
-                        mainImage = locationImageID)
-                cardsList.add(newCard)
-                cursor.moveToNext()
-                id += 1
-            }
-        }
-        return cardsList
+    override fun finish() {
+        super.finish()
+        recyclerViewState = recyclerView.layoutManager!!.onSaveInstanceState()
     }
 
     private fun adapterOnClick(card: Card) {

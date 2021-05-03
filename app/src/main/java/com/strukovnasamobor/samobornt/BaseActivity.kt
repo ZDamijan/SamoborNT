@@ -120,5 +120,12 @@ abstract class BaseActivity : AppCompatActivity() {
             config,
             baseContext.resources.displayMetrics
         )
+        if (this::class.java.simpleName == "CardViewActivity") {
+            this.finish()
+            val intent = Intent(this, CardViewActivity::class.java)
+            intent.putExtra("languageChanged", true)
+            intent.putExtra("changeToLanguage", resources.configuration.locales[0].toString())
+            startActivity<CardViewActivity>()
+        }
     }
 }
