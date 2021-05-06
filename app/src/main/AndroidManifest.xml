@@ -43,6 +43,10 @@
             android:screenOrientation="portrait"
             android:launchMode="singleTask" />
         <activity
+            android:name=".detail.DetailActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask" />
+        <activity
             android:name=".UnityHolderActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask" />

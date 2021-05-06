@@ -7,6 +7,7 @@ import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.RecyclerView
 import com.strukovnasamobor.samobornt.BaseActivity
 import com.strukovnasamobor.samobornt.R
+import com.strukovnasamobor.samobornt.detail.DetailActivity
 import com.strukovnasamobor.samobornt.services.*
 
 class CardViewActivity : BaseActivity() {
@@ -48,9 +49,13 @@ class CardViewActivity : BaseActivity() {
     }
 
     private fun adapterOnClick(card: Card) {
-        // TODO: start CardDetailActivity here
-        //val intent: Intent = Intent(this, CardDetailActivity::class)
-        //intent.putExtra(card.cardID)
-        //startActivity(intent)
+        val intent: Intent = Intent(this, DetailActivity::class.java).apply{
+            putExtra("id", card.cardID)
+            putExtra("lDes",card.longDescription)
+            putExtra("MainImg",card.mainImage)
+            putExtra("title",card.locationName)
+        }
+
+        startActivity(intent)
     }
 }
