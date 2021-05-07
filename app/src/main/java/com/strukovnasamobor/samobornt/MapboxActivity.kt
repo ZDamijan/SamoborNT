@@ -19,7 +19,6 @@ import com.mapbox.mapboxsdk.maps.MapboxMap
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback
 import com.mapbox.mapboxsdk.maps.Style
 
-
 class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
 
     private var permissionsManager: PermissionsManager = PermissionsManager(this)
@@ -72,6 +71,14 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                 }
                 true
             }
+            /*
+            try {
+                val geoJsonUrl = URI("https://url-to-geojson-file.geojson")
+                val geoJsonSource = GeoJsonSource("geojson-source", geoJsonUrl)
+                it.addSource(geoJsonSource)
+            } catch (exception: URISyntaxException) {
+                Log.d("mapbox", "JSON file not found.")
+            }*/
             enableLocationComponent(it)
         }
     }
