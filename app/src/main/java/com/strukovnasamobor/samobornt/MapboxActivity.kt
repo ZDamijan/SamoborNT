@@ -2,11 +2,13 @@ package com.strukovnasamobor.samobornt
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.mapbox.android.core.permissions.PermissionsListener
 import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.mapboxsdk.Mapbox
+import com.mapbox.mapboxsdk.geometry.LatLng
 import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions
 import com.mapbox.mapboxsdk.location.LocationComponentOptions
 import com.mapbox.mapboxsdk.location.OnCameraTrackingChangedListener
@@ -16,6 +18,7 @@ import com.mapbox.mapboxsdk.maps.MapView
 import com.mapbox.mapboxsdk.maps.MapboxMap
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback
 import com.mapbox.mapboxsdk.maps.Style
+
 
 class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
 
@@ -46,8 +49,29 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                 getString(R.string.mapbox_style_url)
             )
         ) {
-
             // Map is set up and the style has loaded. Now you can add data or make other map adjustments
+            Log.e("mapbox", "loaded")
+            mapboxMap.addOnMapClickListener { point: LatLng ->
+                Log.e("mapbox", "mapclick")
+
+                // Convert LatLng coordinates to screen pixel and only query the rendered features.
+                val pixel = mapboxMap.projection.toScreenLocation(point)
+                val features = mapboxMap.queryRenderedFeatures(pixel, "samobornt-markers")
+                Log.e("mapbox", features.toString())
+
+                // Get the first feature within the list if one exist
+                if (features.size > 0) {
+                    val feature = features[0]
+
+                    // Ensure the feature has properties defined
+                    for ((key, value) in feature.properties()!!.entrySet()) {
+                        // Log all the properties
+                        Log.e("mapbox", String.format("%s = %s", key, value))
+                    }
+                    //open specific detail view
+                }
+                true
+            }
             enableLocationComponent(it)
         }
     }
@@ -72,7 +96,6 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
             )
                 .locationComponentOptions(customLocationComponentOptions)
                 .build()
-
             // Get an instance of the LocationComponent and then adjust its settings
             mapboxMap.locationComponent.apply {
                 // Activate the LocationComponent with options
@@ -87,7 +110,8 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                 // Set the LocationComponent's render mode
                 renderMode = RenderMode.COMPASS
             }
-            mapboxMap?.locationComponent.addOnCameraTrackingChangedListener(object : OnCameraTrackingChangedListener {
+            mapboxMap?.locationComponent.addOnCameraTrackingChangedListener(object :
+                OnCameraTrackingChangedListener {
                 override fun onCameraTrackingDismissed() {
                     // Tracking has been dismissed
                 }
