@@ -35,21 +35,25 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MapsActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask" />
-        <activity
             android:name=".cardview.CardViewActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".detail.DetailActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask" />
         <activity
             android:name=".UnityHolderActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MapboxActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MapsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
