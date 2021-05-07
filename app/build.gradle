@@ -34,6 +34,8 @@ android {
     }
 }
 
+apply plugin: 'kotlin-android-extensions'
+
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'com.google.android.libraries.maps:maps:3.1.0-beta'
