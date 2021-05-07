@@ -14,5 +14,6 @@
     <string name="save">Save</string>
     <string name="close">Close</string>
     <string name="augmented_reality">Augmented Reality</string>
+    <string name="mapbox_access_token" translatable="false">pk.eyJ1IjoiYXVyZWxpdXMtemQiLCJhIjoiY2tvMXN3dTVqMGJtbzJwbHliZWljd2xjbiJ9.DkV8Yg7EmRfTSZmqPqEtVQ</string>
     <string name="game_view_content_description" translatable="false">Game view</string>
 </resources>

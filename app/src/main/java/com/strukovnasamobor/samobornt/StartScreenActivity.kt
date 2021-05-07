@@ -35,7 +35,8 @@ class StartScreenActivity : AppCompatActivity() {
 
     private fun initListener() {
         btnExplore.setOnClickListener {
-            startActivity<MapsActivity>()
+            //startActivity<MapsActivity>()
+            startActivity<MapboxActivity>()
         }
     }
 }

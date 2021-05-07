@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
@@ -18,13 +19,19 @@
             android:text="@string/title_actionbar"
             android:textColor="@color/white"
             android:textSize="22sp" />
-
         <ImageView
-            android:id="@+id/imageViewMenu"
+            android:id="@+id/location_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_location"
+            android:layout_alignParentRight="true"
+            android:paddingRight="60dp" />
+        <ImageView
+            android:id="@+id/image_view_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_baseline_menu"
             android:layout_alignParentRight="true"
-            android:paddingRight="18dp" />
+            android:paddingRight="15dp" />
     </RelativeLayout>
 </androidx.appcompat.widget.Toolbar>

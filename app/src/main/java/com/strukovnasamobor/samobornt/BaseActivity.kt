@@ -5,28 +5,40 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Window
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import com.mapbox.mapboxsdk.location.LocationComponent
+import com.mapbox.mapboxsdk.location.modes.CameraMode
 import com.strukovnasamobor.samobornt.api.startActivity
 import com.strukovnasamobor.samobornt.cardview.CardViewActivity
 import java.util.*
 
+
 abstract class BaseActivity : AppCompatActivity() {
+    protected var locationComponent: LocationComponent? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.toolbar)
         setSupportActionBar(findViewById(R.id.toolbar))
     }
-    public fun initializeMenu() {
-        val imageViewMenu = findViewById<ImageView>(R.id.imageViewMenu)
+
+    fun initializeMenu() {
+        val locationMenu = findViewById<ImageView>(R.id.location_menu)
+        locationMenu.setOnClickListener {
+            startActivity<MapboxActivity>()
+            locationComponent?.cameraMode = CameraMode.TRACKING_GPS;
+        }
+
+        val imageViewMenu = findViewById<ImageView>(R.id.image_view_menu)
         imageViewMenu.setOnClickListener {
             val popupMenu = PopupMenu(this, it)
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.menu_mapShow -> {
-                        startActivity<MapsActivity>()
+                        startActivity<MapboxActivity>()
                         true
                     }
                     R.id.menu_changeLanguage -> {

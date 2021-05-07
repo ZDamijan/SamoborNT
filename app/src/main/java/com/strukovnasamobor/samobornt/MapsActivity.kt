@@ -37,7 +37,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random
 
-const val GEOFENCE_RADIUS = 50 //ovo je radius geofence-a, tj. koliko daleko korisnik mora biti da dobije notifikaciju
+const val GEOFENCE_RADIUS = 100 //ovo je radius geofence-a, tj. koliko daleko korisnik mora biti da dobije notifikaciju
 const val GEOFENCE_LOCATION_REQUEST_CODE = 5
 
 class MapsActivity : BaseActivity(), OnMapReadyCallback {
@@ -239,18 +239,6 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
                 }
             }
         }
-    }
-
-    private fun changeLanguage(languageToLoad: String) {
-        val locale = Locale(languageToLoad)
-        Locale.setDefault(locale)
-        val config = Configuration()
-        config.setLocale(locale)
-        @Suppress("DEPRECATION")
-        baseContext.resources.updateConfiguration(
-            config,
-            baseContext.resources.displayMetrics
-        )
     }
 
     private fun createGeofence(location: LatLng, key: String, geofencingClient: GeofencingClient) {
