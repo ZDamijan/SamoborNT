@@ -41,10 +41,10 @@ class DetailActivity : BaseActivity() {
         }
 
         // temp
-        if (R.drawable.muzej_t_1 !in images && R.drawable.old_town !in images) {
-            images.add(1, R.drawable.muzej_t_1)
-            images.add(2, R.drawable.old_town)
-        }
+        //if (R.drawable.muzej_1 !in images && R.drawable.old_town !in images) {
+        //    images.add(1, R.drawable.muzej_1)
+        //    images.add(2, R.drawable.old_town)
+        //}
 
         tekst.text= card.longDescription
         naslovL.text= card.locationName
