@@ -15,10 +15,10 @@ import kotlinx.android.synthetic.main.detail.*
 
 
 class DetailActivity : BaseActivity() {
-    var viewPager: ViewPager? = null
-    var swipeAdapter: SwipeAdapter?=null
-    lateinit var card: Card
-    lateinit var cardListHolder: CardListHolder
+    private var viewPager: ViewPager? = null
+    private var swipeAdapter: SwipeAdapter?=null
+    private lateinit var card: Card
+    private lateinit var cardListHolder: CardListHolder
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +43,7 @@ class DetailActivity : BaseActivity() {
         Mtitle.text= card.locationName
         Mtext.text= card.longDescription
         
-        viewPager=findViewById<ViewPager>(R.id.viewPager) as ViewPager
+        viewPager= findViewById(R.id.viewPager)
         swipeAdapter = SwipeAdapter(this, images.toIntArray())
         viewPager!!.adapter=swipeAdapter
         dotsIndicator.setViewPager(viewPager!!)
