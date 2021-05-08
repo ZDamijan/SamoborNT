@@ -23,6 +23,8 @@ const val TABLE_NAME_ENG: String = "locations_eng"
 const val C_NAME: String = "Name"
 const val C_SHORT_DESCRIPTION: String = "Short_description"
 const val C_LONG_DESCRIPTION: String = "Long_description"
+const val C_LATITUDE: String = "Latitude"
+const val C_LONGITUDE: String = "Longitude"
 const val C_MAIN_IMAGE: String = "Main_image"
 val C_OTHER_IMAGES: List<String> = listOf("Image2", "Image3", "Image4", "Image5")
 

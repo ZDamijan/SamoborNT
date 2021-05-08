@@ -3,7 +3,6 @@ package com.strukovnasamobor.samobornt.cardview
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.strukovnasamobor.samobornt.BaseActivity
 import com.strukovnasamobor.samobornt.R
