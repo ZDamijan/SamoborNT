@@ -40,14 +40,8 @@ class DetailActivity : BaseActivity() {
             images.add(0, card.mainImage)
         }
 
-        // temp
-        //if (R.drawable.muzej_1 !in images && R.drawable.old_town !in images) {
-        //    images.add(1, R.drawable.muzej_1)
-        //    images.add(2, R.drawable.old_town)
-        //}
-
-        tekst.text= card.longDescription
-        naslovL.text= card.locationName
+        Mtitle.text= card.locationName
+        Mtext.text= card.longDescription
         
         viewPager=findViewById<ViewPager>(R.id.viewPager) as ViewPager
         swipeAdapter = SwipeAdapter(this, images.toIntArray())
@@ -56,9 +50,3 @@ class DetailActivity : BaseActivity() {
         viewPager!!.adapter?.registerDataSetObserver(dotsIndicator.dataSetObserver)
     }
 }
-
-
-
-
-
-
