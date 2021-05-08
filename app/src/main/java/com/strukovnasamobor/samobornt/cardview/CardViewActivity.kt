@@ -1,7 +1,9 @@
 package com.strukovnasamobor.samobornt.cardview
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.strukovnasamobor.samobornt.BaseActivity
 import com.strukovnasamobor.samobornt.R
@@ -14,7 +16,7 @@ private var cardListLocale: String? = null
 class CardViewActivity : BaseActivity() {
     private lateinit var connection: DBConnection
     private lateinit var cardListHolder: CardListHolder
-    private lateinit var cardsList: MutableList<Card>
+    private lateinit var cardList: MutableList<Card>
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +26,7 @@ class CardViewActivity : BaseActivity() {
         recyclerView = findViewById(R.id.recycler_view)
         connection = DBConnection.getConnectionInstance(this)
         cardListHolder = CardListHolder.getCardListHolderInstance(this)
-        cardsList = cardListHolder.getCardList()
+        cardList = cardListHolder.getCardList()
 
         if (cardListLocale == null) {
             cardListLocale = resources.configuration.locales[0].toString()
@@ -33,15 +35,15 @@ class CardViewActivity : BaseActivity() {
         if (resources.configuration.locales[0].toString() != cardListLocale) {
             cardListLocale = resources.configuration.locales[0].toString()
             cardListHolder.changeCardsLanguage(cardListLocale!!)
-            cardsList = cardListHolder.getCardList()
+            cardList = cardListHolder.getCardList()
         }
         else if (intent.extras != null && intent.extras!!.getBoolean("languageChanged")) {
             cardListLocale = intent.extras!!.getString("changeToLanguage")
             cardListHolder.changeCardsLanguage(cardListLocale!!)
-            cardsList = cardListHolder.getCardList()
+            cardList = cardListHolder.getCardList()
         }
 
-        val cardsViewAdapter = CardViewAdapter({ card -> adapterOnClick(card) }, cardsList)
+        val cardsViewAdapter = CardViewAdapter({ card -> adapterOnClick(card) }, cardList)
         recyclerView.adapter = cardsViewAdapter
     }
 
@@ -61,13 +63,8 @@ class CardViewActivity : BaseActivity() {
     }
 
     private fun adapterOnClick(card: Card) {
-        val intent: Intent = Intent(this, DetailActivity::class.java).apply{
-            putExtra("id", card.cardID)
-            putExtra("lDes",card.longDescription)
-            putExtra("MainImg",card.mainImage)
-            putExtra("title",card.locationName)
-        }
-
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra("cardIndex", cardList.indexOf(card))
         startActivity(intent)
     }
 }

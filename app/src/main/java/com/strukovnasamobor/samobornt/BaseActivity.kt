@@ -125,7 +125,7 @@ abstract class BaseActivity : AppCompatActivity() {
             val intent = Intent(this, CardViewActivity::class.java)
             intent.putExtra("languageChanged", true)
             intent.putExtra("changeToLanguage", resources.configuration.locales[0].toString())
-            startActivity<CardViewActivity>()
+            startActivity(intent)
         }
     }
 }

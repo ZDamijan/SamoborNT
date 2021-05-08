@@ -18,6 +18,11 @@ class CardViewHolder(itemView: View, val onClick: (Card) -> Unit) : RecyclerView
                 onClick(it)
             }
         }
+        cardImageView.setOnClickListener {
+            currentCard?.let {
+                onClick(it)
+             }
+        }
     }
 
     fun bind(card: Card) {

@@ -32,7 +32,6 @@ class CardListHolder private constructor(private val context: Context) {
         val correctTable = if (cardsListLocale == "hr") TABLE_NAME_HRV else TABLE_NAME_ENG
         val cardsList: MutableList<Card> = mutableListOf()
         val cursor: Cursor = connection.getFetchAllCursor(correctTable)
-        var id = 1
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast) {
                 val locationName: String = cursor.getString(cursor.getColumnIndex(C_NAME))
@@ -40,17 +39,37 @@ class CardListHolder private constructor(private val context: Context) {
                 val locationLD: String = cursor.getString(cursor.getColumnIndex(C_LONG_DESCRIPTION))
                 val imageName: String = cursor.getString(cursor.getColumnIndex(C_MAIN_IMAGE))
                 @DrawableRes
-                val locationImageID: Int? = context.resources
+                val locationImageID: Int = context.resources
                     .getIdentifier(imageName, "drawable", context.packageName)
-                val newCard = Card(cardID = id, locationName = locationName,
+                val otherImages = fetchOtherImageNames(locationName)
+                val newCard = Card(locationName = locationName,
                     longDescription = locationLD, shortDescription = locationSD,
-                    mainImage = locationImageID)
+                    mainImage = locationImageID, otherImages = otherImages)
                 cardsList.add(newCard)
                 cursor.moveToNext()
-                id += 1
             }
         }
         return cardsList
+    }
+
+    private fun fetchOtherImageNames(locationName: String): MutableList<Int> {
+        val imageList: MutableList<Int> = mutableListOf()
+        val cardsListLocale = context.resources.configuration.locales[0].toString()
+        val correctTable = if (cardsListLocale == "hr") TABLE_NAME_HRV else TABLE_NAME_ENG
+        for (otherImageColumn in C_OTHER_IMAGES) {
+            val cursor: Cursor = connection
+                .getGenericWhereCursor(otherImageColumn, correctTable, locationName)
+            if (cursor.moveToFirst()) {
+                try {
+                    val imageName: String = cursor.getString(cursor.getColumnIndex(otherImageColumn))
+                    @DrawableRes
+                    val imageID: Int = context.resources
+                        .getIdentifier(imageName, "drawable", context.packageName)
+                    imageList.add(imageID)
+                } catch (e: java.lang.RuntimeException) {} // image doesn't exist
+            }
+        }
+        return imageList
     }
 
     fun changeCardsLanguage(newLanguage: String) {
@@ -61,7 +80,7 @@ class CardListHolder private constructor(private val context: Context) {
             while (!cursor.isAfterLast) {
                 val currentCard: Card = cardsList[cardIndex]
                 currentCard.locationName = cursor.getString(cursor.getColumnIndex(C_NAME))
-                currentCard.longDescription = cursor.getString(cursor.getColumnIndex(C_SHORT_DESCRIPTION))
+                currentCard.longDescription = cursor.getString(cursor.getColumnIndex(C_LONG_DESCRIPTION))
                 currentCard.shortDescription = cursor.getString(cursor.getColumnIndex(C_SHORT_DESCRIPTION))
                 cardIndex += 1
                 cursor.moveToNext()

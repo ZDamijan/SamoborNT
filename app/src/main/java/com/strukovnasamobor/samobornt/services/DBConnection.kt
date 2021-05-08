@@ -24,6 +24,7 @@ const val C_NAME: String = "Name"
 const val C_SHORT_DESCRIPTION: String = "Short_description"
 const val C_LONG_DESCRIPTION: String = "Long_description"
 const val C_MAIN_IMAGE: String = "Main_image"
+val C_OTHER_IMAGES: List<String> = listOf("Image2", "Image3", "Image4", "Image5")
 
 
 class DBConnection private constructor(context: Context) :
@@ -70,5 +71,9 @@ class DBConnection private constructor(context: Context) :
 
     fun getFetchAllCursor(tableName: String): Cursor {
         return DATABASE!!.rawQuery("SELECT * FROM $tableName", null)
+    }
+
+    fun getGenericWhereCursor(columnName: String, tableName: String, locationName: String): Cursor {
+        return DATABASE!!.rawQuery("SELECT $columnName FROM $tableName WHERE Name='$locationName'", null)
     }
 }
