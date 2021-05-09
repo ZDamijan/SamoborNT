@@ -8,7 +8,6 @@ import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingEvent
 
 class GeofenceReceiver : BroadcastReceiver() {
-    lateinit var key: String
     override fun onReceive(context: Context?, intent: Intent?) {
         if (context != null) {
             val geofencingEvent = GeofencingEvent.fromIntent(intent)
@@ -19,9 +18,9 @@ class GeofenceReceiver : BroadcastReceiver() {
                 triggeringGeofences.forEach {
                     Toast.makeText(context, "Ulaz u geofence: " + it.requestId, Toast.LENGTH_SHORT).show()
 
-                    MapsActivity.showNotification(
+                    MapboxActivity.showNotification(
                         context.applicationContext,
-                        "Ulaz u geofence: " + it.requestId
+                        it.requestId
                     )
                     //ovdje umjesto ovog Toast-a, treba poslati notifikaciju da je korisnik usao u geofence, ime geofence-a dobijemo preko: it.requestId
                 }

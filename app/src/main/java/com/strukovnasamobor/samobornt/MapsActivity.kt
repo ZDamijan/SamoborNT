@@ -36,14 +36,9 @@ import com.strukovnasamobor.samobornt.services.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random
 
-const val GEOFENCE_RADIUS = 100 //ovo je radius geofence-a, tj. koliko daleko korisnik mora biti da dobije notifikaciju
-const val GEOFENCE_LOCATION_REQUEST_CODE = 5
-
 class MapsActivity : BaseActivity(), OnMapReadyCallback {
 
     private lateinit var map: GoogleMap
-    private lateinit var geofencingClient: GeofencingClient
-    private lateinit var connection: DBConnection
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,21 +46,6 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
         setContentView(R.layout.activity_maps)
         super.initializeMenu()
 
-        connection = DBConnection.getConnectionInstance(this)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            if (ContextCompat.checkSelfPermission(
-                    applicationContext,
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
-                    GEOFENCE_LOCATION_REQUEST_CODE
-                )
-            }
-        }
 
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
@@ -73,7 +53,6 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
 
         createLocationCallback(::showCurrentLocation)
         createLocationRequest()
-        geofencingClient = LocationServices.getGeofencingClient(this)
     }
 
     override fun onStart() {
@@ -159,12 +138,6 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
                                     .title(placemark.getProperty("name"))
                                     .snippet(placemark.getProperty("description"))
                             )
-                            createGeofence(
-                                LatLng(
-                                    point.geometryObject.latitude,
-                                    point.geometryObject.longitude
-                                ), placemark.getProperty("name")!!, geofencingClient
-                            )
                         } else if (geometry.geometryType.equals("LineString")) {
                             val kmlLineString: KmlLineString = geometry as KmlLineString
                             val coordinates: ArrayList<LatLng> = kmlLineString.geometryObject
@@ -241,96 +214,5 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
                 }
             }
         }
-    }
-
-    private fun createGeofence(location: LatLng, key: String, geofencingClient: GeofencingClient) {
-        val geofence = Geofence.Builder()
-            .setRequestId(key)
-            .setCircularRegion(location.latitude, location.longitude, GEOFENCE_RADIUS.toFloat())
-            .setExpirationDuration(Geofence.NEVER_EXPIRE)
-            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
-            .build()
-
-        val geofenceRequest = GeofencingRequest.Builder()
-            .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
-            .addGeofence(geofence)
-            .build()
-
-        val intent = Intent(this, GeofenceReceiver::class.java)
-            .putExtra("key", key)
-
-        val pendingIntent = PendingIntent.getBroadcast(
-            applicationContext,
-            0,
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT
-        )
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            if (ContextCompat.checkSelfPermission(
-                    applicationContext,
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
-                    GEOFENCE_LOCATION_REQUEST_CODE
-                )
-            } else {
-                geofencingClient.addGeofences(geofenceRequest, pendingIntent)
-            }
-        } else {
-            geofencingClient.addGeofences(geofenceRequest, pendingIntent)
-        }
-    }
-
-    companion object {
-        fun showNotification(context: Context?, message: String) {
-            val CHANNEL_ID = "REMINDER_NOTIFICATION_CHANNEL"
-            var notificationId = 12345
-            notificationId += Random(notificationId).nextInt(1, 30)
-
-            val notificationBuilder = NotificationCompat.Builder(context!!.applicationContext, CHANNEL_ID)
-                    .setSmallIcon(R.drawable.marker_custom)
-                    .setContentTitle(context.getString(R.string.app_name))
-                    .setContentText(message)
-                    .setStyle(
-                            NotificationCompat.BigTextStyle()
-                                    .bigText(message)
-                    )
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-
-            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val channel = NotificationChannel(
-                        CHANNEL_ID,
-                        context.getString(R.string.app_name),
-                        NotificationManager.IMPORTANCE_DEFAULT
-                ).apply {
-                    description = context.getString(R.string.app_name)
-                }
-                notificationManager.createNotificationChannel(channel)
-            }
-            notificationManager.notify(notificationId, notificationBuilder.build())
-        }
-    }
-
-    private fun getLocationList(): MutableList<Triple<String, Double, Double>> {
-        val locationList: MutableList<Triple<String, Double, Double>> = mutableListOf()
-        val cardsListLocale = resources.configuration.locales[0].toString()
-        val correctTable = if (cardsListLocale == "hr") TABLE_NAME_HRV else TABLE_NAME_ENG
-        val cursor: Cursor = connection.getFetchAllCursor(correctTable)
-        if (cursor.moveToFirst()) {
-            while (!cursor.isAfterLast) {
-                val locationName = cursor.getString(cursor.getColumnIndex(C_NAME))
-                val latitude = cursor.getDouble(cursor.getColumnIndex(C_LATITUDE))
-                val longitude = cursor.getDouble(cursor.getColumnIndex(C_LONGITUDE))
-                locationList.add(Triple(locationName, latitude, longitude))
-                cursor.moveToNext()
-            }
-        }
-        return locationList
     }
 }
