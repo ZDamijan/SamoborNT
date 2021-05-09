@@ -23,7 +23,14 @@
             android:id="@+id/location_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_location"
+            android:src="@drawable/ic_location_menu"
+            android:layout_alignParentRight="true"
+            android:paddingRight="105dp" />
+        <ImageView
+            android:id="@+id/sights_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_sights_menu"
             android:layout_alignParentRight="true"
             android:paddingRight="60dp" />
         <ImageView

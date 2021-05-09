@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import com.mapbox.mapboxsdk.location.LocationComponent
 import com.mapbox.mapboxsdk.location.modes.CameraMode
 import com.strukovnasamobor.samobornt.api.startActivity
@@ -26,6 +27,11 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     fun initializeMenu() {
+        val sightsMenu = findViewById<ImageView>(R.id.sights_menu)
+        sightsMenu.setOnClickListener {
+            startActivity<CardViewActivity>()
+        }
+
         val locationMenu = findViewById<ImageView>(R.id.location_menu)
         locationMenu.setOnClickListener {
             startActivity<MapboxActivity>()
