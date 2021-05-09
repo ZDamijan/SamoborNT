@@ -16,13 +16,17 @@ private lateinit var DB_FILE: File
 private var DATABASE: SQLiteDatabase? = null
 private var UPGRADE_DATABASE: Boolean = false
 
-const val TABLE_NAME: String = "locations"
+const val TABLE_NAME_HRV: String = "locations_hrv"
+const val TABLE_NAME_ENG: String = "locations_eng"
 
 // column names
 const val C_NAME: String = "Name"
 const val C_SHORT_DESCRIPTION: String = "Short_description"
 const val C_LONG_DESCRIPTION: String = "Long_description"
+const val C_LATITUDE: String = "Latitude"
+const val C_LONGITUDE: String = "Longitude"
 const val C_MAIN_IMAGE: String = "Main_image"
+val C_OTHER_IMAGES: List<String> = listOf("Image2", "Image3", "Image4", "Image5")
 
 
 class DBConnection private constructor(context: Context) :
@@ -67,7 +71,11 @@ class DBConnection private constructor(context: Context) :
         }
     }
 
-    fun getFetchAllCursor(): Cursor {
-        return DATABASE!!.rawQuery("SELECT * FROM $TABLE_NAME", null)
+    fun getFetchAllCursor(tableName: String): Cursor {
+        return DATABASE!!.rawQuery("SELECT * FROM $tableName", null)
+    }
+
+    fun getGenericWhereCursor(columnName: String, tableName: String, locationName: String): Cursor {
+        return DATABASE!!.rawQuery("SELECT $columnName FROM $tableName WHERE Name='$locationName'", null)
     }
 }

@@ -5,7 +5,7 @@ import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.Configuration
+import android.database.Cursor
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -29,7 +29,6 @@ import com.google.maps.android.data.kml.KmlLayer
 import com.google.maps.android.data.kml.KmlLineString
 import com.google.maps.android.data.kml.KmlPoint
 import com.strukovnasamobor.samobornt.services.*
-import java.util.*
 import kotlin.collections.ArrayList
 
 const val GEOFENCE_RADIUS = 100 //ovo je radius geofence-a, tj. koliko daleko korisnik mora biti da dobije notifikaciju
@@ -39,12 +38,15 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
 
     private lateinit var map: GoogleMap
     private lateinit var geofencingClient: GeofencingClient
+    private lateinit var connection: DBConnection
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show()
         setContentView(R.layout.activity_maps)
         super.initializeMenu()
+
+        connection = DBConnection.getConnectionInstance(this)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             if (ContextCompat.checkSelfPermission(
@@ -162,7 +164,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
                             val kmlLineString: KmlLineString = geometry as KmlLineString
                             val coordinates: ArrayList<LatLng> = kmlLineString.geometryObject
                             for (latLng in coordinates) {
-                                pathPoints.add(latLng);
+                                pathPoints.add(latLng)
                             }
                         }
                     }
@@ -240,7 +242,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
         val geofence = Geofence.Builder()
             .setRequestId(key)
             .setCircularRegion(location.latitude, location.longitude, GEOFENCE_RADIUS.toFloat())
-            .setExpirationDuration(Geofence.NEVER_EXPIRE.toLong())
+            .setExpirationDuration(Geofence.NEVER_EXPIRE)
             .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
             .build()
 
@@ -276,5 +278,22 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
         } else {
             geofencingClient.addGeofences(geofenceRequest, pendingIntent)
         }
+    }
+
+    private fun getLocationList(): MutableList<Triple<String, Double, Double>> {
+        val locationList: MutableList<Triple<String, Double, Double>> = mutableListOf()
+        val cardsListLocale = resources.configuration.locales[0].toString()
+        val correctTable = if (cardsListLocale == "hr") TABLE_NAME_HRV else TABLE_NAME_ENG
+        val cursor: Cursor = connection.getFetchAllCursor(correctTable)
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast) {
+                val locationName = cursor.getString(cursor.getColumnIndex(C_NAME))
+                val latitude = cursor.getDouble(cursor.getColumnIndex(C_LATITUDE))
+                val longitude = cursor.getDouble(cursor.getColumnIndex(C_LONGITUDE))
+                locationList.add(Triple(locationName, latitude, longitude))
+                cursor.moveToNext()
+            }
+        }
+        return locationList
     }
 }
