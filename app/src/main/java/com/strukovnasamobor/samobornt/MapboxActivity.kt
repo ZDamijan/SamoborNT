@@ -66,8 +66,10 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                     for ((key, value) in feature.properties()!!.entrySet()) {
                         // Log all the properties
                         Log.e("mapbox", String.format("%s = %s", key, value))
+                        if(key=="name")
+                            //open specific detail view with name "value"
+                            Log.e("mapbox open detail view: ", value.toString())
                     }
-                    //open specific detail view
                 }
                 true
             }
