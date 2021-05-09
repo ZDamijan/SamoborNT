@@ -8,8 +8,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,13 +20,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
-
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
             android:layout_width="wrap_content"
             android:layout_height="250dp"/>
-
 
             <com.make.dots.dotsindicator.DotsIndicator
                 android:id="@+id/dotsIndicator"
@@ -45,13 +40,9 @@
                 app:dot_width="6dp"
                 />
 
-
-
-
-
         </FrameLayout>
         <TextView
-            android:id="@+id/naslovL"
+            android:id="@+id/Mtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
@@ -60,7 +51,6 @@
             android:shadowDy="00"
             android:shadowRadius="0"
             android:textStyle="bold"
-            android:text=""
             android:padding="4dp"
             android:textAlignment="center"
             android:textColor="@color/black"
@@ -74,22 +64,17 @@
             >
 
             <TextView
-                android:id="@+id/tekst"
+                android:id="@+id/Mtext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
                 android:shadowColor="@color/black"
                 android:shadowDx="00"
                 android:shadowDy="00"
                 android:shadowRadius="0"
-                android:text="Samobor je grad u Hrvatskoj. Smješten je na istočnim obroncima Samoborskog gorja (dio Žumberačke gore), na izlazu rijeke Gradne u savsku nizinu. Od davnina ima bitno prometno značenje, između ostalog i zbog hrvatsko-slovenske granice koja se nalazi samo 5 kilometara od centra grada, i nije se mijenjala od sredine 12. stoljeća. Jedno je od najomiljenijih i najstarijih izletničkih odredišta u Hrvatskoj. U Samoboru živi oko 37.500 stanovnika od kojih je 16.000 u samom Samoboru, a 21.500 živi u okolnim mjestima koja spadaju pod lokalnu samoupravu Samobor."
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="17dp"
                 />
-
-
-
 
         </ScrollView>
 
@@ -100,7 +85,5 @@
             android:gravity="bottom"
             android:orientation="horizontal"/>
     </LinearLayout>
-
-
 
 </FrameLayout>

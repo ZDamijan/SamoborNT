@@ -18,8 +18,8 @@ class SwipeAdapter(var context: Context, var images:IntArray):PagerAdapter(){
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val view=layoutInflater.inflate(R.layout.detail_slika,container,false)
-        val imageView = view.findViewById<View>(R.id.slika) as ImageView
+        val view=layoutInflater.inflate(R.layout.detail_image,container,false)
+        val imageView = view.findViewById<View>(R.id.image) as ImageView
         imageView.setImageResource(images[position])
 
         container.addView(view)
