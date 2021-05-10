@@ -37,7 +37,7 @@ import com.google.android.gms.location.GeofencingRequest
 import com.google.android.gms.location.LocationServices
 import com.strukovnasamobor.samobornt.detail.DetailActivity
 
-const val GEOFENCE_RADIUS = 100 //ovo je radius geofence-a, tj. koliko daleko korisnik mora biti da dobije notifikaciju
+const val GEOFENCE_RADIUS = 100
 const val GEOFENCE_LOCATION_REQUEST_CODE = 5
 
 class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {

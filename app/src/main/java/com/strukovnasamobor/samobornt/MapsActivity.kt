@@ -2,10 +2,7 @@ package com.strukovnasamobor.samobornt
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
@@ -14,7 +11,6 @@ import android.os.Build
 import android.os.Bundle
 import android.widget.*
 import androidx.core.app.ActivityCompat
-import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingClient
@@ -34,11 +30,16 @@ import com.google.maps.android.data.kml.KmlLineString
 import com.google.maps.android.data.kml.KmlPoint
 import com.strukovnasamobor.samobornt.services.*
 import kotlin.collections.ArrayList
+
+//const val GEOFENCE_RADIUS = 100
+//const val GEOFENCE_LOCATION_REQUEST_CODE = 5
 import kotlin.random.Random
 
 class MapsActivity : BaseActivity(), OnMapReadyCallback {
 
     private lateinit var map: GoogleMap
+    private lateinit var geofencingClient: GeofencingClient
+    private lateinit var connection: DBConnection
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +47,20 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
         setContentView(R.layout.activity_maps)
         super.initializeMenu()
 
+        connection = DBConnection.getConnectionInstance(this)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            if (ContextCompat.checkSelfPermission(
+                    applicationContext,
+                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION), GEOFENCE_LOCATION_REQUEST_CODE
+                )
+            }
+        }
 
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
@@ -53,44 +68,38 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
 
         createLocationCallback(::showCurrentLocation)
         createLocationRequest()
+        geofencingClient = LocationServices.getGeofencingClient(this)
     }
 
     override fun onStart() {
         super.onStart()
         Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show()
     }
-
     override fun onResume() {
         super.onResume()
         Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show()
         if (!locationUpdateState) startLocationUpdates()
     }
-
     override fun onPause() {
         super.onPause()
         Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show()
         stopLocationUpdates()
     }
-
     override fun onStop() {
         super.onStop()
         Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show()
         stopLocationUpdates()
     }
-
     override fun onDestroy() {
         super.onDestroy()
         Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show()
     }
-
     override fun onBackPressed() {
         moveTaskToBack(true)
     }
-
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         map.uiSettings.isZoomControlsEnabled = true
-
         val markerManager = MarkerManager(map)
         val groundOverlayManager = GroundOverlayManager(map)
         val polygonManager = PolygonManager(map)
@@ -106,7 +115,6 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
             null
         )
         kmlLayer.addLayerToMap()
-
         val targetPosition = LatLng(45.8019356, 15.7098924)
         val cameraPosition = CameraPosition.Builder()
             .target(targetPosition) // Sets the center of the map to Mountain View
@@ -115,7 +123,6 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
             .tilt(30f)            // Sets the tilt of the camera to 30 degrees
             .build()              // Creates a CameraPosition from the builder
         map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
-
         val markerCollection = markerManager.newCollection()
         val polylineCollection = polylineManager.newCollection()
         val pathPoints: ArrayList<LatLng> = ArrayList()
@@ -137,6 +144,12 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
                                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_custom))
                                     .title(placemark.getProperty("name"))
                                     .snippet(placemark.getProperty("description"))
+                            )
+                            createGeofence(
+                                LatLng(
+                                    point.geometryObject.latitude,
+                                    point.geometryObject.longitude
+                                ), placemark.getProperty("name")!!, geofencingClient
                             )
                         } else if (geometry.geometryType.equals("LineString")) {
                             val kmlLineString: KmlLineString = geometry as KmlLineString
@@ -163,9 +176,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
                 .geodesic(true)
                 .addAll(pathPoints)
         )
-
         kmlLayer.removeLayerFromMap()
-
         map.setOnMapClickListener { latLng ->
             Toast.makeText(
                 this,
@@ -191,7 +202,6 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
         }
         setupMap()
     }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -200,9 +210,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         showCurrentLocation()
     }
-
     private fun setupMap() = getLocationUpdates(::showCurrentLocation)
-
     @SuppressLint("MissingPermission")
     private fun showCurrentLocation() {
         if (hasLocationPermission()) {
@@ -214,5 +222,64 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
                 }
             }
         }
+    }
+
+    private fun createGeofence(location: LatLng, key: String, geofencingClient: GeofencingClient) {
+        val geofence = Geofence.Builder()
+            .setRequestId(key)
+            .setCircularRegion(location.latitude, location.longitude, GEOFENCE_RADIUS.toFloat())
+            .setExpirationDuration(Geofence.NEVER_EXPIRE)
+            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
+            .build()
+
+        val geofenceRequest = GeofencingRequest.Builder()
+            .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
+            .addGeofence(geofence)
+            .build()
+
+        val intent = Intent(this, GeofenceReceiver::class.java)
+            .putExtra("key", key)
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            applicationContext,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            if (ContextCompat.checkSelfPermission(
+                    applicationContext,
+                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+                    GEOFENCE_LOCATION_REQUEST_CODE
+                )
+            } else {
+                geofencingClient.addGeofences(geofenceRequest, pendingIntent)
+            }
+        } else {
+            geofencingClient.addGeofences(geofenceRequest, pendingIntent)
+        }
+    }
+
+    private fun getLocationList(): MutableList<Triple<String, Double, Double>> {
+        val locationList: MutableList<Triple<String, Double, Double>> = mutableListOf()
+        val cardsListLocale = resources.configuration.locales[0].toString()
+        val correctTable = if (cardsListLocale == "hr") TABLE_NAME_HRV else TABLE_NAME_ENG
+        val cursor: Cursor = connection.getFetchAllCursor(correctTable)
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast) {
+                val locationName = cursor.getString(cursor.getColumnIndex(C_NAME))
+                val latitude = cursor.getDouble(cursor.getColumnIndex(C_LATITUDE))
+                val longitude = cursor.getDouble(cursor.getColumnIndex(C_LONGITUDE))
+                locationList.add(Triple(locationName, latitude, longitude))
+                cursor.moveToNext()
+            }
+        }
+        return locationList
     }
 }
