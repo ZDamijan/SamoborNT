@@ -32,6 +32,11 @@ abstract class BaseActivity : AppCompatActivity() {
             startActivity<CardViewActivity>()
         }
 
+        val mapMenu = findViewById<ImageView>(R.id.map_menu)
+        mapMenu.setOnClickListener {
+            startActivity<MapboxActivity>()
+        }
+
         val locationMenu = findViewById<ImageView>(R.id.location_menu)
         locationMenu.setOnClickListener {
             startActivity<MapboxActivity>()

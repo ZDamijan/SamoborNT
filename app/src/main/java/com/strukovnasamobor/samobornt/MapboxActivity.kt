@@ -12,6 +12,8 @@ import android.database.Cursor
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
@@ -164,7 +166,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                 isLocationComponentEnabled = true
 
                 // Set the LocationComponent's camera mode
-                cameraMode = CameraMode.TRACKING
+                cameraMode = CameraMode.TRACKING_GPS
 
                 // Set the LocationComponent's render mode
                 renderMode = RenderMode.COMPASS
@@ -177,6 +179,17 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
 
                 override fun onCameraTrackingChanged(currentMode: Int) {
                     // CameraMode has been updated
+                    if(currentMode == CameraMode.TRACKING_GPS) {
+                        val mapMenu = findViewById<ImageView>(R.id.map_menu)
+                        mapMenu.visibility = View.VISIBLE
+                        val locationMenu = findViewById<ImageView>(R.id.location_menu)
+                        locationMenu.visibility = View.INVISIBLE
+                    } else{
+                        val mapMenu = findViewById<ImageView>(R.id.map_menu)
+                        mapMenu.visibility = View.INVISIBLE
+                        val locationMenu = findViewById<ImageView>(R.id.location_menu)
+                        locationMenu.visibility = View.VISIBLE
+                    }
                 }
             })
         }

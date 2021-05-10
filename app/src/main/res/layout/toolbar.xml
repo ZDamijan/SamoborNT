@@ -20,12 +20,20 @@
             android:textColor="@color/white"
             android:textSize="22sp" />
         <ImageView
+            android:id="@+id/map_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_map_menu"
+            android:layout_alignParentRight="true"
+            android:paddingRight="105dp" />
+        <ImageView
             android:id="@+id/location_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_location_menu"
             android:layout_alignParentRight="true"
-            android:paddingRight="105dp" />
+            android:paddingRight="105dp"
+            android:visibility="invisible"/>
         <ImageView
             android:id="@+id/sights_menu"
             android:layout_width="wrap_content"
