@@ -2,7 +2,10 @@ package com.strukovnasamobor.samobornt
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
@@ -11,6 +14,7 @@ import android.os.Build
 import android.os.Bundle
 import android.widget.*
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingClient
@@ -30,15 +34,11 @@ import com.google.maps.android.data.kml.KmlLineString
 import com.google.maps.android.data.kml.KmlPoint
 import com.strukovnasamobor.samobornt.services.*
 import kotlin.collections.ArrayList
-
-const val GEOFENCE_RADIUS = 100 //ovo je radius geofence-a, tj. koliko daleko korisnik mora biti da dobije notifikaciju
-const val GEOFENCE_LOCATION_REQUEST_CODE = 5
+import kotlin.random.Random
 
 class MapsActivity : BaseActivity(), OnMapReadyCallback {
 
     private lateinit var map: GoogleMap
-    private lateinit var geofencingClient: GeofencingClient
-    private lateinit var connection: DBConnection
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,21 +46,6 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
         setContentView(R.layout.activity_maps)
         super.initializeMenu()
 
-        connection = DBConnection.getConnectionInstance(this)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            if (ContextCompat.checkSelfPermission(
-                    applicationContext,
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
-                    GEOFENCE_LOCATION_REQUEST_CODE
-                )
-            }
-        }
 
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
@@ -68,7 +53,6 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
 
         createLocationCallback(::showCurrentLocation)
         createLocationRequest()
-        geofencingClient = LocationServices.getGeofencingClient(this)
     }
 
     override fun onStart() {
@@ -154,12 +138,6 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
                                     .title(placemark.getProperty("name"))
                                     .snippet(placemark.getProperty("description"))
                             )
-                            createGeofence(
-                                LatLng(
-                                    point.geometryObject.latitude,
-                                    point.geometryObject.longitude
-                                ), placemark.getProperty("name")!!, geofencingClient
-                            )
                         } else if (geometry.geometryType.equals("LineString")) {
                             val kmlLineString: KmlLineString = geometry as KmlLineString
                             val coordinates: ArrayList<LatLng> = kmlLineString.geometryObject
@@ -236,64 +214,5 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
                 }
             }
         }
-    }
-
-    private fun createGeofence(location: LatLng, key: String, geofencingClient: GeofencingClient) {
-        val geofence = Geofence.Builder()
-            .setRequestId(key)
-            .setCircularRegion(location.latitude, location.longitude, GEOFENCE_RADIUS.toFloat())
-            .setExpirationDuration(Geofence.NEVER_EXPIRE)
-            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
-            .build()
-
-        val geofenceRequest = GeofencingRequest.Builder()
-            .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
-            .addGeofence(geofence)
-            .build()
-
-        val intent = Intent(this, GeofenceReceiver::class.java)
-            .putExtra("key", key)
-
-        val pendingIntent = PendingIntent.getBroadcast(
-            applicationContext,
-            0,
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT
-        )
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            if (ContextCompat.checkSelfPermission(
-                    applicationContext,
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
-                    GEOFENCE_LOCATION_REQUEST_CODE
-                )
-            } else {
-                geofencingClient.addGeofences(geofenceRequest, pendingIntent)
-            }
-        } else {
-            geofencingClient.addGeofences(geofenceRequest, pendingIntent)
-        }
-    }
-
-    private fun getLocationList(): MutableList<Triple<String, Double, Double>> {
-        val locationList: MutableList<Triple<String, Double, Double>> = mutableListOf()
-        val cardsListLocale = resources.configuration.locales[0].toString()
-        val correctTable = if (cardsListLocale == "hr") TABLE_NAME_HRV else TABLE_NAME_ENG
-        val cursor: Cursor = connection.getFetchAllCursor(correctTable)
-        if (cursor.moveToFirst()) {
-            while (!cursor.isAfterLast) {
-                val locationName = cursor.getString(cursor.getColumnIndex(C_NAME))
-                val latitude = cursor.getDouble(cursor.getColumnIndex(C_LATITUDE))
-                val longitude = cursor.getDouble(cursor.getColumnIndex(C_LONGITUDE))
-                locationList.add(Triple(locationName, latitude, longitude))
-                cursor.moveToNext()
-            }
-        }
-        return locationList
     }
 }
