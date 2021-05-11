@@ -29,7 +29,7 @@ class CardListHolder private constructor(private val context: Context) {
 
     private fun createCards(): MutableList<Card> {
         val cardsListLocale = context.resources.configuration.locales[0].toString()
-        val correctTable = if (cardsListLocale == "hr") TABLE_NAME_HRV else TABLE_NAME_ENG
+        val correctTable = if (cardsListLocale == "hr" || cardsListLocale == "hr_HR") TABLE_NAME_HRV else TABLE_NAME_ENG
         val cardsList: MutableList<Card> = mutableListOf()
         val cursor: Cursor = connection.getFetchAllCursor(correctTable)
         if (cursor.moveToFirst()) {
@@ -55,7 +55,7 @@ class CardListHolder private constructor(private val context: Context) {
     private fun fetchOtherImageNames(locationName: String): MutableList<Int> {
         val imageList: MutableList<Int> = mutableListOf()
         val cardsListLocale = context.resources.configuration.locales[0].toString()
-        val correctTable = if (cardsListLocale == "hr") TABLE_NAME_HRV else TABLE_NAME_ENG
+        val correctTable = if (cardsListLocale == "hr" || cardsListLocale == "hr_HR") TABLE_NAME_HRV else TABLE_NAME_ENG
         for (otherImageColumn in C_OTHER_IMAGES) {
             val cursor: Cursor = connection
                 .getGenericWhereCursor(otherImageColumn, correctTable, locationName)
@@ -73,7 +73,7 @@ class CardListHolder private constructor(private val context: Context) {
     }
 
     fun changeCardsLanguage(newLanguage: String) {
-        val correctTable: String = if (newLanguage == "hr") TABLE_NAME_HRV else TABLE_NAME_ENG
+        val correctTable: String = if (newLanguage == "hr" || newLanguage == "hr_HR") TABLE_NAME_HRV else TABLE_NAME_ENG
         val cursor: Cursor = connection.getFetchAllCursor(correctTable)
         if (cursor.moveToFirst()) {
             var cardIndex = 0

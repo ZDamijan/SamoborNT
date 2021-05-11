@@ -1,5 +1,8 @@
 package com.strukovnasamobor.samobornt
 
+import android.app.Activity
+import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -9,8 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.strukovnasamobor.samobornt.api.startActivity
-import com.strukovnasamobor.samobornt.services.DBConnection
 import com.strukovnasamobor.samobornt.services.requestPermission
+import java.util.*
 
 
 private lateinit var btnExplore: Button
@@ -18,6 +21,7 @@ lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
 class StartScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        loadLanguage()
         super.onCreate(savedInstanceState)
         this.window.apply {
             clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
@@ -38,6 +42,29 @@ class StartScreenActivity : AppCompatActivity() {
             //startActivity<MapsActivity>()
             startActivity<MapboxActivity>()
         }
+    }
+
+    private fun loadLanguage() {
+        lateinit var language: String
+        val packageName: String = applicationContext.packageName
+        val sharedPreferences: SharedPreferences =
+            getSharedPreferences("$packageName.PREFERENCES", Activity.MODE_PRIVATE)
+
+        language = if (sharedPreferences.getString("PREFERRED_LANGUAGE", "") == "") {
+            "hr"
+        } else {
+            sharedPreferences.getString("PREFERRED_LANGUAGE", "")!!
+        }
+
+        val locale = Locale(language)
+        Locale.setDefault(locale)
+        val config = Configuration()
+        config.setLocale(locale)
+        @Suppress("DEPRECATION")
+        baseContext.resources.updateConfiguration(
+            config,
+            baseContext.resources.displayMetrics
+        )
     }
 }
 

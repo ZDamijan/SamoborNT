@@ -269,7 +269,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
     private fun getLocationList(): MutableList<Triple<String, Double, Double>> {
         val locationList: MutableList<Triple<String, Double, Double>> = mutableListOf()
         val cardsListLocale = resources.configuration.locales[0].toString()
-        val correctTable = if (cardsListLocale == "hr") TABLE_NAME_HRV else TABLE_NAME_ENG
+        val correctTable = if (cardsListLocale == "hr" || cardsListLocale == "hr_HR") TABLE_NAME_HRV else TABLE_NAME_ENG
         val cursor: Cursor = connection.getFetchAllCursor(correctTable)
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast) {
