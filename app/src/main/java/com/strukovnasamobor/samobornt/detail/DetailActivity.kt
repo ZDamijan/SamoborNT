@@ -36,7 +36,6 @@ class DetailActivity : BaseActivity() {
 
         if (bundle?.get("cardIndex") != null) {
             currentCardIndex = bundle.get("cardIndex") as Int
-            //cardListHolder.getCardList()[currentCardIndex!!].also { card = it }
         }
         val card: Card = cardListHolder.getCardList()[currentCardIndex!!]
         val images: MutableList<Int> = card.otherImages
