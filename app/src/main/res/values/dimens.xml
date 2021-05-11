@@ -4,4 +4,5 @@
     <dimen name="margin_right">5dp</dimen>
     <dimen name="margin_top">5dp</dimen>
     <dimen name="margin_bottom">5dp</dimen>
+    <dimen name="textDetail">3dp</dimen>
 </resources>

@@ -55,12 +55,16 @@
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="20dp"
+            android:layout_marginLeft="@dimen/textDetail"
+            android:layout_marginRight="@dimen/textDetail"
+            android:layout_marginBottom="@dimen/textDetail"
             />
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/margin_left"
             android:layout_marginRight="@dimen/margin_left"
+            android:layout_marginBottom="5dp"
             >
 
             <TextView
@@ -71,19 +75,16 @@
                 android:shadowDx="00"
                 android:shadowDy="00"
                 android:shadowRadius="0"
-                android:textAlignment="center"
+                android:layout_gravity="left"
                 android:textColor="@color/black"
                 android:textSize="17dp"
+                android:layout_marginLeft="@dimen/textDetail"
+                android:layout_marginRight="@dimen/textDetail"
                 />
 
         </ScrollView>
 
-       <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="bottom"
-            android:orientation="horizontal"/>
+
     </LinearLayout>
 
 </FrameLayout>

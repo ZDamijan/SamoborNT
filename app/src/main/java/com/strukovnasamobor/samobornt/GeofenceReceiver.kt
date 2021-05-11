@@ -21,6 +21,7 @@ class GeofenceReceiver : BroadcastReceiver() {
                     MapboxActivity.showNotification(
                         context.applicationContext,
                         it.requestId
+
                     )
                     //ovdje umjesto ovog Toast-a, treba poslati notifikaciju da je korisnik usao u geofence, ime geofence-a dobijemo preko: it.requestId
                 }
