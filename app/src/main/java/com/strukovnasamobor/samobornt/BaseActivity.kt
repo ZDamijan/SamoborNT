@@ -141,7 +141,7 @@ abstract class BaseActivity : AppCompatActivity() {
             intent.putExtra("changeToLanguage", resources.configuration.locales[0].toString())
             startActivity(intent)
         }
-        if (this::class.java.simpleName == "DetailActivity") {
+        else if (this::class.java.simpleName == "DetailActivity") {
             this.finish()
             val intent = Intent(this, DetailActivity::class.java)
             intent.putExtra("languageChanged", true)
