@@ -3,6 +3,7 @@ package com.strukovnasamobor.samobornt.cardview
 import android.annotation.SuppressLint
 import android.content.Context
 import android.database.Cursor
+import android.util.Log
 import androidx.annotation.DrawableRes
 import com.strukovnasamobor.samobornt.services.*
 

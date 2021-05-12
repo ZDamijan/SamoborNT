@@ -1,16 +1,16 @@
 <resources>
     <string name="app_name">Samobor N&amp;T</string>
     <string name="title_activity_maps">Samobor N&amp;T</string>
-    <string name="start_message">Doživite naš grad onakvim kakav je bio nekad i sad na svakom koraku.</string>
+    <string name="start_message">Doživite Samobor onakvim kakav je bio nekad i sad na svakom koraku.</string>
     <string name="explore">Istraži Samobor</string>
     <string name="title_actionbar"><![CDATA[Samobor N&T]]></string>
     <string name="about">O aplikaciji</string>
     <string name="sights">Znamenitosti</string>
     <string name="virtual_tour">Virtualna šetnja</string>
-    <string name="change_language">Promjena jezika</string>
+    <string name="change_language">Jezik / Language</string>
     <string name="map_show">Prikaz mape</string>
     <string name="croatian">Hrvatski</string>
-    <string name="english">Engleski</string>
+    <string name="english">Engleski / English</string>
     <string name="save">Spremi</string>
     <string name="close">Poništi</string>
     <string name="augmented_reality">Proširena stvarnost</string>

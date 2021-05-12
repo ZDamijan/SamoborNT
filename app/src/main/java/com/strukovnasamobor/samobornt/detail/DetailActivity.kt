@@ -3,6 +3,8 @@
 
 import android.database.Cursor
 import android.os.Bundle
+import android.security.identity.EphemeralPublicKeyNotFoundException
+import android.util.Log
 
 import androidx.viewpager.widget.ViewPager
 
@@ -39,38 +41,41 @@ class DetailActivity : BaseActivity() {
         if (bundle?.get("cardIndex") != null) {
             currentCardIndex = bundle.get("cardIndex") as Int
         }
-        val card: Card = cardListHolder.getCardList()[currentCardIndex!!]
-        if (bundle?.get("locationNot") != null) {
-            var name = bundle.get("locationNot") as String
+
+        lateinit var card: Card
+        var cardFound = false
+        if (bundle?.get("locationName") != null) {
+            var name = bundle.get("locationName") as String
+            Log.e("mapbox cardDetail: ", name)
             var i: Int = 0
+
             cardListHolder.getCardList()[i].also { card = it }
-            while (card.locationName!=name) {
 
+            while (i < cardListHolder.getCardList().size) {
+                val cardName: String = card.locationName
+                if ('"'+cardName+'"' == name) {
+                    cardFound = true
+                    break
+                }
                 cardListHolder.getCardList()[i].also { card = it }
-                i+=1
+                i += 1
             }
-            
         }
 
-        if (bundle?.get("cardIndex") != null) {
-            val cardIndex = bundle.get("cardIndex") as Int
-            cardListHolder.getCardList()[cardIndex].also { card = it }
+        if (cardFound || bundle?.getBoolean("fromCardViewActivity") == true) {
+            val images: MutableList<Int> = card.otherImages
+            if (card.mainImage !in images) {
+                images.add(0, card.mainImage)
+            }
+
+            Mtitle.text = card.locationName
+            Mtext.text = card.longDescription
+
+            viewPager = findViewById(R.id.viewPager)
+            swipeAdapter = SwipeAdapter(this, images.toIntArray())
+            viewPager!!.adapter = swipeAdapter
+            dotsIndicator.setViewPager(viewPager!!)
+            viewPager!!.adapter?.registerDataSetObserver(dotsIndicator.dataSetObserver)
         }
-
-
-        val images: MutableList<Int> = card.otherImages
-        if (card.mainImage !in images) {
-            images.add(0, card.mainImage)
-        }
-
-        Mtitle.text= card.locationName
-        Mtext.text= card.longDescription
-        
-        viewPager= findViewById(R.id.viewPager)
-        swipeAdapter = SwipeAdapter(this, images.toIntArray())
-        viewPager!!.adapter=swipeAdapter
-        dotsIndicator.setViewPager(viewPager!!)
-        viewPager!!.adapter?.registerDataSetObserver(dotsIndicator.dataSetObserver)
-
     }
 }

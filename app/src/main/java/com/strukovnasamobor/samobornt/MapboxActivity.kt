@@ -41,7 +41,7 @@ import com.google.android.gms.location.LocationServices
 import com.strukovnasamobor.samobornt.cardview.CardViewActivity
 import com.strukovnasamobor.samobornt.detail.DetailActivity
 
-const val GEOFENCE_RADIUS = 100
+const val GEOFENCE_RADIUS = 800
 const val GEOFENCE_LOCATION_REQUEST_CODE = 5
 
 class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
@@ -125,13 +125,12 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                         // Log all the properties
                         Log.e("mapbox", String.format("%s = %s", key, value))
                         if(key=="name"){
-                        val INtent = Intent(this,DetailActivity::class.java)
-                            .putExtra("locationName", value.toString())
-                            startActivity(INtent)
+                            val intent = Intent(this,DetailActivity::class.java)
+                            intent.putExtra("locationName", value.toString())
+                            startActivity(intent)
                             Toast.makeText(this, value.toString(), Toast.LENGTH_LONG).show()
                             Log.e("mapbox open detail view: ", value.toString())}
                     }
-
                 }
                 true
             }
