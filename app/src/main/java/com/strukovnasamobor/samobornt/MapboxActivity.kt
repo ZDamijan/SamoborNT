@@ -33,10 +33,12 @@ import com.mapbox.mapboxsdk.maps.Style
 import com.strukovnasamobor.samobornt.services.*
 import kotlin.random.Random
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat.startActivity
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingClient
 import com.google.android.gms.location.GeofencingRequest
 import com.google.android.gms.location.LocationServices
+import com.strukovnasamobor.samobornt.cardview.CardViewActivity
 import com.strukovnasamobor.samobornt.detail.DetailActivity
 
 const val GEOFENCE_RADIUS = 100
@@ -49,6 +51,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
     private var mapView: MapView? = null
     private lateinit var connection: DBConnection
     private lateinit var geofencingClient: GeofencingClient
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,6 +93,9 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
         mapView = findViewById(R.id.mapView);
         mapView?.onCreate(savedInstanceState)
         mapView?.getMapAsync(this)
+
+
+
         }
 
     override fun onMapReady(mapboxMap: MapboxMap) {
@@ -118,10 +124,14 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                     for ((key, value) in feature.properties()!!.entrySet()) {
                         // Log all the properties
                         Log.e("mapbox", String.format("%s = %s", key, value))
-                        if(key=="name")
-                            //open specific detail view with name "value"
-                            Log.e("mapbox open detail view: ", value.toString())
+                        if(key=="name"){
+                        val INtent = Intent(this,DetailActivity::class.java)
+                            .putExtra("locationName", value.toString())
+                            startActivity(INtent)
+                            Toast.makeText(this, value.toString(), Toast.LENGTH_LONG).show()
+                            Log.e("mapbox open detail view: ", value.toString())}
                     }
+
                 }
                 true
             }
@@ -305,7 +315,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
             val notificationString = "Došli ste do: $message, kliknite ovdje da pročitate više!"
 
             val resultIntent = Intent(context, DetailActivity::class.java)
-                .putExtra("locationName", message)
+                .putExtra("locationNot", message)
 
             val resultPendingIntent = PendingIntent.getActivity(context, 1, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
