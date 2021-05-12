@@ -15,8 +15,8 @@ private var cardListLocale: String? = null
 class CardViewActivity : BaseActivity() {
     private lateinit var connection: DBConnection
     private lateinit var cardListHolder: CardListHolder
-    private lateinit var cardList: MutableList<Card>
     private lateinit var recyclerView: RecyclerView
+    private lateinit var cardViewAdapter: CardViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +25,6 @@ class CardViewActivity : BaseActivity() {
         recyclerView = findViewById(R.id.recycler_view)
         connection = DBConnection.getConnectionInstance(this)
         cardListHolder = CardListHolder.getCardListHolderInstance(this)
-        cardList = cardListHolder.getCardList()
 
         if (cardListLocale == null) {
             cardListLocale = resources.configuration.locales[0].toString()
@@ -34,16 +33,14 @@ class CardViewActivity : BaseActivity() {
         if (resources.configuration.locales[0].toString() != cardListLocale) {
             cardListLocale = resources.configuration.locales[0].toString()
             cardListHolder.changeCardsLanguage(cardListLocale!!)
-            cardList = cardListHolder.getCardList()
         }
         else if (intent.extras != null && intent.extras!!.getBoolean("languageChanged")) {
             cardListLocale = intent.extras!!.getString("changeToLanguage")
             cardListHolder.changeCardsLanguage(cardListLocale!!)
-            cardList = cardListHolder.getCardList()
         }
 
-        val cardsViewAdapter = CardViewAdapter({ card -> adapterOnClick(card) }, cardList)
-        recyclerView.adapter = cardsViewAdapter
+        cardViewAdapter = CardViewAdapter({ card -> adapterOnClick(card) }, cardListHolder.getCardList())
+        recyclerView.adapter = cardViewAdapter
     }
 
     override fun onStart() {
@@ -54,6 +51,7 @@ class CardViewActivity : BaseActivity() {
     override fun onStop() {
         super.onStop()
         recyclerViewState = recyclerView.layoutManager!!.onSaveInstanceState()
+        cardViewAdapter.notifyDataSetChanged()
     }
 
     override fun finish() {
@@ -63,7 +61,7 @@ class CardViewActivity : BaseActivity() {
 
     private fun adapterOnClick(card: Card) {
         val intent = Intent(this, DetailActivity::class.java)
-        intent.putExtra("cardIndex", cardList.indexOf(card))
+        intent.putExtra("cardIndex", cardListHolder.getCardList().indexOf(card))
         startActivity(intent)
     }
 }

@@ -13,11 +13,11 @@ import com.strukovnasamobor.samobornt.cardview.CardListHolder
 
 import kotlinx.android.synthetic.main.detail.*
 
+private var currentCardIndex: Int? = null
 
 class DetailActivity : BaseActivity() {
     private var viewPager: ViewPager? = null
-    private var swipeAdapter: SwipeAdapter?=null
-    private lateinit var card: Card
+    private var swipeAdapter: SwipeAdapter? = null
     private lateinit var cardListHolder: CardListHolder
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,11 +30,14 @@ class DetailActivity : BaseActivity() {
 
         cardListHolder = CardListHolder.getCardListHolderInstance(this)
 
-        if (bundle?.get("cardIndex") != null) {
-            val cardIndex = bundle.get("cardIndex") as Int
-            cardListHolder.getCardList()[cardIndex].also { card = it }
+        if (bundle?.get("languageChanged") == true) {
+            cardListHolder.changeCardsLanguage(bundle.getString("changeToLanguage")!!)
         }
 
+        if (bundle?.get("cardIndex") != null) {
+            currentCardIndex = bundle.get("cardIndex") as Int
+        }
+        val card: Card = cardListHolder.getCardList()[currentCardIndex!!]
         val images: MutableList<Int> = card.otherImages
         if (card.mainImage !in images) {
             images.add(0, card.mainImage)

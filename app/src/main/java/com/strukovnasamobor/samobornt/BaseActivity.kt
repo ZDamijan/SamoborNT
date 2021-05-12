@@ -1,19 +1,21 @@
 package com.strukovnasamobor.samobornt
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
 import com.mapbox.mapboxsdk.location.LocationComponent
 import com.mapbox.mapboxsdk.location.modes.CameraMode
 import com.strukovnasamobor.samobornt.api.startActivity
 import com.strukovnasamobor.samobornt.cardview.CardViewActivity
+import com.strukovnasamobor.samobornt.detail.DetailActivity
 import java.util.*
 
 
@@ -40,7 +42,7 @@ abstract class BaseActivity : AppCompatActivity() {
         val locationMenu = findViewById<ImageView>(R.id.location_menu)
         locationMenu.setOnClickListener {
             startActivity<MapboxActivity>()
-            locationComponent?.cameraMode = CameraMode.TRACKING_GPS;
+            locationComponent?.cameraMode = CameraMode.TRACKING_GPS
         }
 
         val imageViewMenu = findViewById<ImageView>(R.id.image_view_menu)
@@ -66,7 +68,7 @@ abstract class BaseActivity : AppCompatActivity() {
                         for (i in 0..languageRadioGroup.childCount) {
                             if (languageRadioGroup.getChildAt(i).tag == currentLang) {
                                 languageRadioGroup.check(languageRadioGroup.getChildAt(i).id)
-                                break;
+                                break
                             }
                         }
                         dialog.findViewById<Button>(R.id.btn_close).setOnClickListener {
@@ -123,6 +125,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     private fun changeLanguage(languageToLoad: String) {
         val locale = Locale(languageToLoad)
+        saveLocale(locale.language)
         Locale.setDefault(locale)
         val config = Configuration()
         config.setLocale(locale)
@@ -138,5 +141,21 @@ abstract class BaseActivity : AppCompatActivity() {
             intent.putExtra("changeToLanguage", resources.configuration.locales[0].toString())
             startActivity(intent)
         }
+        else if (this::class.java.simpleName == "DetailActivity") {
+            this.finish()
+            val intent = Intent(this, DetailActivity::class.java)
+            intent.putExtra("languageChanged", true)
+            intent.putExtra("changeToLanguage", resources.configuration.locales[0].toString())
+            startActivity(intent)
+        }
+    }
+
+    private fun saveLocale(language: String) {
+        val packageName: String = applicationContext.packageName
+        val sharedPreferences: SharedPreferences =
+            getSharedPreferences("$packageName.PREFERENCES", Activity.MODE_PRIVATE)
+        val preferencesEditor: SharedPreferences.Editor = sharedPreferences.edit()
+        preferencesEditor.putString("PREFERRED_LANGUAGE", language)
+        preferencesEditor.apply()
     }
 }
