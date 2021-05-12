@@ -1,10 +1,7 @@
  package com.strukovnasamobor.samobornt.detail
 
 
-import android.database.Cursor
 import android.os.Bundle
-import android.security.identity.EphemeralPublicKeyNotFoundException
-import android.util.Log
 
 import androidx.viewpager.widget.ViewPager
 
@@ -13,9 +10,9 @@ import com.strukovnasamobor.samobornt.BaseActivity
 import com.strukovnasamobor.samobornt.R
 import com.strukovnasamobor.samobornt.cardview.Card
 import com.strukovnasamobor.samobornt.cardview.CardListHolder
-import com.strukovnasamobor.samobornt.cardview.CardViewActivity
 import kotlinx.android.synthetic.main.detail.*
 
+lateinit var card: Card
 private var currentCardIndex: Int? = null
 
 class DetailActivity : BaseActivity() {
@@ -23,7 +20,6 @@ class DetailActivity : BaseActivity() {
     private var swipeAdapter: SwipeAdapter? = null
     private lateinit var cardListHolder: CardListHolder
 
-    lateinit var imeLokacije: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -36,33 +32,34 @@ class DetailActivity : BaseActivity() {
 
         if (bundle?.get("languageChanged") == true) {
             cardListHolder.changeCardsLanguage(bundle.getString("changeToLanguage")!!)
+            card = cardListHolder.getCardList()[currentCardIndex!!]
         }
 
         if (bundle?.get("cardIndex") != null) {
             currentCardIndex = bundle.get("cardIndex") as Int
+            card = cardListHolder.getCardList()[currentCardIndex!!]
         }
 
-        lateinit var card: Card
         var cardFound = false
         if (bundle?.get("locationName") != null) {
-            var name = bundle.get("locationName") as String
-            Log.e("mapbox cardDetail: ", name)
-            var i: Int = 0
+            val name = bundle.get("locationName") as String
 
-            cardListHolder.getCardList()[i].also { card = it }
-
-            while (i < cardListHolder.getCardList().size) {
-                val cardName: String = card.locationName
-                if ('"'+cardName+'"' == name) {
+            for (i in 0 until cardListHolder.getCardList().size) {
+                cardListHolder.getCardList()[i].also { card = it }
+                val cardName: String = if (bundle.get("fromMapbox") == true) {
+                    '"'+card.locationName+'"'
+                } else {
+                    card.locationName
+                }
+                if (cardName == name) {
                     cardFound = true
                     break
                 }
-                cardListHolder.getCardList()[i].also { card = it }
-                i += 1
             }
         }
 
-        if (cardFound || bundle?.getBoolean("fromCardViewActivity") == true) {
+        if (cardFound || bundle?.getBoolean("fromCardViewActivity") == true ||
+                bundle?.getBoolean("languageChanged") == true) {
             val images: MutableList<Int> = card.otherImages
             if (card.mainImage !in images) {
                 images.add(0, card.mainImage)
