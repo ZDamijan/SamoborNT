@@ -38,11 +38,12 @@ import com.google.android.gms.location.GeofencingClient
 import com.google.android.gms.location.GeofencingRequest
 import com.google.android.gms.location.LocationServices
 import com.strukovnasamobor.samobornt.detail.DetailActivity
+import java.util.*
 
-const val GEOFENCE_RADIUS = 50
+const val GEOFENCE_RADIUS = 5000
 const val GEOFENCE_LOCATION_REQUEST_CODE = 5
 private lateinit var currentLocale: String
-private lateinit var geofenceLocations: MutableList<Triple<String, Double, Double>>
+private lateinit var geofenceLocations: MutableList<HashMap<String, String>>
 
 class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
     private var permissionsManager: PermissionsManager = PermissionsManager(this)
@@ -84,9 +85,9 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
         geofenceLocations.forEach {
             createGeofence(
                 LatLng(
-                    it.second,
-                    it.third
-                ), it.first, geofencingClient
+                    it["latitude"]!!.toDouble(),
+                    it["longitude"]!!.toDouble()
+                ), it["locationName"]!!, it["locationId"]!!, geofencingClient
             )
         }
 
@@ -132,7 +133,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
         if (resources.configuration.locales[0].toString() != currentLocale) {
             val requestIdList: MutableList<String> = mutableListOf()
             geofenceLocations.forEach {
-                requestIdList.add(it.first)
+                requestIdList.add(it["locationName"]!!)
             }
             geofencingClient.removeGeofences(requestIdList)
             currentLocale = resources.configuration.locales[0].toString()
@@ -140,9 +141,9 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
             geofenceLocations.forEach {
                 createGeofence(
                     LatLng(
-                        it.second,
-                        it.third
-                    ), it.first, geofencingClient
+                        it["latitude"]!!.toDouble(),
+                        it["longitude"]!!.toDouble()
+                    ), it["locationName"]!!, it["locationId"]!!, geofencingClient
                 )
             }
         }
@@ -162,7 +163,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
             for ((key, value) in feature.properties()!!.entrySet()) {
                 // Log all the properties
                 Log.e("mapbox", String.format("%s = %s", key, value))
-                if(key=="id"){
+                if(key == "id"){
                     val intent = Intent(this,DetailActivity::class.java)
                     intent.putExtra("locationId", value.toString())
                     intent.putExtra("fromMapbox", true)
@@ -290,7 +291,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
         mapView?.onLowMemory()
     }
 
-    private fun createGeofence(location: LatLng, key: String, geofencingClient: GeofencingClient) {
+    private fun createGeofence(location: LatLng, key: String, locationId: String, geofencingClient: GeofencingClient) {
         val geofence: Geofence = Geofence.Builder()
             .setRequestId(key)
             .setCircularRegion(location.latitude, location.longitude, GEOFENCE_RADIUS.toFloat())
@@ -304,10 +305,11 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
             .build()
 
         val intent = Intent(this, GeofenceReceiver::class.java)
+        intent.putExtra("locationId", locationId)
 
         val pendingIntent = PendingIntent.getBroadcast(
             this,
-            0,
+            UUID.randomUUID().hashCode(),
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
@@ -332,15 +334,14 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
     }
 
     companion object {
-        fun showNotification(context: Context, message: String) {
+        fun showNotification(context: Context, message: String, locationId: String) {
             val CHANNEL_ID = "REMINDER_NOTIFICATION_CHANNEL"
             var notificationId = 123
             notificationId += Random(notificationId).nextInt(1, 30)
 
             val notificationString = "Došli ste do: $message, kliknite ovdje da pročitate više!"
-
             val resultIntent = Intent(context, DetailActivity::class.java)
-                .putExtra("locationName", message)
+                .putExtra("locationId", locationId)
 
             val resultPendingIntent = PendingIntent.getActivity(context, 1, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
@@ -373,16 +374,20 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
         }
     }
 
-    private fun getLocationList(locale: String): MutableList<Triple<String, Double, Double>> {
-        val locationList: MutableList<Triple<String, Double, Double>> = mutableListOf()
+    private fun getLocationList(locale: String): MutableList<HashMap<String, String>> {
+        val locationList: MutableList<HashMap<String, String>> = mutableListOf()
         val correctTable = if (locale == "hr") TABLE_NAME_HRV else TABLE_NAME_ENG
         val cursor: Cursor = connection.getFetchAllCursor(correctTable)
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast) {
                 val locationName = cursor.getString(cursor.getColumnIndex(C_NAME))
-                val latitude = cursor.getDouble(cursor.getColumnIndex(C_LATITUDE))
-                val longitude = cursor.getDouble(cursor.getColumnIndex(C_LONGITUDE))
-                locationList.add(Triple(locationName, latitude, longitude))
+                val latitude = cursor.getDouble(cursor.getColumnIndex(C_LATITUDE)).toString()
+                val longitude = cursor.getDouble(cursor.getColumnIndex(C_LONGITUDE)).toString()
+                val locationId = cursor.getString(cursor.getColumnIndex(C_ID))
+                val newHashMap: HashMap<String, String> = hashMapOf(
+                    Pair("locationName", locationName), Pair("latitude", latitude),
+                    Pair("longitude", longitude), Pair("locationId", locationId))
+                locationList.add(newHashMap)
                 cursor.moveToNext()
             }
         }

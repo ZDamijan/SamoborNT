@@ -41,17 +41,17 @@ class DetailActivity : BaseActivity() {
         }
 
         var cardFound = false
-        if (bundle?.get("locationName") != null) {
-            val name = bundle.get("locationName") as String
+        if (bundle?.get("locationId") != null) {
+            val name = bundle.get("locationId") as String
 
             for (i in 0 until cardListHolder.getCardList().size) {
                 cardListHolder.getCardList()[i].also { card = it }
-                val cardName: String = if (bundle.get("fromMapbox") == true) {
-                    '"'+card.locationName+'"'
+                val cardId: String = if (bundle.get("fromMapbox") == true) {
+                    '"'+card.locationId+'"'
                 } else {
-                    card.locationName
+                    card.locationId
                 }
-                if (cardName == name) {
+                if (cardId == name) {
                     cardFound = true
                     break
                 }
