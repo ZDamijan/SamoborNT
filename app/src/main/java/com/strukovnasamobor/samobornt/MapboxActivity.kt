@@ -40,7 +40,7 @@ import com.google.android.gms.location.LocationServices
 import com.strukovnasamobor.samobornt.detail.DetailActivity
 import java.util.*
 
-const val GEOFENCE_RADIUS = 5000
+const val GEOFENCE_RADIUS = 50
 const val GEOFENCE_LOCATION_REQUEST_CODE = 5
 private lateinit var currentLocale: String
 private lateinit var geofenceLocations: MutableList<HashMap<String, String>>
