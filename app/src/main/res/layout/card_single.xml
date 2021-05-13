@@ -12,7 +12,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="#E6E6E6"
+        app:cardBackgroundColor="?android:textColorTertiary"
         app:cardCornerRadius="2dp"
         app:cardElevation="15dp"
         app:cardPreventCornerOverlap="false">
@@ -42,14 +42,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:textColor="#000"
+                    android:textColor="?android:textColorPrimary"
                     android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/Short_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#555"
+                    android:textColor="?android:textColorSecondary"
                     android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
