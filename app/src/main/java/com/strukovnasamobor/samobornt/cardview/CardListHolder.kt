@@ -3,6 +3,7 @@ package com.strukovnasamobor.samobornt.cardview
 import android.annotation.SuppressLint
 import android.content.Context
 import android.database.Cursor
+import android.util.Log
 import androidx.annotation.DrawableRes
 import com.strukovnasamobor.samobornt.services.*
 
@@ -34,6 +35,7 @@ class CardListHolder private constructor(private val context: Context) {
         val cursor: Cursor = connection.getFetchAllCursor(correctTable)
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast) {
+                val locationId: String = cursor.getString(cursor.getColumnIndex(C_ID))
                 val locationName: String = cursor.getString(cursor.getColumnIndex(C_NAME))
                 val locationSD: String = cursor.getString(cursor.getColumnIndex(C_SHORT_DESCRIPTION))
                 val locationLD: String = cursor.getString(cursor.getColumnIndex(C_LONG_DESCRIPTION))
@@ -42,7 +44,7 @@ class CardListHolder private constructor(private val context: Context) {
                 val locationImageID: Int = context.resources
                     .getIdentifier(imageName, "drawable", context.packageName)
                 val otherImages = fetchOtherImageNames(locationName)
-                val newCard = Card(locationName = locationName,
+                val newCard = Card(locationId = locationId, locationName = locationName,
                     longDescription = locationLD, shortDescription = locationSD,
                     mainImage = locationImageID, otherImages = otherImages)
                 cardsList.add(newCard)

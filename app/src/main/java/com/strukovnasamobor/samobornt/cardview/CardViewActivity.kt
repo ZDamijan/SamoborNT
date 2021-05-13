@@ -62,6 +62,7 @@ class CardViewActivity : BaseActivity() {
     private fun adapterOnClick(card: Card) {
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra("cardIndex", cardListHolder.getCardList().indexOf(card))
+        intent.putExtra("fromCardViewActivity", true)
         startActivity(intent)
     }
 }

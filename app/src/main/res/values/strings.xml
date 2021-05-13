@@ -1,19 +1,21 @@
 <resources>
     <string name="app_name">Samobor N&amp;T</string>
     <string name="title_activity_maps">Samobor N&amp;T</string>
-    <string name="start_message">Experience our city as it was then and now with every step.</string>
+    <string name="start_message">Experience Samobor as it was then and now with every step.</string>
     <string name="explore">Explore Samobor</string>
     <string name="title_actionbar"><![CDATA[Samobor N&T]]></string>
     <string name="about">About</string>
     <string name="sights">Sights</string>
     <string name="virtual_tour">Virtual Tour</string>
-    <string name="change_language">Change Language</string>
+    <string name="change_language">Language</string>
     <string name="map_show">Show Map</string>
     <string name="croatian">Croatian</string>
     <string name="english">English</string>
     <string name="save">Save</string>
     <string name="close">Close</string>
     <string name="augmented_reality">Augmented Reality</string>
+    <string name="mapbox_style_light">mapbox://styles/aurelius-zd/ckolypt2o272e18ozxowzn3a7</string>
+    <string name="mapbox_style_dark">mapbox://styles/aurelius-zd/ckolunihy36qp17o2o6jd1yjb</string>
     <string name="mapbox_access_token" translatable="false">pk.eyJ1IjoiYXVyZWxpdXMtemQiLCJhIjoiY2tvMXN3dTVqMGJtbzJwbHliZWljd2xjbiJ9.DkV8Yg7EmRfTSZmqPqEtVQ</string>
-    <string name="game_view_content_description" translatable="false">Game view</string>
+    <string name="game_view_content_description" translatable="false">Samobor N&amp;T Augmented Reality</string>
 </resources>

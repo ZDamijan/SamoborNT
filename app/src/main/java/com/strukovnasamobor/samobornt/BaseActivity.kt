@@ -14,10 +14,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.mapboxsdk.location.LocationComponent
 import com.mapbox.mapboxsdk.location.modes.CameraMode
 import com.strukovnasamobor.samobornt.api.startActivity
+import com.strukovnasamobor.samobornt.cardview.CardListHolder
 import com.strukovnasamobor.samobornt.cardview.CardViewActivity
 import com.strukovnasamobor.samobornt.detail.DetailActivity
 import java.util.*
 
+var mapboxActivity : MapboxActivity? = null;
 
 abstract class BaseActivity : AppCompatActivity() {
     protected var locationComponent: LocationComponent? = null
@@ -134,20 +136,25 @@ abstract class BaseActivity : AppCompatActivity() {
             config,
             baseContext.resources.displayMetrics
         )
-        if (this::class.java.simpleName == "CardViewActivity") {
-            this.finish()
-            val intent = Intent(this, CardViewActivity::class.java)
-            intent.putExtra("languageChanged", true)
-            intent.putExtra("changeToLanguage", resources.configuration.locales[0].toString())
-            startActivity(intent)
+        val newLanguage: String = resources.configuration.locales[0].toString()
+        when (this::class.java.simpleName) {
+            "CardViewActivity" -> {
+                this.finish()
+                val intent = Intent(this, CardViewActivity::class.java)
+                intent.putExtra("languageChanged", true)
+                intent.putExtra("changeToLanguage", newLanguage)
+                startActivity(intent)
+            }
+            "DetailActivity" -> {
+                this.finish()
+                val intent = Intent(this, DetailActivity::class.java)
+                intent.putExtra("languageChanged", true)
+                intent.putExtra("changeToLanguage", newLanguage)
+                startActivity(intent)
+            }
         }
-        if (this::class.java.simpleName == "DetailActivity") {
-            this.finish()
-            val intent = Intent(this, DetailActivity::class.java)
-            intent.putExtra("languageChanged", true)
-            intent.putExtra("changeToLanguage", resources.configuration.locales[0].toString())
-            startActivity(intent)
-        }
+        mapboxActivity?.changeLanguage()
+        CardListHolder.getCardListHolderInstance(this).changeCardsLanguage(newLanguage)
     }
 
     private fun saveLocale(language: String) {

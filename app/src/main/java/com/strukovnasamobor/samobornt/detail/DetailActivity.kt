@@ -10,9 +10,9 @@ import com.strukovnasamobor.samobornt.BaseActivity
 import com.strukovnasamobor.samobornt.R
 import com.strukovnasamobor.samobornt.cardview.Card
 import com.strukovnasamobor.samobornt.cardview.CardListHolder
-
 import kotlinx.android.synthetic.main.detail.*
 
+lateinit var card: Card
 private var currentCardIndex: Int? = null
 
 class DetailActivity : BaseActivity() {
@@ -32,24 +32,47 @@ class DetailActivity : BaseActivity() {
 
         if (bundle?.get("languageChanged") == true) {
             cardListHolder.changeCardsLanguage(bundle.getString("changeToLanguage")!!)
+            card = cardListHolder.getCardList()[currentCardIndex!!]
         }
 
         if (bundle?.get("cardIndex") != null) {
             currentCardIndex = bundle.get("cardIndex") as Int
-        }
-        val card: Card = cardListHolder.getCardList()[currentCardIndex!!]
-        val images: MutableList<Int> = card.otherImages
-        if (card.mainImage !in images) {
-            images.add(0, card.mainImage)
+            card = cardListHolder.getCardList()[currentCardIndex!!]
         }
 
-        Mtitle.text= card.locationName
-        Mtext.text= card.longDescription
-        
-        viewPager= findViewById(R.id.viewPager)
-        swipeAdapter = SwipeAdapter(this, images.toIntArray())
-        viewPager!!.adapter=swipeAdapter
-        dotsIndicator.setViewPager(viewPager!!)
-        viewPager!!.adapter?.registerDataSetObserver(dotsIndicator.dataSetObserver)
+        var cardFound = false
+        if (bundle?.get("locationId") != null) {
+            val name = bundle.get("locationId") as String
+
+            for (i in 0 until cardListHolder.getCardList().size) {
+                cardListHolder.getCardList()[i].also { card = it }
+                val cardId: String = if (bundle.get("fromMapbox") == true) {
+                    '"'+card.locationId+'"'
+                } else {
+                    card.locationId
+                }
+                if (cardId == name) {
+                    cardFound = true
+                    break
+                }
+            }
+        }
+
+        if (cardFound || bundle?.getBoolean("fromCardViewActivity") == true ||
+                bundle?.getBoolean("languageChanged") == true) {
+            val images: MutableList<Int> = card.otherImages
+            if (card.mainImage !in images) {
+                images.add(0, card.mainImage)
+            }
+
+            Mtitle.text = card.locationName
+            Mtext.text = card.longDescription
+
+            viewPager = findViewById(R.id.viewPager)
+            swipeAdapter = SwipeAdapter(this, images.toIntArray())
+            viewPager!!.adapter = swipeAdapter
+            dotsIndicator.setViewPager(viewPager!!)
+            viewPager!!.adapter?.registerDataSetObserver(dotsIndicator.dataSetObserver)
+        }
     }
 }
