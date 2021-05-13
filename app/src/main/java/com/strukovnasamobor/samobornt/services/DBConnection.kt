@@ -20,6 +20,7 @@ const val TABLE_NAME_HRV: String = "locations_hrv"
 const val TABLE_NAME_ENG: String = "locations_eng"
 
 // column names
+const val C_ID: String = "Id"
 const val C_NAME: String = "Name"
 const val C_SHORT_DESCRIPTION: String = "Short_description"
 const val C_LONG_DESCRIPTION: String = "Long_description"
