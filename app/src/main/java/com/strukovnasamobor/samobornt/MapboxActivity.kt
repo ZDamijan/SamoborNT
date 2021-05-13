@@ -41,20 +41,19 @@ import com.google.android.gms.location.LocationServices
 import com.strukovnasamobor.samobornt.cardview.CardViewActivity
 import com.strukovnasamobor.samobornt.detail.DetailActivity
 
-const val GEOFENCE_RADIUS = 800
+const val GEOFENCE_RADIUS = 50
 const val GEOFENCE_LOCATION_REQUEST_CODE = 5
 
 class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
-
     private var permissionsManager: PermissionsManager = PermissionsManager(this)
     private lateinit var mapboxMap: MapboxMap
     private var mapView: MapView? = null
     private lateinit var connection: DBConnection
     private lateinit var geofencingClient: GeofencingClient
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mapboxActivity = this
         // Mapbox access token is configured here. This needs to be called either in your application
         // object or in the same activity which contains the mapview.
         Mapbox.getInstance(this, getString(R.string.mapbox_access_token))
@@ -93,17 +92,22 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
         mapView = findViewById(R.id.mapView);
         mapView?.onCreate(savedInstanceState)
         mapView?.getMapAsync(this)
+    }
 
-
-
-        }
+    fun changeLanguage()
+    {
+        onMapReady(mapboxMap)
+    }
 
     override fun onMapReady(mapboxMap: MapboxMap) {
         this.mapboxMap = mapboxMap
-        super.locationComponent = mapboxMap.locationComponent;
+        super.locationComponent = mapboxMap.locationComponent
+        Log.e("mapbox", resources.getString(resources.getIdentifier(getString(R.string.mapbox_style), "string", packageName)))
         mapboxMap.setStyle(
             Style.Builder().fromUri(
-                getString(R.string.mapbox_style_url)
+                resources.getString(
+                    resources.getIdentifier(getString(R.string.mapbox_style), "string",
+                    packageName))
             )
         ) {
             // Map is set up and the style has loaded. Now you can add data or make other map adjustments
@@ -124,9 +128,9 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                     for ((key, value) in feature.properties()!!.entrySet()) {
                         // Log all the properties
                         Log.e("mapbox", String.format("%s = %s", key, value))
-                        if(key=="name"){
+                        if(key=="id"){
                             val intent = Intent(this,DetailActivity::class.java)
-                            intent.putExtra("locationName", value.toString())
+                            intent.putExtra("locationId", value.toString())
                             startActivity(intent)
                             Toast.makeText(this, value.toString(), Toast.LENGTH_LONG).show()
                             Log.e("mapbox open detail view: ", value.toString())}
@@ -185,7 +189,6 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                 override fun onCameraTrackingDismissed() {
                     // Tracking has been dismissed
                 }
-
                 override fun onCameraTrackingChanged(currentMode: Int) {
                     // CameraMode has been updated
                     if(currentMode == CameraMode.TRACKING_GPS) {
@@ -363,5 +366,4 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
         }
         return locationList
     }
-
 }

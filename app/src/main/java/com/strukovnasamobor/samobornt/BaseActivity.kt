@@ -18,6 +18,7 @@ import com.strukovnasamobor.samobornt.cardview.CardViewActivity
 import com.strukovnasamobor.samobornt.detail.DetailActivity
 import java.util.*
 
+var mapboxActivity : MapboxActivity? = null;
 
 abstract class BaseActivity : AppCompatActivity() {
     protected var locationComponent: LocationComponent? = null
@@ -134,20 +135,23 @@ abstract class BaseActivity : AppCompatActivity() {
             config,
             baseContext.resources.displayMetrics
         )
-        if (this::class.java.simpleName == "CardViewActivity") {
-            this.finish()
-            val intent = Intent(this, CardViewActivity::class.java)
-            intent.putExtra("languageChanged", true)
-            intent.putExtra("changeToLanguage", resources.configuration.locales[0].toString())
-            startActivity(intent)
+        when (this::class.java.simpleName) {
+            "CardViewActivity" -> {
+                this.finish()
+                val intent = Intent(this, CardViewActivity::class.java)
+                intent.putExtra("languageChanged", true)
+                intent.putExtra("changeToLanguage", resources.configuration.locales[0].toString())
+                startActivity(intent)
+            }
+            "DetailActivity" -> {
+                this.finish()
+                val intent = Intent(this, DetailActivity::class.java)
+                intent.putExtra("languageChanged", true)
+                intent.putExtra("changeToLanguage", resources.configuration.locales[0].toString())
+                startActivity(intent)
+            }
         }
-        else if (this::class.java.simpleName == "DetailActivity") {
-            this.finish()
-            val intent = Intent(this, DetailActivity::class.java)
-            intent.putExtra("languageChanged", true)
-            intent.putExtra("changeToLanguage", resources.configuration.locales[0].toString())
-            startActivity(intent)
-        }
+        mapboxActivity?.changeLanguage()
     }
 
     private fun saveLocale(language: String) {

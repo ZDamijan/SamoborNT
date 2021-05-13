@@ -14,4 +14,6 @@
     <string name="save">Spremi</string>
     <string name="close">Poništi</string>
     <string name="augmented_reality">Proširena stvarnost</string>
+    <string name="mapbox_style_light">mapbox://styles/aurelius-zd/cko9048ey4yn618te35wim55i</string>
+    <string name="mapbox_style_dark">mapbox://styles/aurelius-zd/ckodwypau3gs117qplg0wel8j</string>
 </resources>

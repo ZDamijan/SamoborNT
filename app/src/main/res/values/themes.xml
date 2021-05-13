@@ -14,5 +14,5 @@
     </style>
 
     <string name="map_id" translatable="false">c55d7f129cda2569</string>
-    <string name="mapbox_style_url" translatable="false">mapbox://styles/aurelius-zd/cko9048ey4yn618te35wim55i</string>
+    <string name="mapbox_style" translatable="false">mapbox_style_light</string>
 </resources>
