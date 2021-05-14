@@ -18,4 +18,5 @@
     <string name="mapbox_style_dark">mapbox://styles/aurelius-zd/ckolunihy36qp17o2o6jd1yjb</string>
     <string name="mapbox_access_token" translatable="false">pk.eyJ1IjoiYXVyZWxpdXMtemQiLCJhIjoiY2tvMXN3dTVqMGJtbzJwbHliZWljd2xjbiJ9.DkV8Yg7EmRfTSZmqPqEtVQ</string>
     <string name="game_view_content_description" translatable="false">Samobor N&amp;T Augmented Reality</string>
+    <string name="aboutText">Created by: Ekonomska, turistička i ugostiteljska škola, Samobor\nPartner: Srednja strukovna škola, Samobor\nSupported by: Ministry of Tourism and Sports\nVersion: 2021 1.0</string>
 </resources>
