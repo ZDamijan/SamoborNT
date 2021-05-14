@@ -2,12 +2,14 @@ package com.strukovnasamobor.samobornt.cardview
 
 import androidx.annotation.DrawableRes
 
-data class Card (
+data class Card(
     val locationId: String,
     @DrawableRes
     val mainImage: Int,
     val otherImages: MutableList<Int>,
     var locationName: String,
+    var Longitude: Double,
+    var Latitude: Double,
     var shortDescription: String,
     var longDescription: String,
 )

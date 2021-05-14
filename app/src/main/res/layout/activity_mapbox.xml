@@ -12,6 +12,7 @@ android:orientation="vertical">
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     mapbox:mapbox_cameraTargetLat="45.8019356"
+
     mapbox:mapbox_cameraTargetLng="15.7098924"
     mapbox:mapbox_cameraZoom="16.5"
     mapbox:mapbox_cameraTilt="65" />

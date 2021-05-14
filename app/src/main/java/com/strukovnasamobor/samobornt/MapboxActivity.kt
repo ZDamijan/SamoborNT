@@ -37,8 +37,15 @@ import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingClient
 import com.google.android.gms.location.GeofencingRequest
 import com.google.android.gms.location.LocationServices
+import com.google.android.libraries.maps.CameraUpdateFactory
+import com.google.android.libraries.maps.model.LatLngBounds
+import com.mapbox.android.accounts.v1.MapboxAccounts.a
+import com.mapbox.mapboxsdk.camera.CameraUpdate
 import com.strukovnasamobor.samobornt.detail.DetailActivity
+import com.strukovnasamobor.samobornt.detail.card
+
 import java.util.*
+import com.mapbox.mapboxsdk.geometry.LatLngBounds as LatLngBounds1
 
 const val GEOFENCE_RADIUS = 50
 const val GEOFENCE_LOCATION_REQUEST_CODE = 5
@@ -91,9 +98,14 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
             )
         }
 
+
+
         mapView = findViewById(R.id.mapView)
         mapView?.onCreate(savedInstanceState)
+
         mapView?.getMapAsync(this)
+
+
     }
 
     fun changeLanguage() {
@@ -102,6 +114,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
 
     override fun onMapReady(mapboxMap: MapboxMap) {
         this.mapboxMap = mapboxMap
+
         super.locationComponent = mapboxMap.locationComponent
         Log.e("mapbox", resources.getString(resources.getIdentifier(getString(R.string.mapbox_style), "string", packageName)))
         mapboxMap.setStyle(
@@ -127,6 +140,9 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
             }*/
             enableLocationComponent(it)
         }
+
+
+
     }
 
     private fun mapOnClickListener(point: LatLng) {
@@ -205,6 +221,10 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                 // Set the LocationComponent's camera mode
                 cameraMode = CameraMode.TRACKING_GPS
 
+
+
+
+
                 // Set the LocationComponent's render mode
                 renderMode = RenderMode.COMPASS
             }
@@ -233,6 +253,9 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
             permissionsManager = PermissionsManager(this)
             permissionsManager.requestLocationPermissions(this)
         }
+
+
+
     }
 
     override fun onRequestPermissionsResult(
@@ -262,8 +285,11 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
     }
 
     override fun onResume() {
+
         super.onResume()
         mapView?.onResume()
+
+
     }
 
     override fun onPause() {
@@ -289,6 +315,22 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
     override fun onLowMemory() {
         super.onLowMemory()
         mapView?.onLowMemory()
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        mapView?.onResume()
+        val bundle: Bundle? = intent?.extras
+
+        if (bundle?.get("latitude") != null) {
+            Log.e("camera", "dela")
+            val a=bundle.get("latitude") as Double
+            val b=bundle.get("longitude") as Double
+            val dest= LatLng(a,b)
+            mapboxMap.moveCamera(com.mapbox.mapboxsdk.camera.CameraUpdateFactory.newLatLngZoom(dest,20.0))
+        }
+        else
+            Log.e("camera", "ne dela")
     }
 
     private fun createGeofence(location: LatLng, key: String, locationId: String, geofencingClient: GeofencingClient) {
@@ -372,6 +414,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
             //Toast.makeText(context, "Sending notification!", Toast.LENGTH_SHORT).show()
             notificationManager.notify(notificationId, notificationBuilder.build())
         }
+
     }
 
     private fun getLocationList(locale: String): MutableList<HashMap<String, String>> {

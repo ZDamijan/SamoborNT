@@ -9,9 +9,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="675dp"
         android:gravity="bottom"
         android:orientation="vertical">
+
         <include layout="@layout/toolbar" />
 
         <FrameLayout
@@ -22,7 +23,7 @@
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewPager"
                 android:layout_width="wrap_content"
-                android:layout_height="250dp"/>
+                android:layout_height="250dp" />
 
             <com.make.dots.dotsindicator.DotsIndicator
                 android:id="@+id/dotsIndicator"
@@ -36,21 +37,20 @@
                 app:dot_drawable_unselected="@drawable/ic_dot_lightgrey"
                 app:dot_height="6dp"
                 app:dot_margin="4dp"
-                app:dot_width="6dp"
-                />
+                app:dot_width="6dp" />
 
         </FrameLayout>
+
         <TextView
             android:id="@+id/Mtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="?android:textColorPrimary"
-            android:textAlignment="center"
-            android:shadowColor="@color/black"
-            android:textStyle="bold"
             android:padding="4dp"
+            android:shadowColor="@color/black"
+            android:textAlignment="center"
+            android:textColor="?android:textColorPrimary"
             android:textSize="30sp"
-            />
+            android:textStyle="bold" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -64,14 +64,38 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start"
-                android:textAlignment="gravity"
-                android:textColor="?android:textColorPrimary"
                 android:shadowColor="@color/black"
                 android:shadowDx="00"
                 android:shadowDy="00"
                 android:shadowRadius="0"
+                android:textAlignment="gravity"
+                android:textColor="?android:textColorPrimary"
                 android:textSize="18sp" />
         </ScrollView>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/gumb"
+        android:layout_width="64dp"
+        android:layout_height="41dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginLeft="@dimen/margin_left"
+        android:layout_marginRight="20dp"
+
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/ic_sights_menu"
+        android:textSize="24sp" />
+    <Button
+        android:id="@+id/ARgumb"
+        android:layout_width="64dp"
+        android:layout_height="41dp"
+        android:layout_gravity="bottom|left"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/ic_baseline_gamepad_24"
+        android:textSize="24sp" />
+
 </FrameLayout>
