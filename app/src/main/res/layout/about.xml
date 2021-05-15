@@ -12,19 +12,18 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="7sp"
-        app:srcCompat="@drawable/privremena_about_slika"
-        />
+        android:layout_height="175dp"
+        android:layout_margin="@dimen/margin_top"
+        app:srcCompat="@drawable/logo_samobornt" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5sp"
+        android:layout_margin="@dimen/margin_top"
         android:fontFamily="sans-serif-thin"
+        android:lineSpacingExtra="5dp"
         android:text="@string/aboutText"
         android:textColor="?android:textColorPrimary"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:lineSpacingExtra="6sp"/>
+        android:textStyle="bold" />
 </LinearLayout>
