@@ -43,7 +43,7 @@
             android:screenOrientation="portrait"
             android:launchMode="singleTask" />
         <activity android:name=".detail.FullscreenImageActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="landscape"
             android:launchMode="singleTask"/>
         <activity
             android:name=".UnityHolderActivity"
