@@ -99,12 +99,22 @@ abstract class BaseActivity : AppCompatActivity() {
                         true
                     }
                     R.id.menu_about -> {
+                        val aboutPopupWindow = Dialog(this)
+                        @Suppress("DEPRECATION") val currentLang =
+                            resources.configuration.locale.language
+                        aboutPopupWindow.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                        aboutPopupWindow.setCancelable(true)
+                        aboutPopupWindow.setCanceledOnTouchOutside(true)
+                        aboutPopupWindow.setContentView(R.layout.about)
+                        aboutPopupWindow.show()
+                        true
+                        /*
                         Toast.makeText(
                             this,
                             "Created by: Ekonomska, turistička i ugostiteljska škola, Samobor\nPartner: Srednja strukovnasamobor škola, Samobor\nSupported by: Ministry of Tourism and Sports\nVersion: 2021 1.0",
                             Toast.LENGTH_LONG
                         ).show()
-                        true
+                        true*/
                     }
                     R.id.virtual_tour -> {
                         val browserIntent = Intent(
