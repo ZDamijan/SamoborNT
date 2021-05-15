@@ -18,6 +18,7 @@
             android:layout_centerVertical="true"
             android:text="@string/title_actionbar"
             android:textColor="@color/white"
+            android:textStyle="bold"
             android:textSize="22sp" />
         <ImageView
             android:id="@+id/map_menu"
