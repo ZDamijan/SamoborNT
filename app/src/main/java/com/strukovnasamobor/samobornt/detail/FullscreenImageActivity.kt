@@ -26,5 +26,6 @@ class FullscreenImageActivity : BaseActivity() {
 
         imageView.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
         imageView.layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
+        imageView.scaleType = ImageView.ScaleType.CENTER_CROP
     }
 }
