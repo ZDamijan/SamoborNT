@@ -42,6 +42,7 @@
             android:layout_marginLeft="@dimen/margin_left"
             android:layout_marginRight="@dimen/margin_right"
             android:layout_marginBottom="@dimen/margin_bottom"
+            android:layout_gravity="center_horizontal"
             android:shadowColor="@color/black"
             android:shadowDx="10"
             android:shadowDy="10"
@@ -53,7 +54,7 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/btnExplore"
+            android:id="@+id/btn_explore"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginLeft="@dimen/margin_left"

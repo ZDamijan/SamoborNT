@@ -76,6 +76,17 @@
             </ScrollView>
         </LinearLayout>
 
+        <Button
+            android:id="@+id/btn_start_ar"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/margin_left"
+            android:layout_marginRight="@dimen/margin_right"
+            android:layout_marginBottom="8dp"
+            android:text="START AR"
+            android:textSize="12sp" />
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"

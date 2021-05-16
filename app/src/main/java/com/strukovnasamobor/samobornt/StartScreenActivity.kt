@@ -3,10 +3,8 @@ package com.strukovnasamobor.samobornt
 import android.app.Activity
 import android.content.SharedPreferences
 import android.content.res.Configuration
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -30,7 +28,7 @@ class StartScreenActivity : AppCompatActivity() {
         setContentView(R.layout.start_screen_activity)
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        btnExplore = findViewById(R.id.btnExplore)
+        btnExplore = findViewById(R.id.btn_explore)
         requestPermission()
         initListener()
     }
@@ -65,4 +63,3 @@ class StartScreenActivity : AppCompatActivity() {
         )
     }
 }
-
