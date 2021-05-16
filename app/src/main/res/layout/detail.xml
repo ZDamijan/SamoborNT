@@ -44,7 +44,7 @@
             </FrameLayout>
 
             <TextView
-                android:id="@+id/Mtitle"
+                android:id="@+id/cardTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
@@ -62,7 +62,7 @@
                 android:padding="6dp">
 
                 <TextView
-                    android:id="@+id/Mtext"
+                    android:id="@+id/cardText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"
@@ -77,6 +77,7 @@
         </LinearLayout>
 
         <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="50dp">
 
