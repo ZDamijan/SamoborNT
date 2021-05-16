@@ -39,9 +39,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_left"
-            android:layout_marginRight="@dimen/margin_right"
+            android:layout_marginStart="@dimen/margin_left"
+            android:layout_marginEnd="@dimen/margin_right"
             android:layout_marginBottom="@dimen/margin_bottom"
+            android:layout_gravity="center"
             android:layout_gravity="center_horizontal"
             android:shadowColor="@color/black"
             android:shadowDx="10"
@@ -57,8 +58,8 @@
             android:id="@+id/btn_explore"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:layout_marginLeft="@dimen/margin_left"
-            android:layout_marginRight="@dimen/margin_right"
+            android:layout_marginStart="@dimen/margin_left"
+            android:layout_marginEnd="@dimen/margin_right"
             android:layout_marginBottom="8dp"
             android:text="@string/explore"
             android:textSize="24sp" />
