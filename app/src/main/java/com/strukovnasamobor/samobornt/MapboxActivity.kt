@@ -267,8 +267,6 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
             val dest= LatLng(lat, lng)
             mapboxMap.moveCamera(com.mapbox.mapboxsdk.camera.CameraUpdateFactory.newLatLngZoom(dest,20.0))
         }
-        else
-            Log.e("camera", "ne dela")
     }
 
     override fun onStart() {
