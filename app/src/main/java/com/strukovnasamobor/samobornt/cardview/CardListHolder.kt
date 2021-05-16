@@ -40,7 +40,7 @@ class CardListHolder private constructor(private val context: Context) {
                 val locationSD: String = cursor.getString(cursor.getColumnIndex(C_SHORT_DESCRIPTION))
                 val locationLD: String = cursor.getString(cursor.getColumnIndex(C_LONG_DESCRIPTION))
                 val imageName: String = cursor.getString(cursor.getColumnIndex(C_MAIN_IMAGE))
-                //val arDescriptiom: String = cursor.getString(cursor.getColumnIndex(C_AR_DESCRIPTION))
+                val arDescriptiom: String? = cursor.getString(cursor.getColumnIndex(C_AR_DESCRIPTION))
                 val longitude: String = cursor.getString(cursor.getColumnIndex(C_LONGITUDE))
                 val latitude: String = cursor.getString(cursor.getColumnIndex(C_LATITUDE))
                 @DrawableRes
@@ -54,7 +54,7 @@ class CardListHolder private constructor(private val context: Context) {
                     shortDescription = locationSD,
                     mainImage = locationImageID,
                     otherImages = otherImages,
-                    arDescription = "AR test description",
+                    arDescription = arDescriptiom,
                     longitude = longitude.toDouble(),
                     latitude = latitude.toDouble()
                 )

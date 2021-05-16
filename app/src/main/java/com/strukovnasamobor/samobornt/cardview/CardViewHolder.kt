@@ -29,6 +29,10 @@ class CardViewHolder(itemView: View, val onClick: (Card) -> Unit) : RecyclerView
         currentCard = card
         locationNameTextView.text = currentCard!!.locationName
         shortDescriptionTextView.text = currentCard!!.shortDescription
-        currentCard!!.mainImage.let { cardImageView.setImageResource(it) }
+        currentCard!!.mainImage.let {
+            if (it != null) {
+                cardImageView.setImageResource(it)
+            }
+        }
     }
 }

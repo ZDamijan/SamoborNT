@@ -43,7 +43,6 @@
             android:layout_marginEnd="@dimen/margin_right"
             android:layout_marginBottom="@dimen/margin_bottom"
             android:layout_gravity="center"
-            android:layout_gravity="center_horizontal"
             android:shadowColor="@color/black"
             android:shadowDx="10"
             android:shadowDy="10"

@@ -262,11 +262,10 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
         val bundle: Bundle? = intent?.extras
 
         if (bundle?.get("latitude") != null) {
-            Log.e("camera", "dela")
             val lat = bundle.get("latitude") as Double
             val lng = bundle.get("longitude") as Double
             val dest= LatLng(lat, lng)
-            mapboxMap.moveCamera(com.mapbox.mapboxsdk.camera.CameraUpdateFactory.newLatLngZoom(dest,18.0))
+            mapboxMap.moveCamera(com.mapbox.mapboxsdk.camera.CameraUpdateFactory.newLatLngZoom(dest,20.0))
         }
         else
             Log.e("camera", "ne dela")

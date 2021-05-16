@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import androidx.core.view.get
 
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
@@ -68,9 +67,11 @@ class DetailActivity : BaseActivity() {
 
         if (cardFound || bundle?.getBoolean("fromCardViewActivity") == true ||
                 bundle?.getBoolean("languageChanged") == true) {
-            val images: MutableList<Int> = card.otherImages
-            if (card.mainImage !in images) {
-                images.add(0, card.mainImage)
+            val images: MutableList<Int>? = card.otherImages
+            if (!images?.contains(card.mainImage!!)!!) {
+                card.mainImage?.let {
+                    images?.add(0, it)
+                }
             }
 
             cardTitle.text = card.locationName
@@ -83,22 +84,24 @@ class DetailActivity : BaseActivity() {
             viewPager!!.adapter?.registerDataSetObserver(dotsIndicator.dataSetObserver)
         }
 
-        var lastSelected = 0
-        var tabLayout: TabLayout = findViewById(R.id.tabLayout)
-        //tabLayout.touchables[1].visibility = View.GONE
+        var lastSelectedTab = 0
         var btnStartAR: Button = findViewById(R.id.btn_start_ar)
         btnStartAR.visibility = View.GONE
+        var tabLayout: TabLayout = findViewById(R.id.tabLayout)
+        if(card.arDescription.isNullOrBlank()){
+            tabLayout.touchables[1].visibility = View.GONE
+        }
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 Log.e("tablayout", tab.position.toString());
                 when (tab.position) {
                     0 -> {
                         cardText.text = card.longDescription
-                        lastSelected = 0
+                        lastSelectedTab = 0
                     }
                     1 -> {
-                        cardText.text = "AR description"
-                        lastSelected = 1
+                        cardText.text = card.arDescription
+                        lastSelectedTab = 1
                         btnStartAR.setOnClickListener{
                             val intent = Intent(this@DetailActivity, UnityHolderActivity::class.java)
                             intent.putExtra("sceneName", "LauncherScreen")
@@ -111,7 +114,7 @@ class DetailActivity : BaseActivity() {
                         intent.putExtra("latitude", card.latitude)
                         intent.putExtra("longitude", card.longitude)
                         startActivity(intent)
-                        tabLayout.getTabAt(lastSelected)?.select()
+                        tabLayout.getTabAt(lastSelectedTab)?.select()
                     }
                 }
             }
