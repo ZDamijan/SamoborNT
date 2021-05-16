@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Samobor N&amp;T</string>
     <string name="title_activity_maps">Samobor N&amp;T</string>
-    <string name="start_message">Doživite Samobor DANAS i kakav je bio NEKAD sa svakim korakom.</string>
+    <string name="start_message">Doživite Samobor\nDANAS i kakav je bio NEKAD\nsa svakim korakom.</string>
     <string name="explore">Istraži Samobor</string>
     <string name="title_actionbar"><![CDATA[Samobor N&T]]></string>
     <string name="about">O aplikaciji</string>
@@ -16,5 +16,5 @@
     <string name="augmented_reality">Proširena stvarnost</string>
     <string name="mapbox_style_light">mapbox://styles/aurelius-zd/cko9048ey4yn618te35wim55i</string>
     <string name="mapbox_style_dark">mapbox://styles/aurelius-zd/ckodwypau3gs117qplg0wel8j</string>
-    <string name="aboutText">Osmislii:\nEkonomska, turistička i ugostiteljska škola, Samobor\n\nIzradili s partnerom:\nSrednja strukovna škola, Samobor\n\nPodržano od:\nMinistarstvo turizma i sporta\n\nVerzija:\n1.0, 2021.</string>
+    <string name="aboutText">Osmislili:\nEkonomska, turistička i ugostiteljska škola, Samobor\n\nIzradili s partnerom:\nSrednja strukovna škola, Samobor\n\nPodržano od:\nMinistarstvo turizma i sporta\n\nVerzija:\n1.0, 2021.</string>
 </resources>

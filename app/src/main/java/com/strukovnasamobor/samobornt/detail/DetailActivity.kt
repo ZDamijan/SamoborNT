@@ -2,8 +2,10 @@
 
 
 import android.os.Bundle
+import android.util.Log
 
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.tabs.TabLayout
 
 
 import com.strukovnasamobor.samobornt.BaseActivity
@@ -65,8 +67,8 @@ class DetailActivity : BaseActivity() {
                 images.add(0, card.mainImage)
             }
 
-            Mtitle.text = card.locationName
-            Mtext.text = card.longDescription
+            cardTitle.text = card.locationName
+            cardText.text = card.longDescription
 
             viewPager = findViewById(R.id.viewPager)
             swipeAdapter = SwipeAdapter(this, images.toIntArray())
@@ -74,5 +76,25 @@ class DetailActivity : BaseActivity() {
             dotsIndicator.setViewPager(viewPager!!)
             viewPager!!.adapter?.registerDataSetObserver(dotsIndicator.dataSetObserver)
         }
+
+        var tabLayout: TabLayout = findViewById(R.id.tabLayout)
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                Log.e("tablayout", tab.position.toString());
+                when (tab.position) {
+                    0 -> {
+                        cardText.text = card.longDescription
+                    }
+                    1 -> {
+                        cardText.text = "AR description"
+                    }
+                    2 -> {
+
+                    }
+                }
+            }
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
     }
 }

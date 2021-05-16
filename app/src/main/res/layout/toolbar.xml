@@ -18,35 +18,40 @@
             android:layout_centerVertical="true"
             android:text="@string/title_actionbar"
             android:textColor="@color/white"
-            android:textSize="22sp" />
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
         <ImageView
             android:id="@+id/map_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_map_menu"
             android:layout_alignParentRight="true"
-            android:paddingRight="105dp" />
+            android:paddingRight="105dp"
+            android:src="@drawable/ic_map_menu" />
+
         <ImageView
             android:id="@+id/location_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_location_menu"
             android:layout_alignParentRight="true"
             android:paddingRight="105dp"
-            android:visibility="invisible"/>
+            android:src="@drawable/ic_location_menu"
+            android:visibility="invisible" />
+
         <ImageView
             android:id="@+id/sights_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_sights_menu"
             android:layout_alignParentRight="true"
-            android:paddingRight="60dp" />
+            android:paddingRight="60dp"
+            android:src="@drawable/ic_sights_menu" />
+
         <ImageView
             android:id="@+id/image_view_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_menu"
             android:layout_alignParentRight="true"
-            android:paddingRight="15dp" />
+            android:paddingRight="15dp"
+            android:src="@drawable/ic_baseline_menu" />
     </RelativeLayout>
 </androidx.appcompat.widget.Toolbar>
