@@ -10,4 +10,7 @@ data class Card (
     var locationName: String,
     var shortDescription: String,
     var longDescription: String,
+    var arDescription: String,
+    var longitude: Double,
+    var latitude: Double
 )

@@ -1,15 +1,21 @@
  package com.strukovnasamobor.samobornt.detail
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Button
+import androidx.core.view.get
 
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 
 
 import com.strukovnasamobor.samobornt.BaseActivity
+import com.strukovnasamobor.samobornt.MapboxActivity
 import com.strukovnasamobor.samobornt.R
+import com.strukovnasamobor.samobornt.UnityHolderActivity
 import com.strukovnasamobor.samobornt.cardview.Card
 import com.strukovnasamobor.samobornt.cardview.CardListHolder
 import kotlinx.android.synthetic.main.detail.*
@@ -77,23 +83,43 @@ class DetailActivity : BaseActivity() {
             viewPager!!.adapter?.registerDataSetObserver(dotsIndicator.dataSetObserver)
         }
 
+        var lastSelected = 0
         var tabLayout: TabLayout = findViewById(R.id.tabLayout)
+        //tabLayout.touchables[1].visibility = View.GONE
+        var btnStartAR: Button = findViewById(R.id.btn_start_ar)
+        btnStartAR.visibility = View.GONE
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 Log.e("tablayout", tab.position.toString());
                 when (tab.position) {
                     0 -> {
                         cardText.text = card.longDescription
+                        lastSelected = 0
                     }
                     1 -> {
                         cardText.text = "AR description"
+                        lastSelected = 1
+                        btnStartAR.setOnClickListener{
+                            val intent = Intent(this@DetailActivity, UnityHolderActivity::class.java)
+                            intent.putExtra("sceneName", "LauncherScreen")
+                            startActivity(intent)
+                        }
+                        btnStartAR.visibility = View.VISIBLE
                     }
                     2 -> {
-
+                        val intent = Intent(this@DetailActivity, MapboxActivity::class.java)
+                        intent.putExtra("latitude", card.latitude)
+                        intent.putExtra("longitude", card.longitude)
+                        startActivity(intent)
+                        tabLayout.getTabAt(lastSelected)?.select()
                     }
                 }
             }
-            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+                if(tab.position == 1){
+                    btnStartAR.visibility = View.GONE
+                }
+            }
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
     }
