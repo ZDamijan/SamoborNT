@@ -49,6 +49,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
     private var permissionsManager: PermissionsManager = PermissionsManager(this)
     private lateinit var mapboxMap: MapboxMap
     private var mapView: MapView? = null
+    private var enabledLocationComponent: Boolean = false
     private lateinit var connection: DBConnection
     private lateinit var geofencingClient: GeofencingClient
 
@@ -125,7 +126,8 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
             } catch (exception: URISyntaxException) {
                 Log.d("mapbox", "JSON file not found.")
             }*/
-            enableLocationComponent(it)
+            if(!enabledLocationComponent)
+                enableLocationComponent(it)
         }
     }
 
@@ -180,6 +182,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
 
     @SuppressLint("MissingPermission")
     private fun enableLocationComponent(loadedMapStyle: Style) {
+        enabledLocationComponent = true
         // Check if permissions are enabled and if not request
         if (PermissionsManager.areLocationPermissionsGranted(this)) {
             // Create and customize the LocationComponent's options
