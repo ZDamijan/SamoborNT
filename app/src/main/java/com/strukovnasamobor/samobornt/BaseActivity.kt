@@ -33,6 +33,9 @@ abstract class BaseActivity : AppCompatActivity() {
     fun initializeMenu() {
         val sightsMenu = findViewById<ImageView>(R.id.sights_menu)
         sightsMenu.setOnClickListener {
+            if (this::class.java.simpleName == "DetailActivity") {
+                this.finish()
+            }
             startActivity<CardViewActivity>()
         }
 
