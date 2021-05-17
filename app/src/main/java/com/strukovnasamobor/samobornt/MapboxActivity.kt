@@ -52,6 +52,8 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
     private var enabledLocationComponent: Boolean = false
     private lateinit var connection: DBConnection
     private lateinit var geofencingClient: GeofencingClient
+    private lateinit var mapMenu: ImageView
+    private lateinit var locationMenu : ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +68,8 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
 
         // This contains the MapView in XML and needs to be called after the access token is configured.
         setContentView(R.layout.activity_mapbox)
+        mapMenu = findViewById<ImageView>(R.id.map_menu)
+        locationMenu = findViewById<ImageView>(R.id.location_menu)
         super.initializeMenu()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -151,6 +155,9 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
         }
 
         Log.e("mapbox", "mapclick")
+        Log.e("mapbox", mapboxMap.cameraPosition.target.toString())
+        Log.e("mapbox", mapboxMap.cameraPosition.zoom.toString())
+        Log.e("mapbox", mapboxMap.cameraPosition.bearing.toString())
 
         // Convert LatLng coordinates to screen pixel and only query the rendered features.
         val pixel = mapboxMap.projection.toScreenLocation(point)
@@ -206,7 +213,9 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                 isLocationComponentEnabled = true
 
                 // Set the LocationComponent's camera mode
-                cameraMode = CameraMode.TRACKING_GPS
+                cameraMode = CameraMode.NONE
+                mapMenu.visibility = View.INVISIBLE
+                locationMenu.visibility = View.VISIBLE
 
                 // Set the LocationComponent's render mode
                 renderMode = RenderMode.COMPASS
@@ -219,14 +228,10 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                 override fun onCameraTrackingChanged(currentMode: Int) {
                     // CameraMode has been updated
                     if(currentMode == CameraMode.TRACKING_GPS) {
-                        val mapMenu = findViewById<ImageView>(R.id.map_menu)
                         mapMenu.visibility = View.VISIBLE
-                        val locationMenu = findViewById<ImageView>(R.id.location_menu)
                         locationMenu.visibility = View.INVISIBLE
                     } else{
-                        val mapMenu = findViewById<ImageView>(R.id.map_menu)
                         mapMenu.visibility = View.INVISIBLE
-                        val locationMenu = findViewById<ImageView>(R.id.location_menu)
                         locationMenu.visibility = View.VISIBLE
                     }
                 }
