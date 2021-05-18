@@ -16,6 +16,7 @@ import java.util.*
 
 private lateinit var btnExplore: Button
 lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+lateinit var configuration: Configuration
 
 class StartScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,12 +55,12 @@ class StartScreenActivity : AppCompatActivity() {
 
         val locale = Locale(language)
         Locale.setDefault(locale)
-        val config = Configuration()
-        config.setLocale(locale)
+        configuration = Configuration()
+        configuration.setLocale(locale)
         @Suppress("DEPRECATION")
-        baseContext.resources.updateConfiguration(
-            config,
-            baseContext.resources.displayMetrics
+        this.resources.updateConfiguration(
+            configuration,
+            this.resources.displayMetrics
         )
     }
 }

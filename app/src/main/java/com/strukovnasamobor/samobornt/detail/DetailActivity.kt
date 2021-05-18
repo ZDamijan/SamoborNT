@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.detail.*
 
 private lateinit var card: Card
 private var currentCardIndex: Int? = null
+private var currentLocationId: String? = null
 const val NUMBER_OF_TABS = 3
 const val AR_TAB_INDEX = 1
 
@@ -57,15 +58,20 @@ class DetailActivity : BaseActivity() {
 
         if (languageChanged == true && changeToLanguage != null) {
             cardListHolder.changeCardsLanguage(changeToLanguage)
-            card = cardListHolder.getCardList()[currentCardIndex!!]
+            if (fromCardViewActivity == true) {
+                card = cardListHolder.getCardList()[currentCardIndex!!]
+            }
         }
-        else if (cardIndex != null || cardIndex != currentCardIndex) {
+        else if (fromCardViewActivity == true) {
             currentCardIndex = cardIndex
             card = cardListHolder.getCardList()[currentCardIndex!!]
         }
+        else {
+            currentLocationId = locationId
+        }
 
         var cardFound = false
-        if (locationId != null) {
+        if (currentLocationId != null && fromCardViewActivity == false && languageChanged == false) {
             for (i in 0 until cardListHolder.getCardList().size) {
                 cardListHolder.getCardList()[i].also { card = it }
                 val cardId: String = if (fromMapbox == true) {
@@ -73,7 +79,7 @@ class DetailActivity : BaseActivity() {
                 } else {
                     card.locationId
                 }
-                if (cardId == locationId) {
+                if (cardId == currentLocationId) {
                     cardFound = true
                     break
                 }
