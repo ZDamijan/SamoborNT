@@ -3,9 +3,9 @@ package com.strukovnasamobor.samobornt
 import android.app.Activity
 import android.app.Dialog
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.view.Window
@@ -19,7 +19,7 @@ import com.strukovnasamobor.samobornt.cardview.CardViewActivity
 import com.strukovnasamobor.samobornt.detail.DetailActivity
 import java.util.*
 
-var mapboxActivity : MapboxActivity? = null;
+var mapboxActivity : MapboxActivity? = null
 
 abstract class BaseActivity : AppCompatActivity() {
     protected var locationComponent: LocationComponent? = null
@@ -28,6 +28,11 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.toolbar)
         setSupportActionBar(findViewById(R.id.toolbar))
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(newBase)
+        applyOverrideConfiguration(configuration)
     }
 
     fun initializeMenu() {
@@ -139,12 +144,11 @@ abstract class BaseActivity : AppCompatActivity() {
         val locale = Locale(languageToLoad)
         saveLocale(locale.language)
         Locale.setDefault(locale)
-        val config = Configuration()
-        config.setLocale(locale)
+        configuration.setLocale(locale)
         @Suppress("DEPRECATION")
-        baseContext.resources.updateConfiguration(
-            config,
-            baseContext.resources.displayMetrics
+        this.resources.updateConfiguration(
+            configuration,
+            this.resources.displayMetrics
         )
         val newLanguage: String = resources.configuration.locales[0].toString()
         when (this::class.java.simpleName) {
