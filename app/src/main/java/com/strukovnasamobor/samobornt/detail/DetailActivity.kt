@@ -6,11 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
-
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
-
-
 import com.strukovnasamobor.samobornt.BaseActivity
 import com.strukovnasamobor.samobornt.MapboxActivity
 import com.strukovnasamobor.samobornt.R
@@ -19,8 +16,10 @@ import com.strukovnasamobor.samobornt.cardview.Card
 import com.strukovnasamobor.samobornt.cardview.CardListHolder
 import kotlinx.android.synthetic.main.detail.*
 
-lateinit var card: Card
+private lateinit var card: Card
 private var currentCardIndex: Int? = null
+const val NUMBER_OF_TABS = 3
+const val AR_TAB_INDEX = 1
 
 class DetailActivity : BaseActivity() {
     private var viewPager: ViewPager? = null
@@ -29,48 +28,63 @@ class DetailActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.detail)
-
         super.initializeMenu()
-        val bundle: Bundle? = intent.extras
 
         cardListHolder = CardListHolder.getCardListHolderInstance(this)
 
-        if (bundle?.get("languageChanged") == true) {
-            cardListHolder.changeCardsLanguage(bundle.getString("changeToLanguage")!!)
+        createDetailActivityLayout(intent)
+        createTabLayout()
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        createDetailActivityLayout(intent)
+        createTabLayout()
+    }
+
+    private fun createDetailActivityLayout(intent: Intent?) {
+        val bundle: Bundle? = intent!!.extras
+        // user changed language while browsing DetailActivity
+        val languageChanged = bundle?.getBoolean("languageChanged")
+        val changeToLanguage = bundle?.getString("changeToLanguage")
+        // CardViewActivity extras
+        val cardIndex = bundle?.getInt("cardIndex")
+        val fromCardViewActivity = bundle?.getBoolean("fromCardViewActivity")
+        // MapboxActivity extras
+        val locationId = bundle?.getString("locationId")
+        val fromMapbox = bundle?.getBoolean("fromMapbox")
+
+        if (languageChanged == true && changeToLanguage != null) {
+            cardListHolder.changeCardsLanguage(changeToLanguage)
             card = cardListHolder.getCardList()[currentCardIndex!!]
         }
-
-        if (bundle?.get("cardIndex") != null) {
-            currentCardIndex = bundle.get("cardIndex") as Int
+        else if (cardIndex != null || cardIndex != currentCardIndex) {
+            currentCardIndex = cardIndex
             card = cardListHolder.getCardList()[currentCardIndex!!]
         }
 
         var cardFound = false
-        if (bundle?.get("locationId") != null) {
-            val name = bundle.get("locationId") as String
-
+        if (locationId != null) {
             for (i in 0 until cardListHolder.getCardList().size) {
                 cardListHolder.getCardList()[i].also { card = it }
-                val cardId: String = if (bundle.get("fromMapbox") == true) {
+                val cardId: String = if (fromMapbox == true) {
                     '"'+card.locationId+'"'
                 } else {
                     card.locationId
                 }
-                if (cardId == name) {
+                if (cardId == locationId) {
                     cardFound = true
                     break
                 }
             }
         }
 
-        if (cardFound || bundle?.getBoolean("fromCardViewActivity") == true ||
-                bundle?.getBoolean("languageChanged") == true) {
+        if (cardFound || fromCardViewActivity == true || languageChanged == true) {
             val images: MutableList<Int>? = card.otherImages
             if (!images?.contains(card.mainImage!!)!!) {
                 card.mainImage?.let {
-                    images?.add(0, it)
+                    images.add(0, it)
                 }
             }
 
@@ -83,17 +97,24 @@ class DetailActivity : BaseActivity() {
             dotsIndicator.setViewPager(viewPager!!)
             viewPager!!.adapter?.registerDataSetObserver(dotsIndicator.dataSetObserver)
         }
+    }
 
+    private fun createTabLayout() {
         var lastSelectedTab = 0
-        var btnStartAR: Button = findViewById(R.id.btn_start_ar)
+        val btnStartAR: Button = findViewById(R.id.btn_start_ar)
         btnStartAR.visibility = View.GONE
-        var tabLayout: TabLayout = findViewById(R.id.tabLayout)
-        if(card.arDescription.isNullOrBlank()){
-            tabLayout.touchables[1].visibility = View.GONE
+        val tabLayout: TabLayout = findViewById(R.id.tabLayout)
+
+        if(card.arDescription.isNullOrBlank() && tabLayout.touchables.size == NUMBER_OF_TABS){
+            tabLayout.getTabAt(AR_TAB_INDEX)!!.view.visibility = View.GONE
         }
+        else if (!card.arDescription.isNullOrBlank()) {
+            tabLayout.getTabAt(AR_TAB_INDEX)!!.view.visibility = View.VISIBLE
+        }
+
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                Log.e("tablayout", tab.position.toString());
+                Log.e("tablayout", tab.position.toString())
                 when (tab.position) {
                     0 -> {
                         cardText.text = card.longDescription
