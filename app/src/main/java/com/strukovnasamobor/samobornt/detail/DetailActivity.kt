@@ -6,11 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
-
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
-
-
 import com.strukovnasamobor.samobornt.BaseActivity
 import com.strukovnasamobor.samobornt.MapboxActivity
 import com.strukovnasamobor.samobornt.R
@@ -19,8 +16,10 @@ import com.strukovnasamobor.samobornt.cardview.Card
 import com.strukovnasamobor.samobornt.cardview.CardListHolder
 import kotlinx.android.synthetic.main.detail.*
 
-lateinit var card: Card
+private lateinit var card: Card
 private var currentCardIndex: Int? = null
+const val NUMBER_OF_TABS = 3
+const val AR_TAB_INDEX = 1
 
 class DetailActivity : BaseActivity() {
     private var viewPager: ViewPager? = null
@@ -105,9 +104,14 @@ class DetailActivity : BaseActivity() {
         val btnStartAR: Button = findViewById(R.id.btn_start_ar)
         btnStartAR.visibility = View.GONE
         val tabLayout: TabLayout = findViewById(R.id.tabLayout)
-        if(card.arDescription.isNullOrBlank()){
-            tabLayout.touchables[1].visibility = View.GONE
+
+        if(card.arDescription.isNullOrBlank() && tabLayout.touchables.size == NUMBER_OF_TABS){
+            tabLayout.getTabAt(AR_TAB_INDEX)!!.view.visibility = View.GONE
         }
+        else if (!card.arDescription.isNullOrBlank()) {
+            tabLayout.getTabAt(AR_TAB_INDEX)!!.view.visibility = View.VISIBLE
+        }
+
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 Log.e("tablayout", tab.position.toString())
