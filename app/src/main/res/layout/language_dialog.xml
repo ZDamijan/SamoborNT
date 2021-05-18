@@ -14,7 +14,7 @@
         android:layout_marginBottom="@dimen/margin_bottom"
         android:text="@string/change_language"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="?android:textColorPrimary"
         android:textSize="18sp"
         android:textStyle="bold" />
 
