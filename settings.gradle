@@ -1,6 +1,6 @@
 include ':app'
 rootProject.name = "Samobor N&T"
-///* Unity Integration
+/* Unity Integration
 include ':unityLibrary'
 project(':unityLibrary').projectDir=new File('\\samobornt-ar\\unityLibrary')
-//*/
+*/

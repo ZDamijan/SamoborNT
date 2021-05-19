@@ -7,10 +7,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 
-///* Unity Integration
+/* Unity Integration
 import com.unity3d.player.UnityPlayerActivity
-//*/
-private const val unityIntegration: Boolean = true
+*/
 
 class UnityHolderActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,11 +18,11 @@ class UnityHolderActivity : AppCompatActivity() {
         val bundle = intent.extras
         val sceneName = bundle!!.getString("sceneName")
         Log.e("UnityPlayerHolder", "Android load Unity scene '" + sceneName + "'.")
-        if(unityIntegration){
-            val intent = Intent(this, UnityPlayerActivity::class.java)
-            intent.putExtra("sceneName", sceneName)
-            startActivity(intent)
-        }
+        /* Unity Integration
+        val intent = Intent(this, UnityPlayerActivity::class.java)
+        intent.putExtra("sceneName", sceneName)
+        startActivity(intent)
+        */
         finish()
     }
 
