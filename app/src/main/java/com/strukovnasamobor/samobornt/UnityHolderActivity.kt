@@ -6,7 +6,11 @@ import android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-//import com.unity3d.player.UnityPlayerActivity
+
+///* Unity Integration
+import com.unity3d.player.UnityPlayerActivity
+//*/
+private const val unityIntegration: Boolean = true
 
 class UnityHolderActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,10 +18,12 @@ class UnityHolderActivity : AppCompatActivity() {
         setContentView(R.layout.activity_unity_holder)
         val bundle = intent.extras
         val sceneName = bundle!!.getString("sceneName")
-        //val intent = Intent(this, UnityPlayerActivity::class.java)
-        intent.putExtra("sceneName", sceneName)
         Log.e("UnityPlayerHolder", "Android load Unity scene '" + sceneName + "'.")
-        startActivity(intent)
+        if(unityIntegration){
+            val intent = Intent(this, UnityPlayerActivity::class.java)
+            intent.putExtra("sceneName", sceneName)
+            startActivity(intent)
+        }
         finish()
     }
 

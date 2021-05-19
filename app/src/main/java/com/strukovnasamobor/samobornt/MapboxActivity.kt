@@ -177,7 +177,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                     intent.putExtra("locationId", value.toString())
                     intent.putExtra("fromMapbox", true)
                     startActivity(intent)
-                    Toast.makeText(this, value.toString(), Toast.LENGTH_LONG).show()
+                    //Toast.makeText(this, value.toString(), Toast.LENGTH_LONG).show()
                     Log.e("mapbox open detail view: ", value.toString())}
             }
         }
