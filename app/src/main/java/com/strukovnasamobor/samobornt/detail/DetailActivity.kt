@@ -131,7 +131,7 @@ class DetailActivity : BaseActivity() {
                         lastSelectedTab = 1
                         btnStartAR.setOnClickListener{
                             val intent = Intent(this@DetailActivity, UnityHolderActivity::class.java)
-                            intent.putExtra("sceneName", "LauncherScreen")
+                            intent.putExtra("sceneName", card.locationId)
                             startActivity(intent)
                         }
                         btnStartAR.visibility = View.VISIBLE
