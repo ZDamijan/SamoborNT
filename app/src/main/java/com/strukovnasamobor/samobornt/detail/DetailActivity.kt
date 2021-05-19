@@ -25,6 +25,7 @@ const val AR_TAB_INDEX = 1
 class DetailActivity : BaseActivity() {
     private var viewPager: ViewPager? = null
     private var swipeAdapter: SwipeAdapter? = null
+    private var lastSelectedTab = 0
     private lateinit var cardListHolder: CardListHolder
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,7 +96,12 @@ class DetailActivity : BaseActivity() {
             }
 
             cardTitle.text = card.locationName
-            cardText.text = card.longDescription
+            if (lastSelectedTab == 0) {
+                cardText.text = card.longDescription
+            }
+            else if (lastSelectedTab == 1) {
+                cardText.text = card.arDescription
+            }
 
             viewPager = findViewById(R.id.viewPager)
             swipeAdapter = SwipeAdapter(this, images.toIntArray())
@@ -106,7 +112,7 @@ class DetailActivity : BaseActivity() {
     }
 
     private fun createTabLayout() {
-        var lastSelectedTab = 0
+        lastSelectedTab = 0
         val btnStartAR: Button = findViewById(R.id.btn_start_ar)
         btnStartAR.visibility = View.GONE
         val tabLayout: TabLayout = findViewById(R.id.tabLayout)
