@@ -26,12 +26,12 @@ class LocaleHelper {
         }
 
         @JvmStatic
-        fun setLanguage(context: Context, language: String= getLanguage(context)) {
+        fun setLanguage(context: Context, language: String=getLanguage(context)) {
             saveLanguage(context, language)
             setLocale(context, language)
         }
 
-        private fun setLocale(context: Context, language: String): Context {
+        private fun setLocale(context: Context, language: String) {
             val locale = Locale(language)
             Locale.setDefault(locale)
 
@@ -43,8 +43,6 @@ class LocaleHelper {
                 configuration,
                 context.resources.displayMetrics
             )
-
-            return context
         }
 
         private fun saveLanguage(context: Context, language: String) {
