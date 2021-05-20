@@ -33,7 +33,7 @@ allprojects {
             }
         }
 
-        /*
+        /* Unity Integration
         flatDir {
             dirs "${project(':unityLibrary').projectDir}/libs"
         }

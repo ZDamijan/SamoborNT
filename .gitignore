@@ -90,11 +90,14 @@ lint/tmp/
 symbols/
 
 samobornt-ar/*
-!/samobornt-ar/launcher/
-samobornt-ar/launcher/*
-!samobornt-ar/launcher/src
-samobornt-ar/launcher/src/*
-!samobornt-ar/launcher/src/main/
-samobornt-ar/launcher/src/main/*
-!samobornt-ar/launcher/src/main/AndroidManifest.xml
+!/samobornt-ar/unityLibrary/
+samobornt-ar/unityLibrary/*
+!samobornt-ar/unityLibrary/build.gradle
+!samobornt-ar/unityLibrary/src
+samobornt-ar/unityLibrary/src/*
+!samobornt-ar/unityLibrary/src/main/
+samobornt-ar/unityLibrary/src/main/*
+!samobornt-ar/unityLibrary/src/main/AndroidManifest.xml
+
+SamoborNT\samobornt-ar\unityLibrary
 

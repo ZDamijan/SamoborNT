@@ -29,7 +29,7 @@ class CardListHolder private constructor(private val context: Context) {
     }
 
     private fun createCards(): MutableList<Card> {
-        val cardsListLocale = context.resources.configuration.locales[0].toString()
+        val cardsListLocale = LocaleHelper.getLanguage(context)
         val correctTable = if (cardsListLocale == "hr" || cardsListLocale == "hr_HR") TABLE_NAME_HRV else TABLE_NAME_ENG
         val cardsList: MutableList<Card> = mutableListOf()
         val cursor: Cursor = connection.getFetchAllCursor(correctTable)
@@ -40,7 +40,7 @@ class CardListHolder private constructor(private val context: Context) {
                 val locationSD: String = cursor.getString(cursor.getColumnIndex(C_SHORT_DESCRIPTION))
                 val locationLD: String = cursor.getString(cursor.getColumnIndex(C_LONG_DESCRIPTION))
                 val imageName: String = cursor.getString(cursor.getColumnIndex(C_MAIN_IMAGE))
-                val arDescriptiom: String? = cursor.getString(cursor.getColumnIndex(C_AR_DESCRIPTION))
+                val arDescription: String? = cursor.getString(cursor.getColumnIndex(C_AR_DESCRIPTION))
                 val longitude: String = cursor.getString(cursor.getColumnIndex(C_LONGITUDE))
                 val latitude: String = cursor.getString(cursor.getColumnIndex(C_LATITUDE))
                 @DrawableRes
@@ -54,7 +54,7 @@ class CardListHolder private constructor(private val context: Context) {
                     shortDescription = locationSD,
                     mainImage = locationImageID,
                     otherImages = otherImages,
-                    arDescription = arDescriptiom,
+                    arDescription = arDescription,
                     longitude = longitude.toDouble(),
                     latitude = latitude.toDouble()
                 )
@@ -67,7 +67,7 @@ class CardListHolder private constructor(private val context: Context) {
 
     private fun fetchOtherImageNames(locationName: String): MutableList<Int> {
         val imageList: MutableList<Int> = mutableListOf()
-        val cardsListLocale = context.resources.configuration.locales[0].toString()
+        val cardsListLocale = LocaleHelper.getLanguage(context)
         val correctTable = if (cardsListLocale == "hr" || cardsListLocale == "hr_HR") TABLE_NAME_HRV else TABLE_NAME_ENG
         for (otherImageColumn in C_OTHER_IMAGES) {
             val cursor: Cursor = connection
@@ -95,6 +95,7 @@ class CardListHolder private constructor(private val context: Context) {
                 currentCard.locationName = cursor.getString(cursor.getColumnIndex(C_NAME))
                 currentCard.longDescription = cursor.getString(cursor.getColumnIndex(C_LONG_DESCRIPTION))
                 currentCard.shortDescription = cursor.getString(cursor.getColumnIndex(C_SHORT_DESCRIPTION))
+                currentCard.arDescription = cursor.getString(cursor.getColumnIndex(C_AR_DESCRIPTION))
                 cardIndex += 1
                 cursor.moveToNext()
             }

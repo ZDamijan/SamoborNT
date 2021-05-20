@@ -60,6 +60,8 @@ dependencies {
     implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:9.6.1'
     implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-annotation-v9:0.9.0'
 
-    //implementation project(':unityLibrary')
-    //implementation fileTree(dir: 'libs', include: ['*.jar'])
+    /* Unity Integration
+    implementation project(':unityLibrary')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    */
 }
