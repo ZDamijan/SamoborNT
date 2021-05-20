@@ -1,11 +1,9 @@
 package com.strukovnasamobor.samobornt
 
-import android.app.Activity
 import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.view.Window
@@ -17,7 +15,7 @@ import com.strukovnasamobor.samobornt.api.startActivity
 import com.strukovnasamobor.samobornt.cardview.CardListHolder
 import com.strukovnasamobor.samobornt.cardview.CardViewActivity
 import com.strukovnasamobor.samobornt.detail.DetailActivity
-import java.util.*
+import com.strukovnasamobor.samobornt.services.LocaleHelper
 
 var mapboxActivity : MapboxActivity? = null
 
@@ -32,7 +30,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(newBase)
-        applyOverrideConfiguration(configuration)
+        LocaleHelper.setLanguage(this)
     }
 
     fun initializeMenu() {
@@ -63,8 +61,7 @@ abstract class BaseActivity : AppCompatActivity() {
                     }
                     R.id.menu_changeLanguage -> {
                         val dialog = Dialog(this)
-                        @Suppress("DEPRECATION") val currentLang =
-                            resources.configuration.locale.language
+                        val currentLang = LocaleHelper.getLanguage(this)
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
                         dialog.setCancelable(true)
                         dialog.setCanceledOnTouchOutside(true)
@@ -105,8 +102,6 @@ abstract class BaseActivity : AppCompatActivity() {
                     }
                     R.id.menu_about -> {
                         val aboutPopupWindow = Dialog(this)
-                        @Suppress("DEPRECATION") val currentLang =
-                            resources.configuration.locale.language
                         aboutPopupWindow.requestWindowFeature(Window.FEATURE_NO_TITLE)
                         aboutPopupWindow.setCancelable(true)
                         aboutPopupWindow.setCanceledOnTouchOutside(true)
@@ -141,41 +136,23 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     private fun changeLanguage(languageToLoad: String) {
-        val locale = Locale(languageToLoad)
-        saveLocale(locale.language)
-        Locale.setDefault(locale)
-        configuration.setLocale(locale)
-        @Suppress("DEPRECATION")
-        this.resources.updateConfiguration(
-            configuration,
-            this.resources.displayMetrics
-        )
-        val newLanguage: String = resources.configuration.locales[0].toString()
+        LocaleHelper.setLanguage(this, languageToLoad)
+        CardListHolder.getCardListHolderInstance(this).changeCardsLanguage(languageToLoad)
+        mapboxActivity?.changeLanguage()
         when (this::class.java.simpleName) {
             "CardViewActivity" -> {
                 this.finish()
                 val intent = Intent(this, CardViewActivity::class.java)
                 intent.putExtra("languageChanged", true)
-                intent.putExtra("changeToLanguage", newLanguage)
+                intent.putExtra("changeToLanguage", languageToLoad)
                 startActivity(intent)
             }
             "DetailActivity" -> {
                 val intent = Intent(this, DetailActivity::class.java)
                 intent.putExtra("languageChanged", true)
-                intent.putExtra("changeToLanguage", newLanguage)
+                intent.putExtra("changeToLanguage", languageToLoad)
                 startActivity(intent)
             }
         }
-        mapboxActivity?.changeLanguage()
-        CardListHolder.getCardListHolderInstance(this).changeCardsLanguage(newLanguage)
-    }
-
-    private fun saveLocale(language: String) {
-        val packageName: String = applicationContext.packageName
-        val sharedPreferences: SharedPreferences =
-            getSharedPreferences("$packageName.PREFERENCES", Activity.MODE_PRIVATE)
-        val preferencesEditor: SharedPreferences.Editor = sharedPreferences.edit()
-        preferencesEditor.putString("PREFERRED_LANGUAGE", language)
-        preferencesEditor.apply()
     }
 }

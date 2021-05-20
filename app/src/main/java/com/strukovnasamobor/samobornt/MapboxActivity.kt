@@ -62,7 +62,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
         // object or in the same activity which contains the mapview.
         Mapbox.getInstance(this, getString(R.string.mapbox_access_token))
 
-        currentLocale = resources.configuration.locales[0].toString()
+        currentLocale = LocaleHelper.getLanguage(this)
         connection = DBConnection.getConnectionInstance(this)
         geofencingClient = LocationServices.getGeofencingClient(this)
 
@@ -136,13 +136,13 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
     }
 
     private fun mapOnClickListener(point: LatLng) {
-        if (resources.configuration.locales[0].toString() != currentLocale) {
+        if (LocaleHelper.getLanguage(this) != currentLocale) {
             val requestIdList: MutableList<String> = mutableListOf()
             geofenceLocations.forEach {
                 requestIdList.add(it["locationName"]!!)
             }
             geofencingClient.removeGeofences(requestIdList)
-            currentLocale = resources.configuration.locales[0].toString()
+            currentLocale = LocaleHelper.getLanguage(this)
             geofenceLocations = getLocationList(currentLocale)
             geofenceLocations.forEach {
                 createGeofence(
