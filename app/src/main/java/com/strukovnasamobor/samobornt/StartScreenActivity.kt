@@ -1,9 +1,16 @@
 package com.strukovnasamobor.samobornt
 
+import android.Manifest
+import android.app.Dialog
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.Window
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.strukovnasamobor.samobornt.api.startActivity
@@ -27,6 +34,28 @@ class StartScreenActivity : AppCompatActivity() {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         btnExplore = findViewById(R.id.btn_explore)
         requestPermission()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                val locationPopupWindow = Dialog(this)
+                locationPopupWindow.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                locationPopupWindow.setCancelable(true)
+                locationPopupWindow.setCanceledOnTouchOutside(true)
+                locationPopupWindow.setContentView(R.layout.location_popup)
+                locationPopupWindow.show()
+                locationPopupWindow.findViewById<Button>(R.id.close_button).setOnClickListener {
+                    locationPopupWindow.cancel()
+                    ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+                        GEOFENCE_LOCATION_REQUEST_CODE
+                    )
+                }
+            }
+        }
         initListener()
     }
 
