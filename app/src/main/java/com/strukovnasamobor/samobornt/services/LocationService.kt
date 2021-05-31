@@ -3,12 +3,16 @@ package com.strukovnasamobor.samobornt.services
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Looper
+import android.view.Window
+import android.widget.Button
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
+import com.strukovnasamobor.samobornt.R
 import com.strukovnasamobor.samobornt.fusedLocationProviderClient
 
 private const val REQUEST_CODE = 12
@@ -19,12 +23,11 @@ private lateinit var locationRequest: LocationRequest
 var locationUpdateState = false
 
 fun Activity.requestPermission() {
-    ActivityCompat.requestPermissions(
-        this,
-        arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-        REQUEST_CODE
-    )
-
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+            REQUEST_CODE
+        )
 }
 
 fun Context.hasLocationPermission(): Boolean {

@@ -2,6 +2,7 @@ package com.strukovnasamobor.samobornt
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -11,8 +12,11 @@ import android.content.pm.PackageManager
 import android.database.Cursor
 import android.os.Build
 import android.os.Bundle
+import android.os.Message
 import android.util.Log
 import android.view.View
+import android.view.Window
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
@@ -71,20 +75,6 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
         mapMenu = findViewById<ImageView>(R.id.map_menu)
         locationMenu = findViewById<ImageView>(R.id.location_menu)
         super.initializeMenu()
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            if (ContextCompat.checkSelfPermission(
-                    applicationContext,
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
-                    GEOFENCE_LOCATION_REQUEST_CODE
-                )
-            }
-        }
 
         geofenceLocations = getLocationList(currentLocale)
         geofenceLocations.forEach {
@@ -334,24 +324,32 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
-                    GEOFENCE_LOCATION_REQUEST_CODE
-                )
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                if (ContextCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    val locationPopupWindow = Dialog(this)
+                    locationPopupWindow.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                    locationPopupWindow.setCancelable(true)
+                    locationPopupWindow.setCanceledOnTouchOutside(true)
+                    locationPopupWindow.setContentView(R.layout.location_popup)
+                    locationPopupWindow.show()
+                    locationPopupWindow.findViewById<Button>(R.id.close_button).setOnClickListener {
+                        locationPopupWindow.cancel()
+                        ActivityCompat.requestPermissions(
+                            this,
+                            arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+                            GEOFENCE_LOCATION_REQUEST_CODE
+                        )
+                    }
+                } else {
+                    geofencingClient.addGeofences(geofenceRequest, pendingIntent)
+                }
             } else {
                 geofencingClient.addGeofences(geofenceRequest, pendingIntent)
             }
-        } else {
-            geofencingClient.addGeofences(geofenceRequest, pendingIntent)
-        }
     }
 
     companion object {
