@@ -4,4 +4,13 @@
     <color name="DarkRed">#760513</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="DirtyWhite">#E6E6E6</color>
+    <color name="LighterGray">#787878</color>
+    <color name="LightGray">#555</color>
+    <color name="DarkGray">#282828</color>
+    <color name="DarkerGray">#141414</color>
+
+
+
+
 </resources>

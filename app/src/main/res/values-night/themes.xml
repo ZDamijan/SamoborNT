@@ -11,9 +11,9 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:textColorSecondary">#787878</item>
-        <item name="android:textColorTertiary">#141414</item>
-        <item name="android:colorBackground">#282828</item>
+        <item name="android:textColorSecondary">@color/LighterGray</item>
+        <item name="android:textColorTertiary">@color/DarkerGray</item>
+        <item name="android:colorBackground">@color/DarkGray</item>
     </style>
 
     <string name="map_id" translatable="false">82e2d37cecf0e0e4</string>
