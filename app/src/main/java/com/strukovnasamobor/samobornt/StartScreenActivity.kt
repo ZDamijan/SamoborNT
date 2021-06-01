@@ -33,6 +33,7 @@ class StartScreenActivity : AppCompatActivity() {
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         btnExplore = findViewById(R.id.btn_explore)
+
         requestPermission()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             if (ContextCompat.checkSelfPermission(

@@ -61,6 +61,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         mapboxActivity = this
         // Mapbox access token is configured here. This needs to be called either in your application
         // object or in the same activity which contains the mapview.
@@ -98,7 +99,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
     override fun onMapReady(mapboxMap: MapboxMap) {
         this.mapboxMap = mapboxMap
         super.locationComponent = mapboxMap.locationComponent
-        Log.e("mapbox", resources.getString(resources.getIdentifier(getString(R.string.mapbox_style), "string", packageName)))
+        //Log.e("mapbox", resources.getString(resources.getIdentifier(getString(R.string.mapbox_style), "string", packageName)))
         mapboxMap.setStyle(
             Style.Builder().fromUri(
                 resources.getString(
@@ -107,7 +108,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
             )
         ) {
             // Map is set up and the style has loaded. Now you can add data or make other map adjustments
-            Log.e("mapbox", "loaded")
+            //Log.e("mapbox", "loaded")
             mapboxMap.addOnMapClickListener{ point: LatLng ->
                 mapOnClickListener(point)
                 true
@@ -143,16 +144,16 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                 )
             }
         }
-
+        /*
         Log.e("mapbox", "mapclick")
         Log.e("mapbox", mapboxMap.cameraPosition.target.toString())
         Log.e("mapbox", mapboxMap.cameraPosition.zoom.toString())
         Log.e("mapbox", mapboxMap.cameraPosition.bearing.toString())
-
+        */
         // Convert LatLng coordinates to screen pixel and only query the rendered features.
         val pixel = mapboxMap.projection.toScreenLocation(point)
         val features = mapboxMap.queryRenderedFeatures(pixel, "samobornt-markers")
-        Log.e("mapbox", features.toString())
+        //Log.e("mapbox", features.toString())
 
         // Get the first feature within the list if one exist
         if (features.size > 0) {
@@ -160,15 +161,15 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
 
             // Ensure the feature has properties defined
             for ((key, value) in feature.properties()!!.entrySet()) {
-                // Log all the properties
-                Log.e("mapbox", String.format("%s = %s", key, value))
+                //Log.e("mapbox", String.format("%s = %s", key, value))
                 if(key == "id"){
                     val intent = Intent(this,DetailActivity::class.java)
                     intent.putExtra("locationId", value.toString())
                     intent.putExtra("fromMapbox", true)
                     startActivity(intent)
                     //Toast.makeText(this, value.toString(), Toast.LENGTH_LONG).show()
-                    Log.e("mapbox open detail view: ", value.toString())}
+                    //Log.e("mapbox open detail view: ", value.toString())
+                }
             }
         }
     }

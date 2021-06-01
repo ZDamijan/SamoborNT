@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
+import android.view.View
 import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +18,7 @@ import com.strukovnasamobor.samobornt.cardview.CardListHolder
 import com.strukovnasamobor.samobornt.cardview.CardViewActivity
 import com.strukovnasamobor.samobornt.detail.DetailActivity
 import com.strukovnasamobor.samobornt.services.LocaleHelper
+
 
 var mapboxActivity : MapboxActivity? = null
 
@@ -89,12 +92,12 @@ abstract class BaseActivity : AppCompatActivity() {
                         true
                     }
                     R.id.menu_sights -> {
-                        Toast.makeText(this, "Sights", Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(this, "Sights", Toast.LENGTH_SHORT).show()
                         startActivity<CardViewActivity>()
                         true
                     }
                     R.id.menu_augmentedReality -> {
-                        Toast.makeText(this, "Augmented Reality", Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(this, "Augmented Reality", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this, UnityHolderActivity::class.java)
                         intent.putExtra("sceneName", "LauncherScreen")
                         startActivity(intent)
