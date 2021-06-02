@@ -1,4 +1,4 @@
- package com.strukovnasamobor.samobornt.detail
+package com.strukovnasamobor.samobornt.detail
 
 
 import android.content.Intent
@@ -126,7 +126,7 @@ class DetailActivity : BaseActivity() {
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                Log.e("tablayout", tab.position.toString())
+                //Log.e("tablayout", tab.position.toString())
                 when (tab.position) {
                     0 -> {
                         cardText.text = card.longDescription

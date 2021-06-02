@@ -2,6 +2,7 @@ package com.strukovnasamobor.samobornt
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -11,8 +12,11 @@ import android.content.pm.PackageManager
 import android.database.Cursor
 import android.os.Build
 import android.os.Bundle
+import android.os.Message
 import android.util.Log
 import android.view.View
+import android.view.Window
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
@@ -57,6 +61,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         mapboxActivity = this
         // Mapbox access token is configured here. This needs to be called either in your application
         // object or in the same activity which contains the mapview.
@@ -71,20 +76,6 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
         mapMenu = findViewById<ImageView>(R.id.map_menu)
         locationMenu = findViewById<ImageView>(R.id.location_menu)
         super.initializeMenu()
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            if (ContextCompat.checkSelfPermission(
-                    applicationContext,
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
-                    GEOFENCE_LOCATION_REQUEST_CODE
-                )
-            }
-        }
 
         geofenceLocations = getLocationList(currentLocale)
         geofenceLocations.forEach {
@@ -108,7 +99,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
     override fun onMapReady(mapboxMap: MapboxMap) {
         this.mapboxMap = mapboxMap
         super.locationComponent = mapboxMap.locationComponent
-        Log.e("mapbox", resources.getString(resources.getIdentifier(getString(R.string.mapbox_style), "string", packageName)))
+        //Log.e("mapbox", resources.getString(resources.getIdentifier(getString(R.string.mapbox_style), "string", packageName)))
         mapboxMap.setStyle(
             Style.Builder().fromUri(
                 resources.getString(
@@ -117,7 +108,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
             )
         ) {
             // Map is set up and the style has loaded. Now you can add data or make other map adjustments
-            Log.e("mapbox", "loaded")
+            //Log.e("mapbox", "loaded")
             mapboxMap.addOnMapClickListener{ point: LatLng ->
                 mapOnClickListener(point)
                 true
@@ -153,16 +144,16 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                 )
             }
         }
-
+        /*
         Log.e("mapbox", "mapclick")
         Log.e("mapbox", mapboxMap.cameraPosition.target.toString())
         Log.e("mapbox", mapboxMap.cameraPosition.zoom.toString())
         Log.e("mapbox", mapboxMap.cameraPosition.bearing.toString())
-
+        */
         // Convert LatLng coordinates to screen pixel and only query the rendered features.
         val pixel = mapboxMap.projection.toScreenLocation(point)
         val features = mapboxMap.queryRenderedFeatures(pixel, "samobornt-markers")
-        Log.e("mapbox", features.toString())
+        //Log.e("mapbox", features.toString())
 
         // Get the first feature within the list if one exist
         if (features.size > 0) {
@@ -170,15 +161,15 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
 
             // Ensure the feature has properties defined
             for ((key, value) in feature.properties()!!.entrySet()) {
-                // Log all the properties
-                Log.e("mapbox", String.format("%s = %s", key, value))
+                //Log.e("mapbox", String.format("%s = %s", key, value))
                 if(key == "id"){
                     val intent = Intent(this,DetailActivity::class.java)
                     intent.putExtra("locationId", value.toString())
                     intent.putExtra("fromMapbox", true)
                     startActivity(intent)
                     //Toast.makeText(this, value.toString(), Toast.LENGTH_LONG).show()
-                    Log.e("mapbox open detail view: ", value.toString())}
+                    //Log.e("mapbox open detail view: ", value.toString())
+                }
             }
         }
     }
@@ -334,24 +325,32 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
-                    GEOFENCE_LOCATION_REQUEST_CODE
-                )
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                if (ContextCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    val locationPopupWindow = Dialog(this)
+                    locationPopupWindow.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                    locationPopupWindow.setCancelable(true)
+                    locationPopupWindow.setCanceledOnTouchOutside(true)
+                    locationPopupWindow.setContentView(R.layout.location_popup)
+                    locationPopupWindow.show()
+                    locationPopupWindow.findViewById<Button>(R.id.close_button).setOnClickListener {
+                        locationPopupWindow.cancel()
+                        ActivityCompat.requestPermissions(
+                            this,
+                            arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+                            GEOFENCE_LOCATION_REQUEST_CODE
+                        )
+                    }
+                } else {
+                    geofencingClient.addGeofences(geofenceRequest, pendingIntent)
+                }
             } else {
                 geofencingClient.addGeofences(geofenceRequest, pendingIntent)
             }
-        } else {
-            geofencingClient.addGeofences(geofenceRequest, pendingIntent)
-        }
     }
 
     companion object {

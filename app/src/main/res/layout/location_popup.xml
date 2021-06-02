@@ -17,12 +17,12 @@
         app:srcCompat="@drawable/logo_samobornt" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_top"
         android:fontFamily="sans-serif-thin"
         android:lineSpacingExtra="5dp"
-        android:text="@string/aboutText"
+        android:text="@string/locationPopupText"
         android:textColor="?android:textColorPrimary"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -43,11 +43,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_top"
+        android:autoLink="web"
         android:fontFamily="sans-serif-thin"
+        android:linksClickable="true"
+        android:text="https://termify.io/privacy-policy/1622526563"
         android:textColor="?android:textColorPrimary"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:linksClickable="true"
-        android:autoLink="web"
-        android:text="https://termify.io/privacy-policy/1622526563" />
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/close_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/close_button" />
 </LinearLayout>

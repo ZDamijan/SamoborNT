@@ -17,7 +17,7 @@ class UnityHolderActivity : AppCompatActivity() {
         setContentView(R.layout.activity_unity_holder)
         val bundle = intent.extras
         val sceneName = bundle!!.getString("sceneName")
-        Log.e("UnityPlayerHolder", "Android load Unity scene '" + sceneName + "'.")
+        //Log.e("UnityPlayerHolder", "Android load Unity scene '" + sceneName + "'.")
         /* Unity Integration
         val intent = Intent(this, UnityPlayerActivity::class.java)
         intent.putExtra("sceneName", sceneName)
