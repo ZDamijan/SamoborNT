@@ -17,7 +17,6 @@
             android:layout_weight="1"
             android:background="?android:colorBackground"
             android:orientation="vertical">
-
             <include layout="@layout/toolbar" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
