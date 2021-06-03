@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Samobor N&amp;T</string>
     <string name="title_activity_maps">Samobor N&amp;T</string>
-    <string name="start_message">Experience Samobor NOW and as it was THEN with each step.</string>
+    <string name="start_message">Experience Samobor NOW\nand as it was THEN\nwith each step.</string>
     <string name="explore">Explore Samobor</string>
     <string name="title_actionbar"><![CDATA[Samobor N&T]]></string>
     <string name="about">About</string>
@@ -22,4 +22,6 @@
     <string name="locationPopupText">This app collects location data to enable Geofences even when the app is closed or not in use. If you wish to use the full functionality of the app please allow location permissions all the time.</string>
     <string name="close_button">I UNDERSTAND</string>
     <string name="privacy_policy">\nPrivacy Policy:</string>
+    <string name="geofence_notification_1">You\'ve come to:</string>
+    <string name="geofence_notification_2">, click here to read more.</string>
 </resources>

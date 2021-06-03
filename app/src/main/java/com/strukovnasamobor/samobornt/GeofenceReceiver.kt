@@ -15,16 +15,13 @@ class GeofenceReceiver : BroadcastReceiver() {
             val triggeringGeofences = geofencingEvent.triggeringGeofences
             if (geofencingTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
                 triggeringGeofences.forEach {
-                    Toast.makeText(context, "Ulaz u geofence: " + it.requestId, Toast.LENGTH_SHORT).show()
-
+                    //Toast.makeText(context, "Ulaz u geofence: " + it.requestId, Toast.LENGTH_SHORT).show()
                     MapboxActivity.showNotification(
                         context.applicationContext,
                         it.requestId,
                         intent!!.extras!!.getString("locationId")!!
                     )
-                    //ovdje umjesto ovog Toast-a, treba poslati notifikaciju da je korisnik usao u geofence, ime geofence-a dobijemo preko: it.requestId
                 }
-
             }
         }
     }

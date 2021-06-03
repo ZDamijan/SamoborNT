@@ -2,7 +2,6 @@ package com.strukovnasamobor.samobornt
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Dialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -12,15 +11,16 @@ import android.content.pm.PackageManager
 import android.database.Cursor
 import android.os.Build
 import android.os.Bundle
-import android.os.Message
-import android.util.Log
 import android.view.View
-import android.view.Window
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import com.google.android.gms.location.Geofence
+import com.google.android.gms.location.GeofencingClient
+import com.google.android.gms.location.GeofencingRequest
+import com.google.android.gms.location.LocationServices
 import com.mapbox.android.core.permissions.PermissionsListener
 import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.mapboxsdk.Mapbox
@@ -34,15 +34,10 @@ import com.mapbox.mapboxsdk.maps.MapView
 import com.mapbox.mapboxsdk.maps.MapboxMap
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback
 import com.mapbox.mapboxsdk.maps.Style
-import com.strukovnasamobor.samobornt.services.*
-import kotlin.random.Random
-import androidx.core.app.ActivityCompat
-import com.google.android.gms.location.Geofence
-import com.google.android.gms.location.GeofencingClient
-import com.google.android.gms.location.GeofencingRequest
-import com.google.android.gms.location.LocationServices
 import com.strukovnasamobor.samobornt.detail.DetailActivity
+import com.strukovnasamobor.samobornt.services.*
 import java.util.*
+import kotlin.random.Random
 
 const val GEOFENCE_RADIUS = 50
 const val GEOFENCE_LOCATION_REQUEST_CODE = 5
@@ -57,7 +52,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
     private lateinit var connection: DBConnection
     private lateinit var geofencingClient: GeofencingClient
     private lateinit var mapMenu: ImageView
-    private lateinit var locationMenu : ImageView
+    private lateinit var locationMenu: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,6 +88,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
     }
 
     fun changeLanguage() {
+        //recreate()
         onMapReady(mapboxMap)
     }
 
@@ -103,13 +99,16 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
         mapboxMap.setStyle(
             Style.Builder().fromUri(
                 resources.getString(
-                    resources.getIdentifier(getString(R.string.mapbox_style), "string",
-                    packageName))
+                    resources.getIdentifier(
+                        getString(R.string.mapbox_style), "string",
+                        packageName
+                    )
+                )
             )
         ) {
             // Map is set up and the style has loaded. Now you can add data or make other map adjustments
             //Log.e("mapbox", "loaded")
-            mapboxMap.addOnMapClickListener{ point: LatLng ->
+            mapboxMap.addOnMapClickListener { point: LatLng ->
                 mapOnClickListener(point)
                 true
             }
@@ -121,7 +120,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
             } catch (exception: URISyntaxException) {
                 Log.d("mapbox", "JSON file not found.")
             }*/
-            if(!enabledLocationComponent)
+            if (!enabledLocationComponent)
                 enableLocationComponent(it)
         }
     }
@@ -162,8 +161,8 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
             // Ensure the feature has properties defined
             for ((key, value) in feature.properties()!!.entrySet()) {
                 //Log.e("mapbox", String.format("%s = %s", key, value))
-                if(key == "id"){
-                    val intent = Intent(this,DetailActivity::class.java)
+                if (key == "id") {
+                    val intent = Intent(this, DetailActivity::class.java)
                     intent.putExtra("locationId", value.toString())
                     intent.putExtra("fromMapbox", true)
                     startActivity(intent)
@@ -216,19 +215,19 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                 override fun onCameraTrackingDismissed() {
                     // Tracking has been dismissed
                 }
+
                 override fun onCameraTrackingChanged(currentMode: Int) {
                     // CameraMode has been updated
-                    if(currentMode == CameraMode.TRACKING_GPS) {
+                    if (currentMode == CameraMode.TRACKING_GPS) {
                         mapMenu.visibility = View.VISIBLE
                         locationMenu.visibility = View.INVISIBLE
-                    } else{
+                    } else {
                         mapMenu.visibility = View.INVISIBLE
                         locationMenu.visibility = View.VISIBLE
                     }
                 }
             })
-        }
-        else {
+        } else {
             permissionsManager = PermissionsManager(this)
             permissionsManager.requestLocationPermissions(this)
         }
@@ -263,8 +262,13 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
         if (bundle?.get("latitude") != null) {
             val lat = bundle.get("latitude") as Double
             val lng = bundle.get("longitude") as Double
-            val dest= LatLng(lat, lng)
-            mapboxMap.moveCamera(com.mapbox.mapboxsdk.camera.CameraUpdateFactory.newLatLngZoom(dest,20.0))
+            val dest = LatLng(lat, lng)
+            mapboxMap.moveCamera(
+                com.mapbox.mapboxsdk.camera.CameraUpdateFactory.newLatLngZoom(
+                    dest,
+                    20.0
+                )
+            )
         }
     }
 
@@ -303,7 +307,12 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
         mapView?.onLowMemory()
     }
 
-    private fun createGeofence(location: LatLng, key: String, locationId: String, geofencingClient: GeofencingClient) {
+    private fun createGeofence(
+        location: LatLng,
+        key: String,
+        locationId: String,
+        geofencingClient: GeofencingClient
+    ) {
         val geofence: Geofence = Geofence.Builder()
             .setRequestId(key)
             .setCircularRegion(location.latitude, location.longitude, GEOFENCE_RADIUS.toFloat())
@@ -325,32 +334,26 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                if (ContextCompat.checkSelfPermission(
-                        this,
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    val locationPopupWindow = Dialog(this)
-                    locationPopupWindow.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                    locationPopupWindow.setCancelable(true)
-                    locationPopupWindow.setCanceledOnTouchOutside(true)
-                    locationPopupWindow.setContentView(R.layout.location_popup)
-                    locationPopupWindow.show()
-                    locationPopupWindow.findViewById<Button>(R.id.close_button).setOnClickListener {
-                        locationPopupWindow.cancel()
-                        ActivityCompat.requestPermissions(
-                            this,
-                            arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
-                            GEOFENCE_LOCATION_REQUEST_CODE
-                        )
-                    }
-                } else {
-                    geofencingClient.addGeofences(geofenceRequest, pendingIntent)
-                }
+                    ),
+                    REQUEST_CODE
+                )
             } else {
                 geofencingClient.addGeofences(geofenceRequest, pendingIntent)
             }
+        } else {
+            geofencingClient.addGeofences(geofenceRequest, pendingIntent)
+        }
     }
 
     companion object {
@@ -359,25 +362,35 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
             var notificationId = 123
             notificationId += Random(notificationId).nextInt(1, 30)
 
-            val notificationString = "Došli ste do: $message, kliknite ovdje da pročitate više!"
+            val notificationString = context.getString(R.string.geofence_notification_1) + " " + message +
+                    context.getString(R.string.geofence_notification_2)
+            //Toast.makeText(context, notificationString, Toast.LENGTH_SHORT).show()
+
             val resultIntent = Intent(context, DetailActivity::class.java)
                 .putExtra("locationId", locationId)
 
-            val resultPendingIntent = PendingIntent.getActivity(context, 1, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+            val resultPendingIntent = PendingIntent.getActivity(
+                context,
+                1,
+                resultIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
 
-            val notificationBuilder = NotificationCompat.Builder(context.applicationContext, CHANNEL_ID)
-                .setSmallIcon(R.drawable.marker_custom)
-                .setContentTitle(context.getString(R.string.app_name))
-                .setContentText(notificationString)
-                .setAutoCancel(true)
-                .setContentIntent(resultPendingIntent)
-                .setStyle(
-                    NotificationCompat.BigTextStyle()
-                        .bigText(notificationString)
-                )
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            val notificationBuilder =
+                NotificationCompat.Builder(context.applicationContext, CHANNEL_ID)
+                    .setSmallIcon(R.drawable.marker_custom)
+                    .setContentTitle(context.getString(R.string.app_name))
+                    .setContentText(notificationString)
+                    .setAutoCancel(true)
+                    .setContentIntent(resultPendingIntent)
+                    .setStyle(
+                        NotificationCompat.BigTextStyle()
+                            .bigText(notificationString)
+                    )
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
-            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val notificationManager =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val channel = NotificationChannel(
@@ -406,7 +419,8 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                 val locationId = cursor.getString(cursor.getColumnIndex(C_ID))
                 val newHashMap: HashMap<String, String> = hashMapOf(
                     Pair("locationName", locationName), Pair("latitude", latitude),
-                    Pair("longitude", longitude), Pair("locationId", locationId))
+                    Pair("longitude", longitude), Pair("locationId", locationId)
+                )
                 locationList.add(newHashMap)
                 cursor.moveToNext()
             }

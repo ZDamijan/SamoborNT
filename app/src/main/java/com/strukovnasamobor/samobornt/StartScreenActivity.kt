@@ -35,28 +35,6 @@ class StartScreenActivity : AppCompatActivity() {
         btnExplore = findViewById(R.id.btn_explore)
 
         requestPermission()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                val locationPopupWindow = Dialog(this)
-                locationPopupWindow.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                locationPopupWindow.setCancelable(true)
-                locationPopupWindow.setCanceledOnTouchOutside(true)
-                locationPopupWindow.setContentView(R.layout.location_popup)
-                locationPopupWindow.show()
-                locationPopupWindow.findViewById<Button>(R.id.close_button).setOnClickListener {
-                    locationPopupWindow.cancel()
-                    ActivityCompat.requestPermissions(
-                        this,
-                        arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
-                        GEOFENCE_LOCATION_REQUEST_CODE
-                    )
-                }
-            }
-        }
         initListener()
     }
 

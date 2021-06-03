@@ -6,16 +6,19 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Looper
 import android.view.Window
 import android.widget.Button
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
+import com.strukovnasamobor.samobornt.GEOFENCE_LOCATION_REQUEST_CODE
 import com.strukovnasamobor.samobornt.R
 import com.strukovnasamobor.samobornt.fusedLocationProviderClient
 
-private const val REQUEST_CODE = 12
+const val REQUEST_CODE = 12
 
 val REQUEST_CHECK_CODE = 17
 private lateinit var locationCallback: LocationCallback
@@ -23,11 +26,31 @@ private lateinit var locationRequest: LocationRequest
 var locationUpdateState = false
 
 fun Activity.requestPermission() {
-        ActivityCompat.requestPermissions(
-            this,
-            arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-            REQUEST_CODE
-        )
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            val locationPopupWindow = Dialog(this)
+            locationPopupWindow.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            locationPopupWindow.setCancelable(true)
+            locationPopupWindow.setCanceledOnTouchOutside(true)
+            locationPopupWindow.setContentView(R.layout.location_popup)
+            locationPopupWindow.show()
+            locationPopupWindow.findViewById<Button>(R.id.close_button).setOnClickListener {
+                locationPopupWindow.cancel()
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                    ),
+                    REQUEST_CODE
+                )
+            }
+        }
+    }
 }
 
 fun Context.hasLocationPermission(): Boolean {
@@ -43,7 +66,6 @@ fun createLocationCallback(function: () -> (Unit)) {
             locationResult ?: return
             if (locationResult.locations.isNotEmpty())
                 function()
-
         }
     }
 }

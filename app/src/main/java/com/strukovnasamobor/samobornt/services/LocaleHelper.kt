@@ -35,8 +35,17 @@ class LocaleHelper {
             val locale = Locale(language)
             Locale.setDefault(locale)
 
-            val configuration: Configuration = context.resources.configuration
+            val configuration: Configuration = context.applicationContext.resources.configuration
             configuration.setLocale(locale)
+
+            val configuration2: Configuration = context.resources.configuration
+            configuration2.setLocale(locale)
+
+            @Suppress("DEPRECATION")
+            context.applicationContext.resources.updateConfiguration(
+                configuration,
+                context.resources.displayMetrics
+            )
 
             @Suppress("DEPRECATION")
             context.resources.updateConfiguration(
