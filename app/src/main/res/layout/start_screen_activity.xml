@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
             android:scaleType="centerCrop"
-            android:src="@drawable/town_main_square" />
+            android:src="@drawable/new_town" />
 
         <ImageView
             android:layout_width="match_parent"
