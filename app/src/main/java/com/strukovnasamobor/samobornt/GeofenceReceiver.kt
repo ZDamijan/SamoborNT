@@ -18,8 +18,7 @@ class GeofenceReceiver : BroadcastReceiver() {
                     //Toast.makeText(context, "Ulaz u geofence: " + it.requestId, Toast.LENGTH_SHORT).show()
                     MapboxActivity.showNotification(
                         context.applicationContext,
-                        it.requestId,
-                        intent!!.extras!!.getString("locationId")!!
+                        it.requestId
                     )
                 }
             }

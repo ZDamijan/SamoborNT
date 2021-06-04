@@ -11,6 +11,7 @@ import android.content.pm.PackageManager
 import android.database.Cursor
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
@@ -34,13 +35,13 @@ import com.mapbox.mapboxsdk.maps.MapView
 import com.mapbox.mapboxsdk.maps.MapboxMap
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback
 import com.mapbox.mapboxsdk.maps.Style
+import com.strukovnasamobor.samobornt.cardview.Card
 import com.strukovnasamobor.samobornt.detail.DetailActivity
 import com.strukovnasamobor.samobornt.services.*
 import java.util.*
 import kotlin.random.Random
 
 const val GEOFENCE_RADIUS = 50
-const val GEOFENCE_LOCATION_REQUEST_CODE = 5
 private lateinit var currentLocale: String
 private lateinit var geofenceLocations: MutableList<HashMap<String, String>>
 
@@ -78,9 +79,10 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                 LatLng(
                     it["latitude"]!!.toDouble(),
                     it["longitude"]!!.toDouble()
-                ), it["locationName"]!!, it["locationId"]!!, geofencingClient
+                ), it["locationId"]!!, geofencingClient
             )
         }
+        //Log.e("geofence_create", geofenceLocations.toString())
 
         mapView = findViewById(R.id.mapView)
         mapView?.onCreate(savedInstanceState)
@@ -89,6 +91,24 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
 
     fun changeLanguage() {
         //recreate()
+        if (LocaleHelper.getLanguage(this) != currentLocale) {
+            val requestIdList: MutableList<String> = mutableListOf()
+            geofenceLocations.forEach {
+                requestIdList.add(it["locationId"]!!)
+            }
+            geofencingClient.removeGeofences(requestIdList)
+            currentLocale = LocaleHelper.getLanguage(this)
+            geofenceLocations = getLocationList(currentLocale)
+            geofenceLocations.forEach {
+                createGeofence(
+                    LatLng(
+                        it["latitude"]!!.toDouble(),
+                        it["longitude"]!!.toDouble()
+                    ), it["locationId"]!!, geofencingClient
+                )
+            }
+        }
+        //Log.e("geofence_create", geofenceLocations.toString())
         onMapReady(mapboxMap)
     }
 
@@ -126,23 +146,6 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
     }
 
     private fun mapOnClickListener(point: LatLng) {
-        if (LocaleHelper.getLanguage(this) != currentLocale) {
-            val requestIdList: MutableList<String> = mutableListOf()
-            geofenceLocations.forEach {
-                requestIdList.add(it["locationName"]!!)
-            }
-            geofencingClient.removeGeofences(requestIdList)
-            currentLocale = LocaleHelper.getLanguage(this)
-            geofenceLocations = getLocationList(currentLocale)
-            geofenceLocations.forEach {
-                createGeofence(
-                    LatLng(
-                        it["latitude"]!!.toDouble(),
-                        it["longitude"]!!.toDouble()
-                    ), it["locationName"]!!, it["locationId"]!!, geofencingClient
-                )
-            }
-        }
         /*
         Log.e("mapbox", "mapclick")
         Log.e("mapbox", mapboxMap.cameraPosition.target.toString())
@@ -309,12 +312,11 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
 
     private fun createGeofence(
         location: LatLng,
-        key: String,
         locationId: String,
         geofencingClient: GeofencingClient
     ) {
         val geofence: Geofence = Geofence.Builder()
-            .setRequestId(key)
+            .setRequestId(locationId)
             .setCircularRegion(location.latitude, location.longitude, GEOFENCE_RADIUS.toFloat())
             .setExpirationDuration(Geofence.NEVER_EXPIRE)
             .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
@@ -330,7 +332,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
 
         val pendingIntent = PendingIntent.getBroadcast(
             this,
-            UUID.randomUUID().hashCode(),
+            REQUEST_CODE,
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
@@ -349,20 +351,41 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                     REQUEST_CODE
                 )
             } else {
-                geofencingClient.addGeofences(geofenceRequest, pendingIntent)
+                geofencingClient.addGeofences(geofenceRequest, pendingIntent)?.run {
+                    addOnSuccessListener {
+                        //Log.e("geofence_create", "added $locationId $location")
+                    }
+                    addOnFailureListener {
+                        //Log.e("geofence_create", "failure $locationId $location")
+                    }
+                }
             }
         } else {
-            geofencingClient.addGeofences(geofenceRequest, pendingIntent)
+            geofencingClient.addGeofences(geofenceRequest, pendingIntent)?.run {
+                addOnSuccessListener {
+                    //.e("geofence_create", "added $locationId $location")
+                }
+                addOnFailureListener {
+                    //Log.e("geofence_create", "failure $locationId $location")
+                }
+            }
         }
     }
 
     companion object {
-        fun showNotification(context: Context, message: String, locationId: String) {
+        fun showNotification(context: Context, locationId: String) {
+            var locationName: String? = ""
+            geofenceLocations.forEach {
+                if(it["locationId"]==locationId) {
+                    locationName = it["locationName"]
+                }
+            }
+
             val CHANNEL_ID = "REMINDER_NOTIFICATION_CHANNEL"
             var notificationId = 123
             notificationId += Random(notificationId).nextInt(1, 30)
 
-            val notificationString = context.getString(R.string.geofence_notification_1) + " " + message +
+            val notificationString = context.getString(R.string.geofence_notification_1) + " " + locationName +
                     context.getString(R.string.geofence_notification_2)
             //Toast.makeText(context, notificationString, Toast.LENGTH_SHORT).show()
 
@@ -421,6 +444,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                     Pair("locationName", locationName), Pair("latitude", latitude),
                     Pair("longitude", longitude), Pair("locationId", locationId)
                 )
+                //Log.e("geofence", "$locationId $latitude $longitude")
                 locationList.add(newHashMap)
                 cursor.moveToNext()
             }

@@ -36,7 +36,6 @@ import kotlin.collections.ArrayList
 import kotlin.random.Random
 
 class MapsActivity : BaseActivity(), OnMapReadyCallback {
-
     private lateinit var map: GoogleMap
     private lateinit var geofencingClient: GeofencingClient
     private lateinit var connection: DBConnection
@@ -57,7 +56,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
             ) {
                 ActivityCompat.requestPermissions(
                     this,
-                    arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION), GEOFENCE_LOCATION_REQUEST_CODE
+                    arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION), REQUEST_CODE
                 )
             }
         }
@@ -256,7 +255,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
-                    GEOFENCE_LOCATION_REQUEST_CODE
+                    REQUEST_CODE
                 )
             } else {
                 geofencingClient.addGeofences(geofenceRequest, pendingIntent)

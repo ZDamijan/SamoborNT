@@ -14,7 +14,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
-import com.strukovnasamobor.samobornt.GEOFENCE_LOCATION_REQUEST_CODE
 import com.strukovnasamobor.samobornt.R
 import com.strukovnasamobor.samobornt.fusedLocationProviderClient
 
