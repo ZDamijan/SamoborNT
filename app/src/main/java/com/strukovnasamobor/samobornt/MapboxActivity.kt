@@ -363,7 +363,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
         } else {
             geofencingClient.addGeofences(geofenceRequest, pendingIntent)?.run {
                 addOnSuccessListener {
-                    //.e("geofence_create", "added $locationId $location")
+                    //Log.e("geofence_create", "added $locationId $location")
                 }
                 addOnFailureListener {
                     //Log.e("geofence_create", "failure $locationId $location")
