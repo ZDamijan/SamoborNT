@@ -114,8 +114,12 @@ class DetailActivity : BaseActivity() {
     private fun createTabLayout() {
         lastSelectedTab = 0
         val btnStartAR: Button = findViewById(R.id.btn_start_ar)
-        btnStartAR.visibility = View.GONE
         val tabLayout: TabLayout = findViewById(R.id.tabLayout)
+        if(tabLayout.selectedTabPosition == 1) {
+            btnStartAR.visibility = View.VISIBLE
+        } else{
+            btnStartAR.visibility = View.GONE
+        }
 
         if(card.arDescription.isNullOrBlank() && tabLayout.touchables.size == NUMBER_OF_TABS){
             tabLayout.getTabAt(AR_TAB_INDEX)!!.view.visibility = View.GONE
