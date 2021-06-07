@@ -7,9 +7,6 @@
         android:id="@+id/menu_sights"
         android:title="@string/sights" />
     <item
-        android:id="@+id/menu_augmentedReality"
-        android:title="@string/augmented_reality" />
-    <item
         android:id="@+id/virtual_tour"
         android:title="@string/virtual_tour" />
     <item
