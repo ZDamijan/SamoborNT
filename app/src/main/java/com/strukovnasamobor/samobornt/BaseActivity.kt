@@ -96,13 +96,6 @@ abstract class BaseActivity : AppCompatActivity() {
                         startActivity<CardViewActivity>()
                         true
                     }
-                    R.id.menu_augmentedReality -> {
-                        //Toast.makeText(this, "Augmented Reality", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this, UnityHolderActivity::class.java)
-                        intent.putExtra("sceneName", "LauncherScreen")
-                        startActivity(intent)
-                        true
-                    }
                     R.id.menu_about -> {
                         val aboutPopupWindow = Dialog(this)
                         aboutPopupWindow.requestWindowFeature(Window.FEATURE_NO_TITLE)
