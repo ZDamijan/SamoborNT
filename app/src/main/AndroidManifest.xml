@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:taskAffinity="com.strukovnasamobor.samobornt"
         android:theme="@style/Theme.SamoborNT">
-        <activity android:name=".TestniActivity"></activity>
+        <activity android:name=".RoutesCardViewActivity"></activity>
+        <activity android:name=".TestniActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".ProbActivity" />
         <activity android:name=".proba" />

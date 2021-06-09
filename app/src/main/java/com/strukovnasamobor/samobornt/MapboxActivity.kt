@@ -115,7 +115,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                 }
                 R.id.ic_map -> return@OnNavigationItemSelectedListener true
                 R.id.ic_routes -> {
-                    startActivity(Intent(applicationContext, UnityHolderActivity::class.java))
+                    startActivity(Intent(applicationContext, RoutesCardViewActivity::class.java))
                     overridePendingTransition(0, 0)
                     return@OnNavigationItemSelectedListener true
                 }
@@ -127,12 +127,14 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
     fun changeLanguage() {
         //recreate()
         if (LocaleHelper.getLanguage(this) != currentLocale) {
+
             val requestIdList: MutableList<String> = mutableListOf()
             geofenceLocations.forEach {
                 requestIdList.add(it["locationId"]!!)
             }
             geofencingClient.removeGeofences(requestIdList)
             currentLocale = LocaleHelper.getLanguage(this)
+
             geofenceLocations = getLocationList(currentLocale)
             geofenceLocations.forEach {
                 createGeofence(
@@ -143,6 +145,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                 )
             }
         }
+
         //Log.e("geofence_create", geofenceLocations.toString())
         onMapReady(mapboxMap)
     }
@@ -302,6 +305,22 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
         val bundle: Bundle? = intent?.extras
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView.selectedItemId = R.id.ic_map
+        bottomNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.ic_sights -> {
+                    startActivity(Intent(applicationContext, CardViewActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.ic_map -> return@OnNavigationItemSelectedListener true
+                R.id.ic_routes -> {
+                    startActivity(Intent(applicationContext, RoutesCardViewActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    return@OnNavigationItemSelectedListener true
+                }
+            }
+            false
+        })
         if (bundle?.get("latitude") != null) {
             val lat = bundle.get("latitude") as Double
             val lng = bundle.get("longitude") as Double
@@ -346,7 +365,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
             try {
                 val activity = weakReference.get()
                 if (activity != null) {
-                    val inputStream = activity.assets.open("skola.geojson")
+                    val inputStream = activity.assets.open("")
                     return FeatureCollection.fromJson(convertStreamToString(inputStream))
                 }
             } catch (exception: Exception) {

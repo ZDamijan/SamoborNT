@@ -25,6 +25,9 @@
     <string name="geofence_notification_1">You\'ve come to:</string>
     <string name="geofence_notification_2">, click here to read more.</string>
     <string name="sights">Sights</string>
-    <string name="map" translatable="false">Map</string>
-    <string name="routes" translatable="false">Routes</string>
+    <string name="map" >Map</string>
+    <string name="routes">Routes</string>
+    <string name="light" translatable="false">Light</string>
+    <string name="challenger" translatable="false">Challenger</string>
+    <string name="active" translatable="false">Active</string>
 </resources>

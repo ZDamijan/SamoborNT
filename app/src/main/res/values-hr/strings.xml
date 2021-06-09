@@ -22,4 +22,6 @@
     <string name="privacy_policy">\nPravila o zaštiti privatnosti:</string>
     <string name="geofence_notification_1">Došli ste do:</string>
     <string name="geofence_notification_2">, kliknite ovdje da pročitate više.</string>
+    <string name="map">Karta</string>
+    <string name="routes" translatable="false">Rute</string>
 </resources>
