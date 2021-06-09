@@ -291,11 +291,11 @@ class CardListHolder private constructor(private val context: Context) {
             Route3.shortDescription="Duljina: 1km\n" +
                     "Kapela Sv. Ane, Vidikovac Tepec, Stari Grad Samobor"
             Route1.mainImage=context.resources
-                .getIdentifier("plava_ruta_hr", "drawable", context.packageName)
+                .getIdentifier("plava_ruta_hrv", "drawable", context.packageName)
             Route2.mainImage=context.resources
-                .getIdentifier("crvena_ruta_hr", "drawable", context.packageName)
+                .getIdentifier("crvena_ruta_hrv", "drawable", context.packageName)
             Route3.mainImage=context.resources
-                .getIdentifier("crna_ruta_hr", "drawable", context.packageName)
+                .getIdentifier("crna_ruta_hrv", "drawable", context.packageName)
 
         }
         else{
