@@ -16,7 +16,7 @@
     <string name="augmented_reality">Proširena stvarnost</string>
     <string name="mapbox_style_light">mapbox://styles/aurelius-zd/cko9048ey4yn618te35wim55i</string>
     <string name="mapbox_style_dark">mapbox://styles/aurelius-zd/ckodwypau3gs117qplg0wel8j</string>
-    <string name="aboutText">Osmislili:\nEkonomska, trgovačka i ugostiteljska škola, Samobor\n\nIzradili s partnerom:\nSrednja strukovna škola, Samobor\n\nPodržano od:\nMinistarstvo turizma i sporta\n\nVerzija:\n1.0, 2021.</string>
+    <string name="aboutText">Osmislili:\nEkonomska, trgovačka i ugostiteljska škola, Samobor\n\nIzradili s partnerom:\nSrednja strukovna škola, Samobor\n\nPodržano od:\nMinistarstvo turizma i sporta\n\nVerzija:\n1.1, 2021.</string>
     <string name="locationPopupText">Ova aplikacija prikuplja podatke o lokaciji kako bi omogućila Geofences čak i kada je aplikacija zatvorena ili se ne koristi. Ako želite koristiti punu funkcionalnost aplikacije, dopustite dozvole za lokaciju cijelo vrijeme.</string>
     <string name="close_button">U REDU</string>
     <string name="privacy_policy">\nPravila o zaštiti privatnosti:</string>
