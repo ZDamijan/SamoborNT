@@ -4,8 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.strukovnasamobor.samobornt.BaseActivity
+import com.strukovnasamobor.samobornt.MapboxActivity
 import com.strukovnasamobor.samobornt.R
+import com.strukovnasamobor.samobornt.UnityHolderActivity
 import com.strukovnasamobor.samobornt.detail.DetailActivity
 import com.strukovnasamobor.samobornt.services.*
 
@@ -41,6 +44,25 @@ class CardViewActivity : BaseActivity() {
 
         cardViewAdapter = CardViewAdapter({ card -> adapterOnClick(card) }, cardListHolder.getCardList())
         recyclerView.adapter = cardViewAdapter
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView.selectedItemId = R.id.ic_sights
+        bottomNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.ic_sights -> {
+
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.ic_map -> {startActivity(Intent(applicationContext, MapboxActivity::class.java))
+                overridePendingTransition(0, 0)
+                    return@OnNavigationItemSelectedListener true}
+                R.id.ic_routes -> {
+                    startActivity(Intent(applicationContext, UnityHolderActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    return@OnNavigationItemSelectedListener true
+                }
+            }
+            false
+        })
     }
 
     override fun onStart() {

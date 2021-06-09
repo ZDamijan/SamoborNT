@@ -5,7 +5,7 @@
     <string name="explore">Explore Samobor</string>
     <string name="title_actionbar"><![CDATA[Samobor N&T]]></string>
     <string name="about">About</string>
-    <string name="sights">Sights</string>
+
     <string name="virtual_tour">Virtual Tour</string>
     <string name="change_language">Language</string>
     <string name="map_show">Show Map</string>
@@ -24,4 +24,7 @@
     <string name="privacy_policy">\nPrivacy Policy:</string>
     <string name="geofence_notification_1">You\'ve come to:</string>
     <string name="geofence_notification_2">, click here to read more.</string>
+    <string name="sights">Sights</string>
+    <string name="map" translatable="false">Map</string>
+    <string name="routes" translatable="false">Routes</string>
 </resources>

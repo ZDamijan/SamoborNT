@@ -15,6 +15,10 @@
         android:supportsRtl="true"
         android:taskAffinity="com.strukovnasamobor.samobornt"
         android:theme="@style/Theme.SamoborNT">
+        <activity android:name=".TestniActivity"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".ProbActivity" />
+        <activity android:name=".proba" />
 
         <receiver
             android:name=".GeofenceReceiver"
@@ -31,6 +35,7 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -40,11 +45,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".detail.DetailActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask" />
-        <activity android:name=".detail.FullscreenImageActivity"
-            android:screenOrientation="landscape"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".detail.FullscreenImageActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".UnityHolderActivity"
             android:launchMode="singleTask"

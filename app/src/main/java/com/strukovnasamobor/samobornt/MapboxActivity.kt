@@ -24,6 +24,21 @@ import com.google.android.gms.location.GeofencingRequest
 import com.google.android.gms.location.LocationServices
 import com.mapbox.android.core.permissions.PermissionsListener
 import com.mapbox.android.core.permissions.PermissionsManager
+import android.graphics.Color
+import android.os.AsyncTask
+
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.mapbox.geojson.FeatureCollection
+
+import com.mapbox.mapboxsdk.style.layers.LineLayer
+import com.mapbox.mapboxsdk.style.layers.Property
+import com.mapbox.mapboxsdk.style.layers.PropertyFactory
+import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
+import timber.log.Timber
+import java.io.InputStream
+import java.lang.ref.WeakReference
+import java.util.*
 import com.mapbox.mapboxsdk.Mapbox
 import com.mapbox.mapboxsdk.geometry.LatLng
 import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions
@@ -36,6 +51,7 @@ import com.mapbox.mapboxsdk.maps.MapboxMap
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback
 import com.mapbox.mapboxsdk.maps.Style
 import com.strukovnasamobor.samobornt.cardview.Card
+import com.strukovnasamobor.samobornt.cardview.CardViewActivity
 import com.strukovnasamobor.samobornt.detail.DetailActivity
 import com.strukovnasamobor.samobornt.services.*
 import java.util.*
@@ -45,6 +61,7 @@ const val GEOFENCE_RADIUS = 50
 private lateinit var currentLocale: String
 private lateinit var geofenceLocations: MutableList<HashMap<String, String>>
 
+@Suppress("DEPRECATION", "UNNECESSARY_SAFE_CALL")
 class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
     private var permissionsManager: PermissionsManager = PermissionsManager(this)
     private lateinit var mapboxMap: MapboxMap
@@ -87,6 +104,24 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
         mapView = findViewById(R.id.mapView)
         mapView?.onCreate(savedInstanceState)
         mapView?.getMapAsync(this)
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView.selectedItemId = R.id.ic_map
+        bottomNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.ic_sights -> {
+                    startActivity(Intent(applicationContext, CardViewActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.ic_map -> return@OnNavigationItemSelectedListener true
+                R.id.ic_routes -> {
+                    startActivity(Intent(applicationContext, UnityHolderActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    return@OnNavigationItemSelectedListener true
+                }
+            }
+            false
+        })
     }
 
     fun changeLanguage() {
@@ -125,9 +160,13 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                     )
                 )
             )
-        ) {
+        )
+
+
+        {
             // Map is set up and the style has loaded. Now you can add data or make other map adjustments
             //Log.e("mapbox", "loaded")
+            LoadGeoJson(this@MapboxActivity).execute()
             mapboxMap.addOnMapClickListener { point: LatLng ->
                 mapOnClickListener(point)
                 true
@@ -261,7 +300,8 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
         super.onNewIntent(intent)
         mapView?.onResume()
         val bundle: Bundle? = intent?.extras
-
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView.selectedItemId = R.id.ic_map
         if (bundle?.get("latitude") != null) {
             val lat = bundle.get("latitude") as Double
             val lng = bundle.get("longitude") as Double
@@ -273,8 +313,67 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                 )
             )
         }
-    }
 
+    }
+     fun drawLines(featureCollection: FeatureCollection) {
+        if (mapboxMap != null) {
+            mapboxMap!!.getStyle { style: Style ->
+                if (featureCollection.features() != null) {
+                    if (featureCollection.features()!!.size > 0) {
+                        style.addSource(GeoJsonSource("line-source", featureCollection))
+
+// The layer properties for our line. This is where we make the line dotted, set the
+// color, etc.
+                        style.addLayer(
+                            LineLayer("linelayer", "line-source")
+                                .withProperties(
+                                    PropertyFactory.lineCap(Property.LINE_CAP_SQUARE),
+                                    PropertyFactory.lineJoin(Property.LINE_JOIN_MITER),
+                                    PropertyFactory.lineOpacity(.7f),
+                                    PropertyFactory.lineWidth(7f),
+                                    PropertyFactory.lineColor(Color.parseColor("#3bb2d0"))
+                                )
+                        )
+                    }
+                }
+            }
+        }
+    }
+    class LoadGeoJson internal constructor(activity: MapboxActivity) :
+        AsyncTask<Void?, Void?, FeatureCollection?>() {
+        private val weakReference: WeakReference<MapboxActivity>
+        protected override fun doInBackground(vararg params: Void?): FeatureCollection? {
+            try {
+                val activity = weakReference.get()
+                if (activity != null) {
+                    val inputStream = activity.assets.open("skola.geojson")
+                    return FeatureCollection.fromJson(convertStreamToString(inputStream))
+                }
+            } catch (exception: Exception) {
+                Timber.e("Exception Loading GeoJSON: %s", exception.toString())
+            }
+            return null
+        }
+
+        override fun onPostExecute(featureCollection: FeatureCollection?) {
+            super.onPostExecute(featureCollection)
+            val activity = weakReference.get()
+            if (activity != null && featureCollection != null) {
+                activity.drawLines(featureCollection)
+            }
+        }
+
+        companion object {
+            fun convertStreamToString(`is`: InputStream?): String {
+                val scanner = Scanner(`is`).useDelimiter("\\A")
+                return if (scanner.hasNext()) scanner.next() else ""
+            }
+        }
+
+        init {
+            weakReference = WeakReference(activity)
+        }
+    }
     override fun onStart() {
         super.onStart()
         mapView?.onStart()

@@ -1,20 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar" />
+    <include
+        android:id="@+id/include3"
+        layout="@layout/toolbar" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingLeft="@dimen/margin_left"
-        android:paddingTop="50dp"
-        android:paddingRight="@dimen/margin_right"
-        android:paddingBottom="@dimen/margin_bottom"
-        app:layoutManager="LinearLayoutManager" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="?android:colorBackground"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintTop_toBottomOf="@+id/include3"
+        tools:ignore="MissingConstraints">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingLeft="@dimen/margin_left"
+            android:paddingTop="50dp"
+            android:paddingRight="@dimen/margin_right"
+            android:paddingBottom="@dimen/margin_bottom"
+            app:layoutManager="LinearLayoutManager" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:background="@color/design_default_color_background"
+        app:itemBackground="@drawable/selector"
+        app:itemIconTint="#ffff"
+        app:itemTextColor="#ffff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottom_nav_menu"
+        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>
