@@ -12,12 +12,17 @@ import android.database.Cursor
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.view.menu.ActionMenuItemView
+import androidx.appcompat.view.menu.MenuView
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import androidx.navigation.findNavController
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingClient
 import com.google.android.gms.location.GeofencingRequest
@@ -108,7 +113,6 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
     }
 
     fun changeLanguage() {
-        recreate()
         if (LocaleHelper.getLanguage(this) != currentLocale) {
             val requestIdList: MutableList<String> = mutableListOf()
             geofenceLocations.forEach {
@@ -276,7 +280,9 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         mapView?.onResume()
+
         val bundle: Bundle? = intent?.extras
+
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView.selectedItemId = R.id.ic_map
         bottomNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
@@ -306,7 +312,6 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                 )
             )
         }
-
     }
 
     override fun onStart() {

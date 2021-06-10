@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/action_menu_eng">
     <item
         android:id="@+id/ic_sights"
         android:icon="@drawable/bottom_nav_sights_icon"

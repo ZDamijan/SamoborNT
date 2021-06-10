@@ -7,6 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.*
@@ -21,7 +22,6 @@ import com.strukovnasamobor.samobornt.services.LocaleHelper
 
 
 var mapboxActivity : MapboxActivity? = null
-var cardListHolder : CardListHolder? = null
 
 abstract class BaseActivity : AppCompatActivity() {
     protected var locationComponent: LocationComponent? = null
@@ -133,8 +133,6 @@ abstract class BaseActivity : AppCompatActivity() {
         LocaleHelper.setLanguage(this, languageToLoad)
         CardListHolder.getCardListHolderInstance(this).changeCardsLanguage(languageToLoad)
         mapboxActivity?.changeLanguage()
-        cardListHolder?.changeCardsLanguage(languageToLoad)
-        cardListHolder?.changeCardsLanguage(languageToLoad)
 
         when (this::class.java.simpleName) {
             "CardViewActivity" -> {
