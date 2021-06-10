@@ -1,18 +1,26 @@
-package com.strukovnasamobor.samobornt.cardview
+package com.strukovnasamobor.samobornt
 
 import android.content.Intent
+import android.media.Image
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcelable
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.strukovnasamobor.samobornt.*
+import com.strukovnasamobor.samobornt.cardview.Card
+import com.strukovnasamobor.samobornt.cardview.CardListHolder
+import com.strukovnasamobor.samobornt.cardview.CardViewActivity
+import com.strukovnasamobor.samobornt.cardview.CardViewAdapter
 import com.strukovnasamobor.samobornt.detail.DetailActivity
-import com.strukovnasamobor.samobornt.services.*
+import com.strukovnasamobor.samobornt.services.DBConnection
+import com.strukovnasamobor.samobornt.services.LocaleHelper
 
-var recyclerViewState: Parcelable? = null
-private var cardListLocale: String? = null
-
-class CardViewActivity : BaseActivity() {
+import com.strukovnasamobor.samobornt.services.TABLE_NAME_ENG
+import com.strukovnasamobor.samobornt.services.TABLE_NAME_HRV
+private var recyclerViewState: Parcelable? = null
+private  var cardListLocale: String? = null
+class RoutesCardViewActivity : BaseActivity() {
     private lateinit var connection: DBConnection
     private lateinit var cardListHolder: CardListHolder
     private lateinit var recyclerView: RecyclerView
@@ -20,48 +28,61 @@ class CardViewActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.card_view)
+        setContentView(R.layout.activity_routes_card_view)
         super.initializeMenu()
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+
+
         recyclerView = findViewById(R.id.recycler_view)
         connection = DBConnection.getConnectionInstance(this)
         cardListHolder = CardListHolder.getCardListHolderInstance(this)
-
         if (cardListLocale == null) {
             cardListLocale = resources.configuration.locales[0].toString()
         }
 
         if (resources.configuration.locales[0].toString() != cardListLocale) {
             cardListLocale = resources.configuration.locales[0].toString()
-            cardListHolder.changeCardsLanguage(cardListLocale!!)
+            cardListHolder.changeRoutesLanguage(cardListLocale!!)
         }
         else if (intent.extras != null && intent.extras!!.getBoolean("languageChanged")) {
             cardListLocale = intent.extras!!.getString("changeToLanguage")
-            cardListHolder.changeCardsLanguage(cardListLocale!!)
+            cardListHolder.changeRoutesLanguage(cardListLocale!!)
         }
-
-        cardViewAdapter = CardViewAdapter({ card -> adapterOnClick(card) }, cardListHolder.getCardList())
-        recyclerView.adapter = cardViewAdapter
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        bottomNavigationView.selectedItemId = R.id.ic_sights
+        bottomNavigationView.selectedItemId = R.id.ic_routes
         bottomNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.ic_sights -> {
-
-                    return@OnNavigationItemSelectedListener true
-                }
-                R.id.ic_map -> {startActivity(Intent(applicationContext, MapboxActivity::class.java))
-                overridePendingTransition(0, 0)
-                    return@OnNavigationItemSelectedListener true}
-                R.id.ic_routes -> {
-                    startActivity(Intent(applicationContext, RoutesCardViewActivity::class.java))
+                    startActivity(Intent(applicationContext, CardViewActivity::class.java))
                     overridePendingTransition(0, 0)
                     return@OnNavigationItemSelectedListener true
                 }
+                R.id.ic_map -> {
+                    startActivity(Intent(applicationContext, MapboxActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.ic_routes -> return@OnNavigationItemSelectedListener true
+
+
             }
             false
         })
-    }
+        cardViewAdapter = CardViewAdapter({ card -> adapterOnClick(card) }, cardListHolder.getRouteList())
+        recyclerView.adapter = cardViewAdapter
 
+        /*if (LocaleHelper.getLanguage(this) == "hr" || LocaleHelper.getLanguage(this) == "hr_HR")
+        {
+            slika1.setImageResource(R.drawable.plava_ruta_hrv)
+            slika2.setImageResource(R.drawable.crvena_ruta_hrv)
+            slika3.setImageResource(R.drawable.crna_ruta_hrv)
+        }
+        else {
+            slika1.setImageResource(R.drawable.plava_ruta_eng)
+            slika2.setImageResource(R.drawable.crvena_ruta_eng)
+            slika3.setImageResource(R.drawable.crna_ruta_eng)
+        }*/
+
+        }
     override fun onStart() {
         super.onStart()
         recyclerView.layoutManager!!.onRestoreInstanceState(recyclerViewState)
@@ -73,15 +94,13 @@ class CardViewActivity : BaseActivity() {
         cardViewAdapter.notifyDataSetChanged()
     }
 
+
     override fun finish() {
         super.finish()
         recyclerViewState = recyclerView.layoutManager!!.onSaveInstanceState()
     }
 
     private fun adapterOnClick(card: Card) {
-        val intent = Intent(this, DetailActivity::class.java)
-        intent.putExtra("cardIndex", cardListHolder.getCardList().indexOf(card))
-        intent.putExtra("fromCardViewActivity", true)
-        startActivity(intent)
+
     }
-}
+    }

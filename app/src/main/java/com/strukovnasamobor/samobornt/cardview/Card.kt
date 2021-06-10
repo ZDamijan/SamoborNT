@@ -5,7 +5,7 @@ import androidx.annotation.DrawableRes
 data class Card (
     val locationId: String,
     @DrawableRes
-    val mainImage: Int?,
+    var mainImage: Int?,
     val otherImages: MutableList<Int>?,
     var locationName: String?,
     var shortDescription: String?,

@@ -59,7 +59,7 @@ dependencies {
     implementation 'com.otaliastudios:zoomlayout:1.4.0'
     implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:9.6.1'
     implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-annotation-v9:0.9.0'
-
+    implementation 'com.github.ajalt:timberkt:1.5.1'
     /* Unity Integration
     implementation project(':unityLibrary')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
