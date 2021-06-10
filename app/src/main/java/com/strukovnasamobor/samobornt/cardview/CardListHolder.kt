@@ -5,13 +5,14 @@ import android.content.Context
 import android.database.Cursor
 import android.util.Log
 import androidx.annotation.DrawableRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat.recreate
 import com.strukovnasamobor.samobornt.services.*
 
-class CardListHolder private constructor(private val context: Context) {
+class CardListHolder private constructor(private val context: Context) : AppCompatActivity() {
     private val connection: DBConnection = DBConnection.getConnectionInstance(context)
     private val cardsList = createCards()
     private val routesList = createRoutes()
-
 
     companion object {
         @SuppressLint("StaticFieldLeak")
@@ -71,16 +72,17 @@ class CardListHolder private constructor(private val context: Context) {
         }
         return cardsList
     }
-    private fun createRoutes(): MutableList<Card> {
 
+    private fun createRoutes(): MutableList<Card> {
         val cardsListLocale = LocaleHelper.getLanguage(context)
         val routesList: MutableList<Card> = mutableListOf()
         if (cardsListLocale == "en" || cardsListLocale == "en_EN") {
 
             val locationId1: String = "1"
             val locationName1: String = "Light"
-            val locationSD1: String = "Length: 2km\n" +
-                    "Prica Gallery, Ferdo Livadić, Church of St. Anastasia, Samobor cream cake, Samobor Museum, Battle of Samobor, Hydropathic swimming pool"
+            val locationSD1: String = "Length: 2 km\n" +
+                    "Color: blue\n" +
+                    "Sights: Prica Gallery, Ferdo Livadić Music School, Homeland Gratitude Park, Church of St. Anastasia, The love story of Stanko Vraz, King Tomislav Square, Samobor cream cake, Samobor Carnival, Samobor Tourist Board, Bermet and Mustarda, Little Venice, Samobor Museum, Ivica Sudnik, Battle of Samobor, Hydropathic swimming pool"
             val locationLD1: String = "0"
             val imageName1: String = "plava_ruta_eng"
             val arDescription1: String? = ""
@@ -105,8 +107,9 @@ class CardListHolder private constructor(private val context: Context) {
             routesList.add(newCard1)
             val locationId2: String = "2"
             val locationName2: String = "Active"
-            val locationSD2: String = "Length: 3km\n" +
-                    "Franciscan Church and Monastery, Saint Ana's Chapel, The Old town Samobor"
+            val locationSD2: String = "Length: 3 km\n" +
+                    "Color: red\n" +
+                    "Sights: The Old town Samobor, Saint Ana's Chapel, Franciscan Church and Monastery"
             val locationLD2: String = "0"
             val imageName2: String = "crvena_ruta_eng"
             val arDescription2: String? = ""
@@ -131,8 +134,9 @@ class CardListHolder private constructor(private val context: Context) {
             routesList.add(newCard2)
             val locationId3: String = "3"
             val locationName3: String = "Challenger"
-            val locationSD3: String = "Length: 1km\n" +
-                    "Saint Ana's Chapel, Tepec Viewpoint, The Old town Samobor"
+            val locationSD3: String = "Length: 1 km\n" +
+                    "Color: black\n" +
+                    "Sights: Saint Ana's Chapel, Tepec Viewpoint, The Old town Samobor"
             val locationLD3: String = "0"
             val imageName3: String = "crna_ruta_eng"
             val arDescription3: String? = ""
@@ -156,13 +160,12 @@ class CardListHolder private constructor(private val context: Context) {
             )
             routesList.add(newCard3)
         }
-        else
-        {
-
+        else {
             val locationId1: String = "1"
             val locationName1: String = "Light"
-            val locationSD1: String = "Duljina: 2km\n" +
-                    "Galerija Prica, Ferdo Livadić, Crkva Sv. Anastazije, Samoborska kremšnita, Samoborski muzej, Bitka kod Samobora, Hydropathic swimming pool"
+            val locationSD1: String = "Duljina: 2 km\n" +
+                    "Boja: plava\n" +
+                    "Znamenitosti: Galerija Prica, Glazbena škola Ferdo Livadić, Park domovinske zahvalnosti, Crkva Sv. Anastazije, Ljubavna priča Stanka Vraza, Trg kralja Tomislava, Samoborska kremšnita, Samoborski fašnik, Turistička zajednica grada Samobora, Bermet i muštarda, Mala Venecija, Samoborski muzej, Ivica Sudnik, Bitka kod Samobora, Hidropatsko kupalište"
             val locationLD1: String = "0"
             val imageName1: String = "plava_ruta_hrv"
             val arDescription1: String? = ""
@@ -187,8 +190,9 @@ class CardListHolder private constructor(private val context: Context) {
             routesList.add(newCard1)
             val locationId2: String = "2"
             val locationName2: String = "Active"
-            val locationSD2: String = "Duljina: 3km\n" +
-                    "Franjevačka crkva i samostan, Kapela Sv. Ane, Stari Grad Samobor"
+            val locationSD2: String = "Duljina: 2 km\n" +
+                    "Boja: crvena\n" +
+                    "Znamenitosti: Stari Grad Samobor, Kapela Sv. Ane, Franjevačka crkva i samostan"
             val locationLD2: String = "0"
             val imageName2: String = "crvena_ruta_hrv"
             val arDescription2: String? = ""
@@ -213,8 +217,9 @@ class CardListHolder private constructor(private val context: Context) {
             routesList.add(newCard2)
             val locationId3: String = "3"
             val locationName3: String = "Challenger"
-            val locationSD3: String = "Duljina: 1km\n" +
-                    "Kapela Sv. Ane, Vidikovac Tepec, Stari Grad Samobor"
+            val locationSD3: String = "Duljina: 1 km\n" +
+                    "Boja: crna\n" +
+                    "Znamenitosti: Kapela Sv. Ane, Vidikovac Tepec"
             val locationLD3: String = "0"
             val imageName3: String = "crna_ruta_hrv"
             val arDescription3: String? = ""
@@ -277,6 +282,7 @@ class CardListHolder private constructor(private val context: Context) {
             }
         }
     }
+
     fun changeRoutesLanguage(newLanguage: String) {
         val Route1:Card = routesList[0]
         val Route2:Card = routesList[1]
@@ -284,27 +290,32 @@ class CardListHolder private constructor(private val context: Context) {
 
         if (newLanguage == "hr" || newLanguage == "hr_HR")
         {
-            Route1.shortDescription="Duljina: 2km\n" +
-                    "Galerija Prica, Ferdo Livadić, Crkva Sv. Anastazije, Samoborska kremšnita, Samoborski muzej, Bitka kod Samobora, Hydropathic swimming pool"
-            Route2.shortDescription="Duljina: 3km\n" +
-                "Franjevačka crkva i samostan, Kapela Sv. Ane, Stari Grad Samobor"
-            Route3.shortDescription="Duljina: 1km\n" +
-                    "Kapela Sv. Ane, Vidikovac Tepec, Stari Grad Samobor"
+            Route1.shortDescription = "Duljina: 2 km\n" +
+                    "Boja: plava\n" +
+                    "Znamenitosti: Galerija Prica, Glazbena škola Ferdo Livadić, Park domovinske zahvalnosti, Crkva Sv. Anastazije, Ljubavna priča Stanka Vraza, Trg kralja Tomislava, Samoborska kremšnita, Samoborski fašnik, Turistička zajednica grada Samobora, Bermet i muštarda, Mala Venecija, Samoborski muzej, Ivica Sudnik, Bitka kod Samobora, Hidropatsko kupalište"
+            Route2.shortDescription = "Duljina: 2 km\n" +
+                    "Boja: crvena\n" +
+                    "Znamenitosti: Stari Grad Samobor, Kapela Sv. Ane, Franjevačka crkva i samostan"
+            Route3.shortDescription = "Duljina: 1 km\n" +
+                    "Boja: crna\n" +
+                    "Znamenitosti: Kapela Sv. Ane, Vidikovac Tepec"
             Route1.mainImage=context.resources
                 .getIdentifier("plava_ruta_hrv", "drawable", context.packageName)
             Route2.mainImage=context.resources
                 .getIdentifier("crvena_ruta_hrv", "drawable", context.packageName)
             Route3.mainImage=context.resources
                 .getIdentifier("crna_ruta_hrv", "drawable", context.packageName)
-
         }
         else{
-            Route1.shortDescription="Lenght: 2km\n"+
-            "Prica Gallery, Ferdo Livadić, Church of St. Anastasia, Samobor cream cake, Samobor Museum, Battle of Samobor, Hydropathic swimming pool"
-            Route2.shortDescription="Lenght: 3km\n"+
-                "Franciscan Church and Monastery, Saint Ana's Chapel, The Old town Samobor"
-            Route3.shortDescription="Lenght: 1km\n"+
-                "Saint Ana's Chapel, Tepec Viewpoint, The Old town Samobor"
+            Route1.shortDescription = "Length: 2 km\n" +
+                    "Color: blue\n" +
+                    "Sights: Prica Gallery, Ferdo Livadić Music School, Homeland Gratitude Park, Church of St. Anastasia, The love story of Stanko Vraz, King Tomislav Square, Samobor cream cake, Samobor Carnival, Samobor Tourist Board, Bermet and Mustarda, Little Venice, Samobor Museum, Ivica Sudnik, Battle of Samobor, Hydropathic swimming pool"
+            Route2.shortDescription = "Length: 3 km\n" +
+                    "Color: red\n" +
+                    "Sights: The Old town Samobor, Saint Ana's Chapel, Franciscan Church and Monastery"
+            Route3.shortDescription = "Length: 1 km\n" +
+                    "Color: black\n" +
+                    "Sights: Saint Ana's Chapel, Tepec Viewpoint, The Old town Samobor"
             Route1.mainImage=context.resources
                 .getIdentifier("plava_ruta_eng", "drawable", context.packageName)
             Route2.mainImage=context.resources
@@ -312,6 +323,5 @@ class CardListHolder private constructor(private val context: Context) {
             Route3.mainImage=context.resources
                 .getIdentifier("crna_ruta_eng", "drawable", context.packageName)
         }
-
     }
 }

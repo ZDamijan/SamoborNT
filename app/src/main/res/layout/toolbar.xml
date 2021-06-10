@@ -22,29 +22,13 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:id="@+id/map_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:paddingRight="115dp"
-            android:src="@drawable/ic_map_menu" />
-
-        <ImageView
             android:id="@+id/location_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:paddingRight="115dp"
+            android:paddingRight="65dp"
             android:src="@drawable/ic_location_menu"
             android:visibility="invisible" />
-
-        <ImageView
-            android:id="@+id/sights_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:paddingRight="65dp"
-            android:src="@drawable/ic_sights_menu" />
 
         <ImageView
             android:id="@+id/image_view_menu"

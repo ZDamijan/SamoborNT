@@ -5,7 +5,6 @@
     <string name="explore">Istraži Samobor</string>
     <string name="title_actionbar"><![CDATA[Samobor N&T]]></string>
     <string name="about">O aplikaciji</string>
-    <string name="sights">Znamenitosti</string>
     <string name="virtual_tour">Virtualna šetnja</string>
     <string name="change_language">Jezik / Language</string>
     <string name="map_show">Prikaz mape</string>
@@ -22,6 +21,7 @@
     <string name="privacy_policy">\nPravila o zaštiti privatnosti:</string>
     <string name="geofence_notification_1">Došli ste do:</string>
     <string name="geofence_notification_2">, kliknite ovdje da pročitate više.</string>
+    <string name="sights">Znamenitosti</string>
     <string name="map">Karta</string>
-    <string name="routes" translatable="false">Rute</string>
+    <string name="routes">Rute</string>
 </resources>

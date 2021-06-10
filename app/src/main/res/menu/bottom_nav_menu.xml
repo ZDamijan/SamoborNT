@@ -12,6 +12,4 @@
         android:id="@+id/ic_routes"
         android:icon="@drawable/bottom_nav_routes_icon"
         android:title="@string/routes" />
-
-
 </menu>

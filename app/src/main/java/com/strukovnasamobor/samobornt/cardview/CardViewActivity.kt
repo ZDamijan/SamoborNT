@@ -46,11 +46,11 @@ class CardViewActivity : BaseActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.ic_sights -> {
-
                     return@OnNavigationItemSelectedListener true
                 }
-                R.id.ic_map -> {startActivity(Intent(applicationContext, MapboxActivity::class.java))
-                overridePendingTransition(0, 0)
+                R.id.ic_map -> {
+                    startActivity(Intent(applicationContext, MapboxActivity::class.java))
+                    overridePendingTransition(0, 0)
                     return@OnNavigationItemSelectedListener true}
                 R.id.ic_routes -> {
                     startActivity(Intent(applicationContext, RoutesCardViewActivity::class.java))
@@ -71,6 +71,29 @@ class CardViewActivity : BaseActivity() {
         super.onStop()
         recyclerViewState = recyclerView.layoutManager!!.onSaveInstanceState()
         cardViewAdapter.notifyDataSetChanged()
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView.selectedItemId = R.id.ic_sights
+        bottomNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.ic_sights -> {
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.ic_map -> {startActivity(Intent(applicationContext, MapboxActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    return@OnNavigationItemSelectedListener true}
+                R.id.ic_routes -> {
+                    startActivity(Intent(applicationContext, RoutesCardViewActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    return@OnNavigationItemSelectedListener true
+                }
+            }
+            false
+        })
     }
 
     override fun finish() {

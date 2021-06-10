@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:background="@color/design_default_color_background"
+        android:background="@color/BrightRed"
         app:itemBackground="@drawable/selector"
         app:itemIconTint="#ffff"
         app:itemTextColor="#ffff"

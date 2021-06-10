@@ -24,20 +24,7 @@ import com.google.android.gms.location.GeofencingRequest
 import com.google.android.gms.location.LocationServices
 import com.mapbox.android.core.permissions.PermissionsListener
 import com.mapbox.android.core.permissions.PermissionsManager
-import android.graphics.Color
-import android.os.AsyncTask
-
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.mapbox.geojson.FeatureCollection
-
-import com.mapbox.mapboxsdk.style.layers.LineLayer
-import com.mapbox.mapboxsdk.style.layers.Property
-import com.mapbox.mapboxsdk.style.layers.PropertyFactory
-import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
-import timber.log.Timber
-import java.io.InputStream
-import java.lang.ref.WeakReference
 import java.util.*
 import com.mapbox.mapboxsdk.Mapbox
 import com.mapbox.mapboxsdk.geometry.LatLng
@@ -50,11 +37,9 @@ import com.mapbox.mapboxsdk.maps.MapView
 import com.mapbox.mapboxsdk.maps.MapboxMap
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback
 import com.mapbox.mapboxsdk.maps.Style
-import com.strukovnasamobor.samobornt.cardview.Card
 import com.strukovnasamobor.samobornt.cardview.CardViewActivity
 import com.strukovnasamobor.samobornt.detail.DetailActivity
 import com.strukovnasamobor.samobornt.services.*
-import java.util.*
 import kotlin.random.Random
 
 const val GEOFENCE_RADIUS = 50
@@ -69,7 +54,6 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
     private var enabledLocationComponent: Boolean = false
     private lateinit var connection: DBConnection
     private lateinit var geofencingClient: GeofencingClient
-    private lateinit var mapMenu: ImageView
     private lateinit var locationMenu: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,7 +70,6 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
 
         // This contains the MapView in XML and needs to be called after the access token is configured.
         setContentView(R.layout.activity_mapbox)
-        mapMenu = findViewById<ImageView>(R.id.map_menu)
         locationMenu = findViewById<ImageView>(R.id.location_menu)
         super.initializeMenu()
 
@@ -125,9 +108,8 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
     }
 
     fun changeLanguage() {
-        //recreate()
+        recreate()
         if (LocaleHelper.getLanguage(this) != currentLocale) {
-
             val requestIdList: MutableList<String> = mutableListOf()
             geofenceLocations.forEach {
                 requestIdList.add(it["locationId"]!!)
@@ -158,18 +140,13 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
             Style.Builder().fromUri(
                 resources.getString(
                     resources.getIdentifier(
-                        getString(R.string.mapbox_style), "string",
-                        packageName
+                        getString(R.string.mapbox_style), "string", packageName
                     )
                 )
             )
-        )
-
-
-        {
+        ) {
             // Map is set up and the style has loaded. Now you can add data or make other map adjustments
             //Log.e("mapbox", "loaded")
-            LoadGeoJson(this@MapboxActivity).execute()
             mapboxMap.addOnMapClickListener { point: LatLng ->
                 mapOnClickListener(point)
                 true
@@ -249,7 +226,6 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
 
                 // Set the LocationComponent's camera mode
                 cameraMode = CameraMode.NONE
-                mapMenu.visibility = View.INVISIBLE
                 locationMenu.visibility = View.VISIBLE
 
                 // Set the LocationComponent's render mode
@@ -264,10 +240,8 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                 override fun onCameraTrackingChanged(currentMode: Int) {
                     // CameraMode has been updated
                     if (currentMode == CameraMode.TRACKING_GPS) {
-                        mapMenu.visibility = View.VISIBLE
                         locationMenu.visibility = View.INVISIBLE
                     } else {
-                        mapMenu.visibility = View.INVISIBLE
                         locationMenu.visibility = View.VISIBLE
                     }
                 }
@@ -334,65 +308,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
         }
 
     }
-     fun drawLines(featureCollection: FeatureCollection) {
-        if (mapboxMap != null) {
-            mapboxMap!!.getStyle { style: Style ->
-                if (featureCollection.features() != null) {
-                    if (featureCollection.features()!!.size > 0) {
-                        style.addSource(GeoJsonSource("line-source", featureCollection))
 
-// The layer properties for our line. This is where we make the line dotted, set the
-// color, etc.
-                        style.addLayer(
-                            LineLayer("linelayer", "line-source")
-                                .withProperties(
-                                    PropertyFactory.lineCap(Property.LINE_CAP_SQUARE),
-                                    PropertyFactory.lineJoin(Property.LINE_JOIN_MITER),
-                                    PropertyFactory.lineOpacity(.7f),
-                                    PropertyFactory.lineWidth(7f),
-                                    PropertyFactory.lineColor(Color.parseColor("#3bb2d0"))
-                                )
-                        )
-                    }
-                }
-            }
-        }
-    }
-    class LoadGeoJson internal constructor(activity: MapboxActivity) :
-        AsyncTask<Void?, Void?, FeatureCollection?>() {
-        private val weakReference: WeakReference<MapboxActivity>
-        protected override fun doInBackground(vararg params: Void?): FeatureCollection? {
-            try {
-                val activity = weakReference.get()
-                if (activity != null) {
-                    val inputStream = activity.assets.open("")
-                    return FeatureCollection.fromJson(convertStreamToString(inputStream))
-                }
-            } catch (exception: Exception) {
-                Timber.e("Exception Loading GeoJSON: %s", exception.toString())
-            }
-            return null
-        }
-
-        override fun onPostExecute(featureCollection: FeatureCollection?) {
-            super.onPostExecute(featureCollection)
-            val activity = weakReference.get()
-            if (activity != null && featureCollection != null) {
-                activity.drawLines(featureCollection)
-            }
-        }
-
-        companion object {
-            fun convertStreamToString(`is`: InputStream?): String {
-                val scanner = Scanner(`is`).useDelimiter("\\A")
-                return if (scanner.hasNext()) scanner.next() else ""
-            }
-        }
-
-        init {
-            weakReference = WeakReference(activity)
-        }
-    }
     override fun onStart() {
         super.onStart()
         mapView?.onStart()

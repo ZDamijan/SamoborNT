@@ -21,6 +21,7 @@ import com.strukovnasamobor.samobornt.services.LocaleHelper
 
 
 var mapboxActivity : MapboxActivity? = null
+var cardListHolder : CardListHolder? = null
 
 abstract class BaseActivity : AppCompatActivity() {
     protected var locationComponent: LocationComponent? = null
@@ -37,16 +38,6 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     fun initializeMenu() {
-        val sightsMenu = findViewById<ImageView>(R.id.sights_menu)
-        sightsMenu.setOnClickListener {
-            startActivity<CardViewActivity>()
-        }
-
-        val mapMenu = findViewById<ImageView>(R.id.map_menu)
-        mapMenu.setOnClickListener {
-            startActivity<MapboxActivity>()
-        }
-
         val locationMenu = findViewById<ImageView>(R.id.location_menu)
         locationMenu.setOnClickListener {
             startActivity<MapboxActivity>()
@@ -142,6 +133,9 @@ abstract class BaseActivity : AppCompatActivity() {
         LocaleHelper.setLanguage(this, languageToLoad)
         CardListHolder.getCardListHolderInstance(this).changeCardsLanguage(languageToLoad)
         mapboxActivity?.changeLanguage()
+        cardListHolder?.changeCardsLanguage(languageToLoad)
+        cardListHolder?.changeCardsLanguage(languageToLoad)
+
         when (this::class.java.simpleName) {
             "CardViewActivity" -> {
                 this.finish()
@@ -152,6 +146,12 @@ abstract class BaseActivity : AppCompatActivity() {
             }
             "DetailActivity" -> {
                 val intent = Intent(this, DetailActivity::class.java)
+                intent.putExtra("languageChanged", true)
+                intent.putExtra("changeToLanguage", languageToLoad)
+                startActivity(intent)
+            }
+            "RoutesCardViewActivity" -> {
+                val intent = Intent(this, RoutesCardViewActivity::class.java)
                 intent.putExtra("languageChanged", true)
                 intent.putExtra("changeToLanguage", languageToLoad)
                 startActivity(intent)

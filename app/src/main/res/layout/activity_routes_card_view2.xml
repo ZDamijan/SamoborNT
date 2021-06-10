@@ -9,6 +9,7 @@
     <include
         android:id="@+id/include3"
         layout="@layout/toolbar" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -18,6 +19,7 @@
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintTop_toBottomOf="@+id/include3"
         tools:ignore="MissingConstraints">
+
         <ScrollView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
@@ -26,18 +28,18 @@
             android:paddingLeft="@dimen/margin_left"
             android:paddingTop="5dp"
             android:paddingRight="@dimen/margin_right"
-            android:paddingBottom="@dimen/margin_bottom"
-            >
+            android:paddingBottom="@dimen/margin_bottom">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:background="?android:colorBackground"
                 android:orientation="vertical"
+                android:padding="12dp"
                 app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
                 app:layout_constraintTop_toBottomOf="@+id/include3"
-                tools:ignore="MissingConstraints"
-                android:padding="12dp">
+                tools:ignore="MissingConstraints">
 
                 //ruta1
                 <androidx.cardview.widget.CardView
@@ -60,8 +62,8 @@
                             android:layout_marginLeft="2dp"
                             android:layout_marginTop="2dp"
                             android:layout_marginRight="2dp"
-                            android:scaleType="fitXY"
                             android:adjustViewBounds="true"
+                            android:scaleType="fitXY"
 
                             />
 
@@ -76,10 +78,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="8dp"
-                                android:textColor="?android:textColorPrimary"
-                                android:textSize="24sp"
                                 android:text="@string/light"
-                                />
+                                android:textColor="?android:textColorPrimary"
+                                android:textSize="24sp" />
 
                             <TextView
                                 android:id="@+id/RouteDescription1"
@@ -91,6 +92,7 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
                 //ruta2
+
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -111,10 +113,8 @@
                             android:layout_marginLeft="2dp"
                             android:layout_marginTop="2dp"
                             android:layout_marginRight="2dp"
-                            android:scaleType="fitXY"
                             android:adjustViewBounds="true"
-
-                            />
+                            android:scaleType="fitXY" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -127,9 +127,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="8dp"
+                                android:text="@string/active"
                                 android:textColor="?android:textColorPrimary"
-                                android:textSize="24sp"
-                                android:text="@string/active"/>
+                                android:textSize="24sp" />
 
                             <TextView
                                 android:id="@+id/RouteDescription2"
@@ -138,10 +138,10 @@
                                 android:textColor="?android:textColorSecondary"
                                 android:textSize="18sp" />
                         </LinearLayout>
-
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
                 //ruta3
+
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -162,9 +162,8 @@
                             android:layout_marginLeft="2dp"
                             android:layout_marginTop="2dp"
                             android:layout_marginRight="2dp"
-                            android:scaleType="fitXY"
                             android:adjustViewBounds="true"
-                            />
+                            android:scaleType="fitXY" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -177,9 +176,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="8dp"
+                                android:text="@string/challenger"
                                 android:textColor="?android:textColorPrimary"
-                                android:textSize="24sp"
-                                android:text="@string/challenger"/>
+                                android:textSize="24sp" />
 
                             <TextView
                                 android:id="@+id/RouteDescription3"
@@ -190,24 +189,21 @@
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
-
-
             </LinearLayout>
-
         </ScrollView>
     </LinearLayout>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:background="@color/design_default_color_background"
+        android:background="@color/BrightRed"
         app:itemBackground="@drawable/selector"
         app:itemIconTint="#ffff"
         app:itemTextColor="#ffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_nav_menu"
         tools:ignore="MissingConstraints" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
