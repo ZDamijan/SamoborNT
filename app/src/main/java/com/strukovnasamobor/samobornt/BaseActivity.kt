@@ -132,7 +132,7 @@ abstract class BaseActivity : AppCompatActivity() {
     private fun changeLanguage(languageToLoad: String) {
         LocaleHelper.setLanguage(this, languageToLoad)
         CardListHolder.getCardListHolderInstance(this).changeCardsLanguage(languageToLoad)
-        mapboxActivity?.changeLanguage()
+        mapboxActivity?.changeLanguage(languageToLoad)
 
         when (this::class.java.simpleName) {
             "CardViewActivity" -> {

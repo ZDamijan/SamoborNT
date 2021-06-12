@@ -17,7 +17,6 @@
         android:theme="@style/Theme.SamoborNT">
 
 
-
         <receiver
             android:name=".GeofenceReceiver"
             android:enabled="true"
