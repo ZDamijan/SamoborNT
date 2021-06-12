@@ -93,6 +93,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
         mapView?.onCreate(savedInstanceState)
         mapView?.getMapAsync(this)
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView.invalidate()
         bottomNavigationView.selectedItemId = R.id.ic_map
         bottomNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
@@ -130,10 +131,34 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                     ), it["locationId"]!!, geofencingClient
                 )
             }
+            if (currentLocale == "hr" || currentLocale == "hr_HR") {
+                val navView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+                var menuItem1 = navView.menu.findItem(R.id.ic_routes)
+                var menuItem2 = navView.menu.findItem(R.id.ic_map)
+                var menuItem3 = navView.menu.findItem(R.id.ic_sights)
+                menuItem1.title = "Rute"
+                menuItem2.title = "Karta"
+                menuItem3.title = "Znamenitosti"
+
+            }
+            else
+            {
+                val navView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+                var menuItem1 = navView.menu.findItem(R.id.ic_routes)
+                var menuItem2 = navView.menu.findItem(R.id.ic_map)
+                var menuItem3 = navView.menu.findItem(R.id.ic_sights)
+                menuItem1.title = "Routes"
+                menuItem2.title = "Map"
+                menuItem3.title = "Sights"
+
+            }
+            onMapReady(mapboxMap)
+
         }
 
         //Log.e("geofence_create", geofenceLocations.toString())
         onMapReady(mapboxMap)
+
     }
 
     override fun onMapReady(mapboxMap: MapboxMap) {
@@ -166,7 +191,10 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
             if (!enabledLocationComponent)
                 enableLocationComponent(it)
         }
+
+
     }
+
 
     private fun mapOnClickListener(point: LatLng) {
         /*
@@ -201,6 +229,26 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
 
     override fun onBackPressed() {
         moveTaskToBack(true)
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView.invalidate()
+        bottomNavigationView.selectedItemId = R.id.ic_map
+        bottomNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.ic_sights -> {
+                    startActivity(Intent(applicationContext, CardViewActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.ic_map -> return@OnNavigationItemSelectedListener true
+                R.id.ic_routes -> {
+                    startActivity(Intent(applicationContext, RoutesCardViewActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    return@OnNavigationItemSelectedListener true
+                }
+            }
+            false
+        })
+        recreate()
     }
 
     @SuppressLint("MissingPermission")
@@ -284,7 +332,10 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
         val bundle: Bundle? = intent?.extras
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+
         bottomNavigationView.selectedItemId = R.id.ic_map
+
+
         bottomNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.ic_sights -> {
@@ -300,6 +351,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                 }
             }
             false
+
         })
         if (bundle?.get("latitude") != null) {
             val lat = bundle.get("latitude") as Double
@@ -312,16 +364,21 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                 )
             )
         }
+        onMapReady(mapboxMap)
+
     }
 
     override fun onStart() {
         super.onStart()
         mapView?.onStart()
+
     }
 
     override fun onResume() {
         super.onResume()
         mapView?.onResume()
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView.selectedItemId = R.id.ic_map
     }
 
     override fun onPause() {
