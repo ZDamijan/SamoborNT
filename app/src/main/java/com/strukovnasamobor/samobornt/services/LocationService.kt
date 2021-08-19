@@ -18,8 +18,8 @@ import com.strukovnasamobor.samobornt.R
 import com.strukovnasamobor.samobornt.fusedLocationProviderClient
 
 const val REQUEST_CODE = 12
+const val REQUEST_CHECK_CODE = 17
 
-val REQUEST_CHECK_CODE = 17
 private lateinit var locationCallback: LocationCallback
 private lateinit var locationRequest: LocationRequest
 var locationUpdateState = false
@@ -42,8 +42,8 @@ fun Activity.requestPermission() {
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                        //,Manifest.permission.ACCESS_BACKGROUND_LOCATION
                     ),
                     REQUEST_CODE
                 )
