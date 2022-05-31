@@ -3,11 +3,19 @@ package com.strukovnasamobor.samobornt.cardview
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.strukovnasamobor.samobornt.*
 import com.strukovnasamobor.samobornt.detail.DetailActivity
 import com.strukovnasamobor.samobornt.services.*
+import kotlinx.android.synthetic.main.card_view.*
 
 var recyclerViewState: Parcelable? = null
 private var cardListLocale: String? = null
@@ -34,14 +42,14 @@ class CardViewActivity : BaseActivity() {
             cardListLocale = resources.configuration.locales[0].toString()
             cardListHolder.changeCardsLanguage(cardListLocale!!)
             cardListHolder.changeRoutesLanguage(cardListLocale!!)
-        }
-        else if (intent.extras != null && intent.extras!!.getBoolean("languageChanged")) {
+        } else if (intent.extras != null && intent.extras!!.getBoolean("languageChanged")) {
             cardListLocale = intent.extras!!.getString("changeToLanguage")
             cardListHolder.changeCardsLanguage(cardListLocale!!)
             cardListHolder.changeRoutesLanguage(cardListLocale!!)
         }
 
-        cardViewAdapter = CardViewAdapter({ card -> adapterOnClick(card) }, cardListHolder.getCardList())
+        cardViewAdapter =
+            CardViewAdapter({ card -> adapterOnClick(card) }, cardListHolder.getCardList())
         recyclerView.adapter = cardViewAdapter
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView.selectedItemId = R.id.ic_sights
@@ -53,7 +61,8 @@ class CardViewActivity : BaseActivity() {
                 R.id.ic_map -> {
                     startActivity(Intent(applicationContext, MapboxActivity::class.java))
                     overridePendingTransition(0, 0)
-                    return@OnNavigationItemSelectedListener true}
+                    return@OnNavigationItemSelectedListener true
+                }
                 R.id.ic_routes -> {
                     startActivity(Intent(applicationContext, RoutesCardViewActivity::class.java))
                     overridePendingTransition(0, 0)
@@ -61,6 +70,20 @@ class CardViewActivity : BaseActivity() {
                 }
             }
             false
+        })
+        search.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(input: CharSequence?, start: Int, before: Int, count: Int) {
+                if (input != null) {
+                    val cardsList = cardListHolder.getCardList().filter { card -> card.locationName!!.contains(input) }
+                    cardViewAdapter =
+                        CardViewAdapter({ card -> adapterOnClick(card) }, cardsList.toMutableList())
+                    recyclerView.adapter = cardViewAdapter
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
         })
     }
 
@@ -74,8 +97,7 @@ class CardViewActivity : BaseActivity() {
             cardListLocale = resources.configuration.locales[0].toString()
             cardListHolder.changeCardsLanguage(cardListLocale!!)
             cardListHolder.changeRoutesLanguage(cardListLocale!!)
-        }
-        else if (intent.extras != null && intent.extras!!.getBoolean("languageChanged")) {
+        } else if (intent.extras != null && intent.extras!!.getBoolean("languageChanged")) {
             cardListLocale = intent.extras!!.getString("changeToLanguage")
             cardListHolder.changeCardsLanguage(cardListLocale!!)
             cardListHolder.changeRoutesLanguage(cardListLocale!!)
@@ -90,9 +112,7 @@ class CardViewActivity : BaseActivity() {
             menuItem2.title = "Karta"
             menuItem3.title = "Znamenitosti"
 
-        }
-        else
-        {
+        } else {
             val navView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
             var menuItem1 = navView.menu.findItem(R.id.ic_routes)
             var menuItem2 = navView.menu.findItem(R.id.ic_map)
@@ -109,6 +129,7 @@ class CardViewActivity : BaseActivity() {
         recyclerViewState = recyclerView.layoutManager!!.onSaveInstanceState()
         cardViewAdapter.notifyDataSetChanged()
     }
+
     override fun onResume() {
         super.onResume()
 
@@ -122,8 +143,7 @@ class CardViewActivity : BaseActivity() {
             cardListLocale = resources.configuration.locales[0].toString()
             cardListHolder.changeCardsLanguage(cardListLocale!!)
             cardListHolder.changeRoutesLanguage(cardListLocale!!)
-        }
-        else if (intent.extras != null && intent.extras!!.getBoolean("languageChanged")) {
+        } else if (intent.extras != null && intent.extras!!.getBoolean("languageChanged")) {
             cardListLocale = intent.extras!!.getString("changeToLanguage")
             cardListHolder.changeCardsLanguage(cardListLocale!!)
             cardListHolder.changeRoutesLanguage(cardListLocale!!)
@@ -137,9 +157,7 @@ class CardViewActivity : BaseActivity() {
             menuItem2.title = "Karta"
             menuItem3.title = "Znamenitosti"
 
-        }
-        else
-        {
+        } else {
             val navView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
             var menuItem1 = navView.menu.findItem(R.id.ic_routes)
             var menuItem2 = navView.menu.findItem(R.id.ic_map)
@@ -150,6 +168,7 @@ class CardViewActivity : BaseActivity() {
 
         }
     }
+
     override fun onBackPressed() {
         super.onBackPressed()
         cardViewAdapter.notifyDataSetChanged()
@@ -164,9 +183,7 @@ class CardViewActivity : BaseActivity() {
             menuItem2.title = "Karta"
             menuItem3.title = "Znamenitosti"
 
-        }
-        else
-        {
+        } else {
             val navView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
             var menuItem1 = navView.menu.findItem(R.id.ic_routes)
             var menuItem2 = navView.menu.findItem(R.id.ic_map)
@@ -178,6 +195,7 @@ class CardViewActivity : BaseActivity() {
         }
 
     }
+
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         if (cardListLocale == null) {
@@ -188,8 +206,7 @@ class CardViewActivity : BaseActivity() {
             cardListLocale = resources.configuration.locales[0].toString()
             cardListHolder.changeCardsLanguage(cardListLocale!!)
             cardListHolder.changeRoutesLanguage(cardListLocale!!)
-        }
-        else if (intent != null) {
+        } else if (intent != null) {
             if (intent.extras != null && intent.extras!!.getBoolean("languageChanged")) {
                 cardListLocale = intent.extras!!.getString("changeToLanguage")
                 cardListHolder.changeCardsLanguage(cardListLocale!!)
@@ -204,9 +221,11 @@ class CardViewActivity : BaseActivity() {
                 R.id.ic_sights -> {
                     return@OnNavigationItemSelectedListener true
                 }
-                R.id.ic_map -> {startActivity(Intent(applicationContext, MapboxActivity::class.java))
+                R.id.ic_map -> {
+                    startActivity(Intent(applicationContext, MapboxActivity::class.java))
                     overridePendingTransition(0, 0)
-                    return@OnNavigationItemSelectedListener true}
+                    return@OnNavigationItemSelectedListener true
+                }
                 R.id.ic_routes -> {
                     startActivity(Intent(applicationContext, RoutesCardViewActivity::class.java))
                     overridePendingTransition(0, 0)
@@ -224,9 +243,7 @@ class CardViewActivity : BaseActivity() {
             menuItem2.title = "Karta"
             menuItem3.title = "Znamenitosti"
 
-        }
-        else
-        {
+        } else {
             val navView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
             var menuItem1 = navView.menu.findItem(R.id.ic_routes)
             var menuItem2 = navView.menu.findItem(R.id.ic_map)

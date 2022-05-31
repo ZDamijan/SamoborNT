@@ -4,14 +4,19 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.database.Cursor
 import android.util.Log
+import android.widget.EditText
+import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat.recreate
+import androidx.recyclerview.widget.RecyclerView
+import com.strukovnasamobor.samobornt.R
 import com.strukovnasamobor.samobornt.services.*
+import kotlinx.android.synthetic.main.card_view.*
 
 class CardListHolder private constructor(private val context: Context) : AppCompatActivity() {
     private val connection: DBConnection = DBConnection.getConnectionInstance(context)
-    private val cardsList = createCards()
+    private var cardsList = createCards()
     private val routesList = createRoutes()
 
     companion object {
@@ -31,6 +36,7 @@ class CardListHolder private constructor(private val context: Context) : AppComp
     fun getCardList(): MutableList<Card> {
         return cardsList
     }
+
     fun getRouteList(): MutableList<Card> {
         return routesList
     }

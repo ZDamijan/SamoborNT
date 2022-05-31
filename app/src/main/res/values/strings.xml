@@ -30,4 +30,6 @@
     <string name="light" translatable="false">Light</string>
     <string name="challenger" translatable="false">Challenger</string>
     <string name="active" translatable="false">Active</string>
+    <string name="search">SEARCH</string>
+    <string name="search1">Search sights</string>
 </resources>
