@@ -547,4 +547,6 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
         }
         return locationList
     }
+
+
 }

@@ -21,4 +21,6 @@ class CardViewAdapter(private val onClick: (Card) -> Unit, private val cardsList
         return cardsList.size
     }
 
+
+
 }
