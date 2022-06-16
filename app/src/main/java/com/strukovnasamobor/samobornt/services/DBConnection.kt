@@ -80,4 +80,10 @@ class DBConnection private constructor(context: Context) :
     fun getGenericWhereCursor(columnName: String, tableName: String, locationName: String): Cursor {
         return DATABASE!!.rawQuery("SELECT $columnName FROM $tableName WHERE Name='$locationName'", null)
     }
+
+    fun searchNames(tableName: String, keyword: String): Cursor{
+        return DATABASE!!.rawQuery("SELECT * FROM $tableName WHERE lower(Name) LIKE lower('%$keyword%')", null)
+    }
+
 }
+
