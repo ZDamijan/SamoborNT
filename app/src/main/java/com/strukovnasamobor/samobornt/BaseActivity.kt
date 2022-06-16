@@ -83,17 +83,9 @@ abstract class BaseActivity : AppCompatActivity() {
                         true
                     }
                     R.id.menu_sights -> {
-                        //Toast.makeText(this, "Sights", Toast.LENGTH_SHORT).show()
                         startActivity<CardViewActivity>()
                         true
                     }
-                    /*R.id.menu_augmentedReality -> {
-                        //Toast.makeText(this, "Augmented Reality", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this, UnityHolderActivity::class.java)
-                        intent.putExtra("sceneName", "LauncherScreen")
-                        startActivity(intent)
-                        true
-                    }*/
                     R.id.menu_about -> {
                         val aboutPopupWindow = Dialog(this)
                         aboutPopupWindow.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -102,13 +94,6 @@ abstract class BaseActivity : AppCompatActivity() {
                         aboutPopupWindow.setContentView(R.layout.about)
                         aboutPopupWindow.show()
                         true
-                        /*
-                        Toast.makeText(
-                            this,
-                            "Created by: Ekonomska, turistička i ugostiteljska škola, Samobor\nPartner: Srednja strukovnasamobor škola, Samobor\nSupported by: Ministry of Tourism and Sports\nVersion: 2021 1.0",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        true*/
                     }
                     R.id.virtual_tour -> {
                         val browserIntent = Intent(

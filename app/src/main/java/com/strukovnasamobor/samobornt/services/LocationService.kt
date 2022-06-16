@@ -31,23 +31,14 @@ fun Activity.requestPermission() {
                 Manifest.permission.ACCESS_BACKGROUND_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            val locationPopupWindow = Dialog(this)
-            locationPopupWindow.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            locationPopupWindow.setCancelable(true)
-            locationPopupWindow.setCanceledOnTouchOutside(true)
-            locationPopupWindow.setContentView(R.layout.location_popup)
-            locationPopupWindow.show()
-            locationPopupWindow.findViewById<Button>(R.id.close_button).setOnClickListener {
-                locationPopupWindow.cancel()
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                        //,Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                    ),
-                    REQUEST_CODE
-                )
-            }
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                    //,Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                ),
+                REQUEST_CODE
+            )
         }
     }
 }

@@ -21,23 +21,22 @@
         tools:ignore="MissingConstraints">
 
 
-            <EditText
-                android:id="@+id/search"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:textSize="20dp"
-                android:background="@drawable/edittext"
-                android:inputType="text"
-                tools:ignore="MissingConstraints"
-                android:hint="@string/search1"
-                />
+        <EditText
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/edittext"
+            android:hint="@string/search1"
+            android:inputType="text"
+            android:paddingLeft="@dimen/margin_left"
+            android:paddingTop="5dp"
+            android:paddingRight="@dimen/margin_right"
+            android:paddingBottom="@dimen/margin_bottom"
+            android:textSize="20dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -51,6 +50,7 @@
             app:layoutManager="LinearLayoutManager" />
 
     </LinearLayout>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="fill_parent"
