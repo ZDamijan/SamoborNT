@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:taskAffinity="com.strukovnasamobor.samobornt"
         android:theme="@style/Theme.SamoborNT">
-
+        <activity android:name=".RouteRecyclerViewActivity"></activity>
 
         <receiver
             android:name=".GeofenceReceiver"
@@ -60,11 +60,10 @@
             android:name=".MapsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <activity android:name=".RoutesCardViewActivity"
+        <activity
+            android:name=".RoutesCardViewActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
-
-
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

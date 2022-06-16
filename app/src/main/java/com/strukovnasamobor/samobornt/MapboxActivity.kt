@@ -420,14 +420,14 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             if (ContextCompat.checkSelfPermission(
                     this,
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                    Manifest.permission.ACCESS_FINE_LOCATION
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                        //,Manifest.permission.ACCESS_BACKGROUND_LOCATION
                     ),
                     REQUEST_CODE
                 )
