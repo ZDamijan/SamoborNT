@@ -61,7 +61,6 @@ class DetailActivity : BaseActivity() {
             cardListHolder.changeCardsLanguage(changeToLanguage)
             cardListHolder.changeRoutesLanguage(changeToLanguage)
             if (fromCardViewActivity == true) {
-
                 card = cardListHolder.getCardList()[currentCardIndex!!]
             }
         }

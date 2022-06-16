@@ -42,6 +42,7 @@ import com.mapbox.mapboxsdk.maps.MapView
 import com.mapbox.mapboxsdk.maps.MapboxMap
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback
 import com.mapbox.mapboxsdk.maps.Style
+import com.strukovnasamobor.samobornt.cardview.CardListHolder
 import com.strukovnasamobor.samobornt.cardview.CardViewActivity
 import com.strukovnasamobor.samobornt.detail.DetailActivity
 import com.strukovnasamobor.samobornt.services.*
@@ -113,7 +114,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
         })
     }
 
-    fun changeLanguage() {
+    fun changeLanguage(newLanguage: String) {
         if (LocaleHelper.getLanguage(this) != currentLocale) {
             val requestIdList: MutableList<String> = mutableListOf()
             geofenceLocations.forEach {
@@ -121,7 +122,6 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
             }
             geofencingClient.removeGeofences(requestIdList)
             currentLocale = LocaleHelper.getLanguage(this)
-
             geofenceLocations = getLocationList(currentLocale)
             geofenceLocations.forEach {
                 createGeofence(
@@ -131,34 +131,28 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
                     ), it["locationId"]!!, geofencingClient
                 )
             }
-            if (currentLocale == "hr" || currentLocale == "hr_HR") {
-                val navView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-                var menuItem1 = navView.menu.findItem(R.id.ic_routes)
-                var menuItem2 = navView.menu.findItem(R.id.ic_map)
-                var menuItem3 = navView.menu.findItem(R.id.ic_sights)
-                menuItem1.title = "Rute"
-                menuItem2.title = "Karta"
-                menuItem3.title = "Znamenitosti"
-
-            }
-            else
-            {
-                val navView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-                var menuItem1 = navView.menu.findItem(R.id.ic_routes)
-                var menuItem2 = navView.menu.findItem(R.id.ic_map)
-                var menuItem3 = navView.menu.findItem(R.id.ic_sights)
-                menuItem1.title = "Routes"
-                menuItem2.title = "Map"
-                menuItem3.title = "Sights"
-
-            }
-            onMapReady(mapboxMap)
-
+            //Log.e("geofence_create", geofenceLocations.toString())
         }
+        if (currentLocale == "hr" || currentLocale == "hr_HR") {
+            val navView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+            var menuItem1 = navView.menu.findItem(R.id.ic_routes)
+            var menuItem2 = navView.menu.findItem(R.id.ic_map)
+            var menuItem3 = navView.menu.findItem(R.id.ic_sights)
+            menuItem1.title = "Rute"
+            menuItem2.title = "Karta"
+            menuItem3.title = "Znamenitosti"
 
-        //Log.e("geofence_create", geofenceLocations.toString())
+        } else {
+            val navView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+            var menuItem1 = navView.menu.findItem(R.id.ic_routes)
+            var menuItem2 = navView.menu.findItem(R.id.ic_map)
+            var menuItem3 = navView.menu.findItem(R.id.ic_sights)
+            menuItem1.title = "Routes"
+            menuItem2.title = "Map"
+            menuItem3.title = "Sights"
+        }
+        LocaleHelper.setLanguage(this, newLanguage)
         onMapReady(mapboxMap)
-
     }
 
     override fun onMapReady(mapboxMap: MapboxMap) {
@@ -191,10 +185,7 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
             if (!enabledLocationComponent)
                 enableLocationComponent(it)
         }
-
-
     }
-
 
     private fun mapOnClickListener(point: LatLng) {
         /*
@@ -330,12 +321,8 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
         mapView?.onResume()
 
         val bundle: Bundle? = intent?.extras
-
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-
         bottomNavigationView.selectedItemId = R.id.ic_map
-
-
         bottomNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.ic_sights -> {
@@ -365,13 +352,11 @@ class MapboxActivity : BaseActivity(), OnMapReadyCallback, PermissionsListener {
             )
         }
         onMapReady(mapboxMap)
-
     }
 
     override fun onStart() {
         super.onStart()
         mapView?.onStart()
-
     }
 
     override fun onResume() {

@@ -25,7 +25,6 @@ class CardListHolder private constructor(private val context: Context) : AppComp
                 newInstance
             }
         }
-
     }
 
     fun getCardList(): MutableList<Card> {
