@@ -13,6 +13,7 @@ class GeofenceReceiver : BroadcastReceiver() {
             val geofencingEvent = GeofencingEvent.fromIntent(intent)
             val geofencingTransition = geofencingEvent.geofenceTransition
             val triggeringGeofences = geofencingEvent.triggeringGeofences
+
             if (geofencingTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
                 triggeringGeofences.forEach {
                     //Toast.makeText(context, "Ulaz u geofence: " + it.requestId, Toast.LENGTH_SHORT).show()
