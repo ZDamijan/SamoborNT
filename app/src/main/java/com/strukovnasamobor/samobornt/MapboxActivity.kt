@@ -48,7 +48,7 @@ import com.strukovnasamobor.samobornt.detail.DetailActivity
 import com.strukovnasamobor.samobornt.services.*
 import kotlin.random.Random
 
-const val GEOFENCE_RADIUS = 100
+const val GEOFENCE_RADIUS = 50
 private lateinit var currentLocale: String
 private lateinit var geofenceLocations: MutableList<HashMap<String, String>>
 
