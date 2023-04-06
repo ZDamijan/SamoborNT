@@ -5,12 +5,11 @@
     <string name="explore">Explore Samobor</string>
     <string name="title_actionbar"><![CDATA[Samobor N&T]]></string>
     <string name="about">About</string>
-
     <string name="virtual_tour">Virtual Tour</string>
-    <string name="change_language">Language</string>
+    <string name="change_language">Language / Jezik</string>
     <string name="map_show">Show Map</string>
-    <string name="croatian">Croatian</string>
-    <string name="english">English</string>
+    <string name="croatian">Croatian / Hrvatski</string>
+    <string name="english">English / Engleski</string>
     <string name="save">Save</string>
     <string name="close">Close</string>
     <string name="augmented_reality">Augmented Reality</string>
@@ -18,10 +17,11 @@
     <string name="mapbox_style_dark">mapbox://styles/aurelius-zd/ckolunihy36qp17o2o6jd1yjb</string>
     <string name="mapbox_access_token" translatable="false">pk.eyJ1IjoiYXVyZWxpdXMtemQiLCJhIjoiY2tvMXN3dTVqMGJtbzJwbHliZWljd2xjbiJ9.DkV8Yg7EmRfTSZmqPqEtVQ</string>
     <string name="game_view_content_description" translatable="false">Samobor N&amp;T Augmented Reality</string>
-    <string name="aboutText">Idea by:\nSchool of Economics, Trade and Catering, Samobor\n\nCreated with Partner:\nSecondary Vocational School, Samobor\n\nSupported by:\nMinistry of Tourism and Sports\n\nVersion:\n1.3, 2022.</string>
+    <string name="aboutText">Idea by:\nSchool of Economics, Trade and Catering, Samobor\n\nCreated with Partner:\nSecondary Vocational School, Samobor\n\nSupported by:\nMinistry of Tourism and Sports\n\nVersion:\n1.4, 2023.</string>
     <string name="locationPopupText">This app collects location data to enable Geofences even when the app is closed or not in use. If you wish to use the full functionality of the app please allow location permissions all the time.</string>
     <string name="close_button">I UNDERSTAND</string>
     <string name="privacy_policy">\nPrivacy Policy:</string>
+    <string name="privacy_policy_url">https://samobornt.strukovnasamobor.com/privacy_policy.html</string>
     <string name="geofence_notification_1">You\'ve come to:</string>
     <string name="geofence_notification_2">, click here to read more.</string>
     <string name="sights">Sights</string>

@@ -49,5 +49,5 @@
         android:textStyle="bold"
         android:linksClickable="true"
         android:autoLink="web"
-        android:text="https://termify.io/privacy-policy/1622526563" />
+        android:text="@string/privacy_policy_url" />
 </LinearLayout>
