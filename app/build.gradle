@@ -12,9 +12,9 @@ android {
     defaultConfig {
         applicationId "com.strukovnasamobor.samobornt"
         minSdkVersion 24
-        targetSdkVersion 31
-        versionCode 7
-        versionName "1.4"
+        targetSdkVersion 33
+        versionCode 9
+        versionName "1.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -31,6 +31,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    namespace 'com.strukovnasamobor.samobornt'
 }
 
 apply plugin: 'kotlin-android-extensions'

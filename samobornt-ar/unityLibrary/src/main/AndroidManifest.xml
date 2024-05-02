@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.unity3d.player" xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
   <application>
     <activity android:name="com.unity3d.player.UnityPlayerActivity" android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale|layoutDirection|density" android:hardwareAccelerated="true" android:launchMode="singleInstance" android:process=":unityProcess" android:screenOrientation="portrait" android:taskAffinity="com.unity3d.player" android:theme="@style/UnityThemeSelector">
       <meta-data android:name="unityplayer.UnityActivity" android:value="true" />

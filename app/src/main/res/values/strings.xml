@@ -17,7 +17,7 @@
     <string name="mapbox_style_dark">mapbox://styles/aurelius-zd/ckolunihy36qp17o2o6jd1yjb</string>
     <string name="mapbox_access_token" translatable="false">pk.eyJ1IjoiYXVyZWxpdXMtemQiLCJhIjoiY2tvMXN3dTVqMGJtbzJwbHliZWljd2xjbiJ9.DkV8Yg7EmRfTSZmqPqEtVQ</string>
     <string name="game_view_content_description" translatable="false">Samobor N&amp;T Augmented Reality</string>
-    <string name="aboutText">Idea by:\nSchool of Economics, Trade and Catering, Samobor\n\nCreated with Partner:\nSecondary Vocational School, Samobor\n\nSupported by:\nMinistry of Tourism and Sports\n\nVersion:\n1.4, 2023.</string>
+    <string name="aboutText">Idea by:\nSchool of Economics, Trade and Catering, Samobor\n\nCreated with Partner:\nSecondary Vocational School, Samobor\n\nSupported by:\nMinistry of Tourism and Sports\n\nVersion:\n1.5, 2024.</string>
     <string name="locationPopupText">This app collects location data to enable Geofences even when the app is closed or not in use. If you wish to use the full functionality of the app please allow location permissions all the time.</string>
     <string name="close_button">I UNDERSTAND</string>
     <string name="privacy_policy">\nPrivacy Policy:</string>
